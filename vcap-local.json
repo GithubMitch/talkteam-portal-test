@@ -1,0 +1,25 @@
+{
+    "cloudantNoSQLDB": [
+        {
+            "credentials": {
+                "username": "186bc4a1-0187-48b2-bc2d-b54267a7fce2-bluemix",
+                "password": "5e39c2c9728fc768ab2dc93f26c9eb9a62038517b813ac4ee1454136f3833182",
+                "host": "186bc4a1-0187-48b2-bc2d-b54267a7fce2-bluemix.cloudant.com",
+                "port": 443,
+                "url": "https://186bc4a1-0187-48b2-bc2d-b54267a7fce2-bluemix:5e39c2c9728fc768ab2dc93f26c9eb9a62038517b813ac4ee1454136f3833182@186bc4a1-0187-48b2-bc2d-b54267a7fce2-bluemix.cloudant.com"
+            },
+            "syslog_drain_url": null,
+            "volume_mounts": [],
+            "label": "cloudantNoSQLDB",
+            "provider": null,
+            "plan": "Lite",
+            "name": "talkteam-portal-test-cloudantNoSQLDB",
+            "tags": [
+                "data_management",
+                "ibm_created",
+                "lite",
+                "ibm_dedicated_public"
+            ]
+        }
+    ]
+}

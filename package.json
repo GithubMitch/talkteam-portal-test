@@ -1,0 +1,26 @@
+{
+  "name": "cloudant_boilerplate_nodejs",
+  "version": "0.0.2",
+  "private": true,
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "body-parser": "1.17.x",
+    "bootstrap": "^4.0.0",
+    "browserify": "^15.2.0",
+    "cloudant": "1.7.x",
+    "connect-multiparty": "2.0.x",
+    "ejs": "2.5.x",
+    "errorhandler": "1.5.x",
+    "express": "4.15.x",
+    "jquery": "^3.3.1",
+    "method-override": "2.3.x",
+    "morgan": "1.8.x",
+    "popper": "^1.0.1"
+  },
+  "repository": {},
+  "engines": {
+    "node": "6.x"
+  }
+}
