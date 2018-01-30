@@ -28,6 +28,8 @@ var errorHandler = require('errorhandler');
 var multipart = require('connect-multiparty')
 var multipartMiddleware = multipart();
 
+
+
 // all environments
 app.set('port', process.env.PORT || 3000);
 app.set('views', __dirname + '/views');
@@ -52,7 +54,6 @@ app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css'));
 
 app.use('/js', express.static(__dirname + '/node_modules/jquery.mmenu/dist')); // redirect jQuery MMenu
 app.use('/css', express.static(__dirname + '/node_modules/jquery.mmenu/dist')); // redirect CSS jQuery MMenu
-
 
 
 // development only
@@ -100,6 +101,8 @@ function initDBConnection() {
     });
 
     db = cloudant.use(dbCredentials.dbName);
+
+
 }
 
 initDBConnection();
@@ -108,6 +111,7 @@ app.get('/', routes.index);
 app.get('/register', routes.register);
 app.get('/downloads', routes.downloads);
 app.get('/news', routes.news);
+app.get('/admin', routes.admin);
 
 function createResponseData(id, name, value, attachments) {
 
