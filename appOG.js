@@ -25,8 +25,11 @@ var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
 var logger = require('morgan');
 var errorHandler = require('errorhandler');
-var multipart = require('connect-multiparty')
+var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
+var SuperLogin = require('superlogin');
+
+
 
 // all environments
 app.set('port', process.env.PORT || 3000);
@@ -35,7 +38,7 @@ app.set('view engine', 'ejs');
 app.engine('html', require('ejs').renderFile);
 app.use(logger('dev'));
 app.use(bodyParser.urlencoded({
-    extended: true
+    extended: false
 }));
 app.use(bodyParser.json());
 app.use(methodOverride());
@@ -44,11 +47,14 @@ app.use('/style', express.static(path.join(__dirname, '/views/style')));
 
 // app.use('/', express.static(__dirname + '/www')); // redirect root
 // app.use('/api', api); // redirect API calls
+
 app.use(express.static(path.join(__dirname, '/node_modules')));
 app.use('/js', express.static(__dirname + '/node_modules/bootstrap/dist/js')); // redirect bootstrap JS
 app.use('/js', express.static(__dirname + '/node_modules/jquery/dist')); // redirect JS jQuery
 app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css')); // redirect CSS bootstrap
 
+app.use('/js', express.static(__dirname + '/node_modules/jquery.mmenu/dist')); // redirect jQuery MMenu
+app.use('/css', express.static(__dirname + '/node_modules/jquery.mmenu/dist')); // redirect CSS jQuery MMenu
 
 
 // development only
@@ -96,6 +102,8 @@ function initDBConnection() {
     });
 
     db = cloudant.use(dbCredentials.dbName);
+
+
 }
 
 initDBConnection();
@@ -104,6 +112,7 @@ app.get('/', routes.index);
 app.get('/register', routes.register);
 app.get('/downloads', routes.downloads);
 app.get('/news', routes.news);
+app.get('/admin', routes.admin);
 
 function createResponseData(id, name, value, attachments) {
 
