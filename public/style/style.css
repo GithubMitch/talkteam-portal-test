@@ -17,22 +17,50 @@ header, footer {
 	text-align: center;
 }
 
-#mainmenu {text-align:center;}
+#mainmenu {text-align:right;}
 #mainmenu ul {
 	list-style:none;
 	padding:0 10px;
+	margin-top:1rem;
 }
 #mainmenu ul li {
-	display:inline-block;
+	display:inline;
+	margin-left:37px;
 }
 #mainmenu ul li a:hover {
-	color:aquamarine;
+	border-bottom: solid 1px #8d6daa;
+	text-decoration: none;
 }
 #mainmenu ul li a {
-	display:block;
-	color:#fff;
+	color: #fff;
+	text-transform: uppercase;
+	font-size: 15px;
+	display: inline-block;
+	padding: 8px 2px;
+	vertical-align: middle;
+	text-align: center;
+	border-bottom: solid 1px transparent;
+	transition: border-bottom .25s ease;
+}
+
+#mainmenu ul li.english {
+	background-color: #8d6daa;
+	border-radius: 50%;
+	width: 36px;
+	height: 36px;
+	display:inline-block;
+	text-align: center;
+	transition: background-color .25s ease;
+}
+#mainmenu ul li.english a:hover {
 	text-decoration: none;
-	padding:1em;
+	border-bottom: solid 1px #633689;
+}
+#mainmenu ul li.english:hover {
+    background-color: #3f125e;
+		text-decoration: none;
+		border:none;
+
 }
 
 body {
@@ -45,10 +73,7 @@ h2,h3,h4 {
 
 
 .container {
-	height: 100%;
-	overflow: auto;
-	display: flex;
-	flex-direction: column;
+
 }
 
 .banner {
@@ -206,4 +231,72 @@ tr:hover .deleteBtn {
 }
 .appinfo {
 	padding: 10px;
+}
+
+
+/* //// CUSTOM style */
+header {
+	/* height: 100%; */
+	background:#633689;
+	overflow: auto;
+	display: flex;
+	flex-direction: column;
+}
+.bannerimg {
+	width:100%;
+	/* position:absolute; */
+}
+.intro {
+	margin-top:-6rem;
+	position: relative;
+  background: rgba(255,255,255,.85);
+	background-color: #fff;
+}
+.intro div[class^="col-"] {
+	font-size: 20px;
+	line-height: 36px;
+	padding-top:15px;
+	padding-bottom:15px;
+	padding:3rem;
+	text-align:center;
+}
+.intro h2 ,
+.intro h3 {
+	font-size:50px;
+}
+.purplebox {
+	background-color: #8d6daa;
+	color: #fff;
+}
+.intro ul {
+	padding-left:20%;
+	list-style:inside;
+	text-align:left;
+}
+
+
+/* //// RESPONSIVE STYLE */
+/* // Extra small devices (portrait phones, less than 576px)
+// No media query since this is the default in Bootstrap */
+
+/* // Small devices (landscape phones, 576px and up) */
+@media (max-width: 576px) {
+}
+
+/* // Medium devices (tablets, 768px and up) */
+@media (max-width: 768px) {
+	.intro div[class^="col-"] {
+		padding:1rem;
+	}
+	.intro ul {
+		padding-left:0%;
+	}
+}
+
+/* // Large devices (desktops, 992px and up) */
+@media (max-width: 992px) {
+}
+
+// Extra large devices (large desktops, 1200px and up)
+@media (max-width: 1200px) {
 }
