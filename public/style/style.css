@@ -199,6 +199,11 @@ tr:hover .deleteBtn {
   max-height: 100px;
   margin: 0 auto;
 	padding: 10px;
+	border: 1px solid white;
+	border-radius: 5px;
+	background: #8d6daa;
+	opacity: 1;
+  margin-bottom: 12px;
 }
 
 .appTitle {
@@ -235,6 +240,21 @@ tr:hover .deleteBtn {
 
 
 /* //// CUSTOM style */
+#wrap {
+	position: relative;
+	box-shadow: -1px -5px 11px 0px black;
+}
+#hamburger {
+	display:none;
+	position: absolute;
+	top:15px;
+	right:20px;
+	background:red;
+	width:40px;
+	height:40px;
+	background: url("../images/whamburger.png")no-repeat center;
+	background-size:contain;
+}
 header {
 	/* height: 100%; */
 	background:#633689;
@@ -281,16 +301,31 @@ header {
 
 /* // Small devices (landscape phones, 576px and up) */
 @media (max-width: 576px) {
+	.intro {
+		margin-top:-2rem;
+	}
+
 }
 
 /* // Medium devices (tablets, 768px and up) */
 @media (max-width: 768px) {
+	.intro h2,
+	.intro h3 {
+		font-size:20px;
+		font-weight:bold;
+	}
 	.intro div[class^="col-"] {
-		padding:1rem;
+		font-size: 14px;
+		line-height: 24px;
 	}
 	.intro ul {
 		padding-left:0%;
 	}
+	.intro div[class^="col-"] {
+		padding:1rem;
+	}
+	#mainmenu {display:none;}
+	#hamburger {display:block;}
 }
 
 /* // Large devices (desktops, 992px and up) */
