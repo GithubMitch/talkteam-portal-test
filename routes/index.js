@@ -15,6 +15,9 @@ exports.downloads = function(req, res){
 exports.news = function(req, res){
   res.render('news.html', { title: 'Talkteam - News & Updates page' });
 };
+exports.thankyou = function(req, res){
+  res.render('thankyou.html', { title: 'Talkteam - Thankyou page' });
+};
 exports.admin = function(req, res){
   res.render('admin.html', { title: 'Talkteam - Admin' });
 };

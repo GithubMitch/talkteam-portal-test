@@ -54,7 +54,26 @@
 
 <section class="container main">
 	<div class="row intro">
-		Register
+
+		<div>
+			<!-- <form id="regForm" method="post">
+					<input type="text" name="name" value="">
+					<input type="text" name="email" value="">
+			</form> -->
+			<form id="regForm" method="post">
+			    <div>
+			        <label>Username:</label>
+			        <input type="text" name="username"/><br/>
+			    </div>
+			    <div>
+			        <label>Password:</label>
+			        <input type="password" name="password"/>
+			    </div>
+			    <!-- <div><input type="submit" value="Sign Up"/></div> -->
+			</form>
+		</div>
+		<!-- <a href="#" onclick="registerUser()">Register User</a> -->
+
 	</div>
 
 </section>
@@ -94,6 +113,9 @@
 	<div id="myImage"><div id="innerImg"></div></div>
 	<br><br><br>
 	</div> -->
+	<script type="text/javascript" src="/scripts/util.js"></script>
+	<script type="text/javascript" src="/scripts/indexcustom.js"></script>
+
 </div>
 	<script type="text/javascript">
 	$(document).ready(function() {
