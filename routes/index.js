@@ -21,3 +21,12 @@ exports.thankyou = function(req, res){
 exports.admin = function(req, res){
   res.render('admin.html', { title: 'Talkteam - Admin' });
 };
+exports.login = function(req, res){
+  res.render('login.html', { title: 'Talkteam - login' });
+};
+exports.logout = function(req, res){
+  res.render('logout.html', { title: 'Talkteam - logout' });
+};
+exports.content = function(req, res){
+  res.render('content.html', { title: 'Talkteam - content' });
+};

@@ -8,7 +8,9 @@ var express = require('express'),
     http = require('http'),
     path = require('path'),
     request = require('request'),
-    fs = require('fs');
+    fs = require('fs'),
+    session = require('express-session'),
+    authorization = require('express-authorization');
 
 var app = express();
 
@@ -57,19 +59,28 @@ app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css'));
 app.use('/js', express.static(__dirname + '/node_modules/jquery.mmenu/dist')); // redirect jQuery MMenu
 app.use('/css', express.static(__dirname + '/node_modules/jquery.mmenu/dist')); // redirect CSS jQuery MMenu
 
+app.use(session({
+    secret: '2C44-4D44-WppQ38S',
+    resave: true,
+    saveUninitialized: true
+}));
 
 // development only
 if ('development' == app.get('env')) {
     app.use(errorHandler());
 }
 
+// app.get('/restricted',
+//   authorization.ensureRequest.isPermitted("restricted:view"),
+//   function(req, res) {
+//     console.log(' /restriced')
+//   });
+
+
 var Cloudant = require('cloudant');
 var username = "186bc4a1-0187-48b2-bc2d-b54267a7fce2-bluemix";
 var password = "5e39c2c9728fc768ab2dc93f26c9eb9a62038517b813ac4ee1454136f3833182";
 var cloudant = Cloudant({account:username, password:password});
-
-
-
 
 app.post('/register', function(req, res) {
     var regUser = req.body.username;
@@ -157,6 +168,8 @@ app.get('/downloads', routes.downloads);
 app.get('/news', routes.news);
 app.get('/admin', routes.admin);
 app.get('/thankyou', routes.thankyou);
+app.get('/login', routes.login);
+// app.get('/logout', routes.logout);
 
 function createResponseData(id, name, value, attachments) {
 
@@ -493,6 +506,43 @@ app.get('/api/favorites', function(request, response) {
 
 });
 
+
+
+// Authentication and Authorization Middleware
+var auth = function(req, res, next) {
+  if (req.session && req.session.user === "amy" && req.session.admin)
+    return next();
+  else
+    return res.sendStatus(401);
+};
+
+// Login endpoint
+app.post('/login', function (req, res) {
+  var user = req.body.username;
+  var password = req.body.password;
+
+  if (!user || !password) {
+    res.send('login failed');
+  } else if(user === "amy" ||password === "amyspassword") {
+    req.session.user = "amy";
+    req.session.admin = true;
+    // res.send("login success!");
+    res.redirect('/content');
+  }
+});
+
+// Logout endpoint
+app.get('/logout', function (req, res) {
+  req.session.destroy();
+  res.send("logout success!");
+});
+
+// Get content endpoint
+app.get('/content', auth, function (req, res) {
+    // res.send("You can only see this after you've logged in.");
+    // res.redirect('/content');
+    res.sendFile('./views/content.html', {root: __dirname});
+});
 
 http.createServer(app).listen(app.get('port'), '0.0.0.0', function() {
     console.log('Express server listening on port ' + app.get('port'));
