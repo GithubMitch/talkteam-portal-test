@@ -534,7 +534,9 @@ app.post('/login', function (req, res) {
 // Logout endpoint
 app.get('/logout', function (req, res) {
   req.session.destroy();
-  res.send("logout success!");
+  // res.send("logout success!");
+  res.sendFile('./views/logout.html', {root: __dirname});
+
 });
 
 // Get content endpoint
@@ -542,7 +544,9 @@ app.get('/content', auth, function (req, res) {
     // res.send("You can only see this after you've logged in.");
     // res.redirect('/content');
     res.sendFile('./views/content.html', {root: __dirname});
+    console.log(req.session.user);
 });
+
 
 http.createServer(app).listen(app.get('port'), '0.0.0.0', function() {
     console.log('Express server listening on port ' + app.get('port'));

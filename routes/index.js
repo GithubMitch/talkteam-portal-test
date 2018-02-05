@@ -13,7 +13,12 @@ exports.downloads = function(req, res){
   res.render('downloads.html', { title: 'Talkteam - Downloads & Releases page' });
 };
 exports.news = function(req, res){
-  res.render('news.html', { title: 'Talkteam - News & Updates page' });
+  if (req.session.user){
+    res.render('news.html', { title: 'Talkteam - News & Updates page' });
+    consol.log(req.session.user)
+  } else {
+    res.send("No req.session.user" + req.session.user );
+  }
 };
 exports.thankyou = function(req, res){
   res.render('thankyou.html', { title: 'Talkteam - Thankyou page' });
