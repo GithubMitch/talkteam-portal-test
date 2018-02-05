@@ -88,7 +88,10 @@ app.post('/register', function(req, res) {
       var talkteam_users = cloudant.db.use('talkteam_users')
 
       // ...and insert a document in it.
-      talkteam_users.insert({ json: true }, regUser, function(err, body, header) {
+      talkteam_users.insert({
+        user: regUser,
+        password: regPassword
+      }, regUser, function(err, body, header) {
         if (err) {
           return console.log('[talkteam_users.insert] ', err.message);
         }
@@ -99,7 +102,7 @@ app.post('/register', function(req, res) {
 
     });
     res.redirect('/thankyou');
-    return newUser
+    // return newUser
 });
 
 function getDBCredentialsUrl(jsonData) {
