@@ -15,7 +15,7 @@ exports.downloads = function(req, res){
 exports.news = function(req, res){
   if (req.session.user){
     res.render('news.html', { title: 'Talkteam - News & Updates page' });
-    consol.log(req.session.user)
+    console.log(req.session.user)
   } else {
     res.send("No req.session.user" + req.session.user );
   }
