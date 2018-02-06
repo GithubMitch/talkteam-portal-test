@@ -20,7 +20,18 @@ var REST_DATA = 'api/login';
 //   console.log("registerUser fired");
 // };
 
-function loginButton() {
-    console.log(req.session.user);
-  // console.log("ADMIN")
-}
+// var loggedIn = req.body.username
+// var loginButton = document.getElementById('loginButton');
+// var logoutButton = document.getElementById('logoutButton');
+//
+// if (loggedIn) {
+//   console.log(logoutButton)
+// }
+
+// console.log(loginButton , logoutButton);
+// function loginButton() {
+//
+//     console.log(loginButton);
+//     console.log(req.session.user);
+//   // console.log("ADMIN")
+// }

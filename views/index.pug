@@ -17,37 +17,37 @@
 <body>
 	<div id="wrap">
 
-		<header class = "fluid-container">
-			<div class="container">
-				<div class="row">
-					<div class="col-2 mr-auto">
-						<!-- <img class="newappIcon" src="images/e-office_logo.svg"> -->
-						<img class="newappIcon" src="images/talkteam_logo.png">
-						<div class="login">
-							<% if (username) { %>
-								<span>Hello <%= username %></span>
-								<a id="logoutButton" href="/logout">Logout</a>
-							<% } %>
-							<% if (!username) { %>
-								<a id="loginButton" href="/login">Login</a>
-							<% } %>
-						</div>
-					</div>
-					<div class="col-2 col-sm-10 col-xs-10 col-auto">
-						<a id="hamburger" href="#mainmenu"></a>
-						<nav id="mainmenu">
-							<ul>
-								<li><a href="/">Home</a></li>
-								<li><a href="/register">Register</a></li>
-								<li><a href="/downloads">Downloads</a></li>
-								<li><a href="/news">News</a></li>
-								<li class="english"><a href="/translate">EN</a></li>
-							</ul>
-						</nav>
-					</div>
+	<header class = "fluid-container">
+		<div class="container">
+			<div class="row">
+				<div class="col-1 mr-auto">
+					<!-- <img class="newappIcon" src="images/e-office_logo.svg"> -->
+					<img class="newappIcon" src="images/talkteam_logo.png">
+					<ul>
+						<li><a id="loginButton" href="/login">Login</a></li>
+						<li><a id="logoutButton" href="/logout">Logout</a></li>
+					</ul>
+					<!-- <p class = "appTitle">
+					</p> -->
+				</div>
+				<div class="col-2 col-sm-10 col-xs-10 col-auto">
+					<a id="hamburger" href="#mainmenu"></a>
+					<nav id="mainmenu">
+						<ul>
+							<li><a href="/">Home</a></li>
+							<li><a href="/register">Register</a></li>
+							<li><a href="/downloads">Downloads</a></li>
+							<li><a href="/news">News</a></li>
+							<li class="english"><a href="/translate">EN</a></li>
+						</ul>
+					</nav>
+				</div>
+				<!-- <div class = "banner">
+				</div> -->
 			</div>
-		</header>
+		</div>
 
+</header>
 <div class="fluid-container">
 	<div class="row">
 		<div class="col">
@@ -61,9 +61,12 @@
 	<div class="row intro">
 		<div class="col-12">
 			<h2>
-Welcome <%= username %>, this is a authorized environment !	<br>
-			<span style="font-size: 10px;">u can only see this when you are logged in .</span>
+				TalkTeam	<br>
+				meeting app for IBM Connections
 			</h2>
+			<p>
+				Meetings are a waste of time? Losing overview of all submitted documents? Not clear which agreements have been made after the meeting? Meetings will be better, smarter and easier using TalkTeam. An app which uses the power of IBM Connections.
+			</p>
 			<h3>
 				meetings will be nice and smart
 			</h3>
@@ -156,7 +159,8 @@ Welcome <%= username %>, this is a authorized environment !	<br>
 	<br><br><br>
 	</div> -->
 </div>
-	<script type="text/javascript" src="/scripts/loginbutton.js"></script>
+<script type="text/javascript" src="/scripts/loginbutton.js"></script>
+
 	<script type="text/javascript">
 	$(document).ready(function() {
 		 $("#mainmenu").mmenu({
@@ -165,8 +169,6 @@ Welcome <%= username %>, this is a authorized environment !	<br>
 				 // configuration
 				 clone:	'true',
 			});
-
-
 	});
 	</script>
 </body>

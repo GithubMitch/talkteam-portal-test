@@ -194,7 +194,7 @@ tr:hover .deleteBtn {
 	font-weight:normal;
 }
 .newappIcon {
-  display: block;
+  display: inline;
   max-width: 100px;
   max-height: 100px;
   margin: 0 auto;
@@ -204,6 +204,12 @@ tr:hover .deleteBtn {
 	background: #8d6daa;
 	opacity: 1;
   margin-bottom: 12px;
+	vertical-align: middle;
+}
+.login {
+	display:inline;
+	vertical-align: middle;
+	font-size:12px;
 }
 
 .appTitle {

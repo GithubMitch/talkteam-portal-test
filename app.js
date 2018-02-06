@@ -9,8 +9,10 @@ var express = require('express'),
     path = require('path'),
     request = require('request'),
     fs = require('fs'),
+    jade = require('jade'),
     session = require('express-session'),
-    authorization = require('express-authorization');
+    authorization = require('express-authorization'),
+    createElement = require('create-element');
 
 var app = express();
 
@@ -85,9 +87,6 @@ var cloudant = Cloudant({account:username, password:password});
 app.post('/register', function(req, res) {
     var regUser = req.body.username;
     var regPassword = req.body.password;
-    var newUser = regUser + regPassword;
-    console.log("post received: %s %s", regUser, regPassword);
-    console.log(newUser);
 
     // Create a new "talkteam_users" database.
     cloudant.db.create('talkteam_users', function(err, res) {
@@ -169,7 +168,8 @@ app.get('/news', routes.news);
 app.get('/admin', routes.admin);
 app.get('/thankyou', routes.thankyou);
 app.get('/login', routes.login);
-// app.get('/logout', routes.logout);
+app.get('/content', routes.content);
+app.get('/logout', routes.logout);
 
 function createResponseData(id, name, value, attachments) {
 
@@ -510,7 +510,7 @@ app.get('/api/favorites', function(request, response) {
 
 // Authentication and Authorization Middleware
 var auth = function(req, res, next) {
-  if (req.session && req.session.user === "amy" && req.session.admin)
+  if (req.session.user)
     return next();
   else
     return res.sendStatus(401);
@@ -521,31 +521,41 @@ app.post('/login', function (req, res) {
   var user = req.body.username;
   var password = req.body.password;
 
-  if (!user || !password) {
-    res.send('login failed');
-  } else if(user === "amy" ||password === "amyspassword") {
-    req.session.user = "amy";
-    req.session.admin = true;
-    // res.send("login success!");
-    res.redirect('/content');
-  }
+  var talkteam_users = cloudant.db.use('talkteam_users');
+
+  talkteam_users.get(user, function(err, data) {
+    if (!user || !data) {
+      res.send('login failed');
+    } else if(user === data._id || password === data.password) {
+      req.session.user = user;
+      req.session.admin = true;
+      // res.send("login success!");
+      console.log('Username:' + data._id + '\n' + 'Password:'+ data.password);
+      res.redirect('/content');
+      // res.render('/content.html', { username: req.session.user });
+    }
+  });
+
 });
 
 // Logout endpoint
-app.get('/logout', function (req, res) {
-  req.session.destroy();
-  // res.send("logout success!");
-  res.sendFile('./views/logout.html', {root: __dirname});
-
-});
+// app.get('/logout', function (req, res) {
+//   req.session.destroy();
+//   // res.send("logout success!");
+//   console.log("Logout succesfull");
+//   res.redirect('/content');
+// });
 
 // Get content endpoint
-app.get('/content', auth, function (req, res) {
-    // res.send("You can only see this after you've logged in.");
-    // res.redirect('/content');
-    res.sendFile('./views/content.html', {root: __dirname});
-    console.log(req.session.user);
-});
+// app.get('/content', auth, function (req, res) {
+//     // res.send("You can only see this after you've logged in.");
+//     // res.redirect('/content');
+//     res.sendFile('./views/content.html', {
+//       root: __dirname,
+//       username: req.session.username
+//     });
+//
+// });
 
 
 http.createServer(app).listen(app.get('port'), '0.0.0.0', function() {

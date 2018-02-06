@@ -4,34 +4,40 @@
  */
 
 exports.index = function(req, res){
-  res.render('index.html', { title: 'Talkteam Portal' });
+  res.render('index.html', { username: req.session.user });
 };
 exports.register = function(req, res){
-  res.render('register.html', { title: 'Talkteam - Register page' });
+  res.render('register.html', { username: req.session.user });
 };
 exports.downloads = function(req, res){
-  res.render('downloads.html', { title: 'Talkteam - Downloads & Releases page' });
-};
-exports.news = function(req, res){
   if (req.session.user){
-    res.render('news.html', { title: 'Talkteam - News & Updates page' });
-    console.log(req.session.user)
+    res.render('downloads.html', { username: req.session.user });
   } else {
-    res.send("No req.session.user" + req.session.user );
+    res.redirect('/login');
   }
 };
+exports.news = function(req, res){
+    res.render('news.html', { username: req.session.user });
+};
 exports.thankyou = function(req, res){
-  res.render('thankyou.html', { title: 'Talkteam - Thankyou page' });
+  res.render('thankyou.html', { username: req.session.user });
 };
 exports.admin = function(req, res){
-  res.render('admin.html', { title: 'Talkteam - Admin' });
+  res.render('admin.html', { username: req.session.user });
 };
 exports.login = function(req, res){
-  res.render('login.html', { title: 'Talkteam - login' });
+  if (req.session.user){
+    res.redirect('/');
+  } else {
+    res.render('login.html', { username: req.session.user });
+  }
 };
 exports.logout = function(req, res){
-  res.render('logout.html', { title: 'Talkteam - logout' });
+  res.render('logout.html', { username: req.session.user });
+  req.session.destroy();
+  // res.send("logout success!");
+  console.log("Logout succesfull");
 };
 exports.content = function(req, res){
-  res.render('content.html', { title: 'Talkteam - content' });
+  res.render('content.html', { username: req.session.user });
 };

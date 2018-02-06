@@ -1,7 +1,7 @@
 // index.js
 // WIP making CRUD
 
-var REST_DATA = 'api/register';
+var REST_DATA = 'api/authorization';
 
 
 
