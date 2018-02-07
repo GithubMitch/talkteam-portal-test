@@ -528,6 +528,8 @@ app.post('/login', function (req, res) {
   var user = req.body.username;
   var password = req.body.password;
   var talkteam_clients = cloudant.db.use('talkteam_clients');
+  // var admin;
+  // var admin;
 
   talkteam_clients.get(req.body.username, function(err, body) {
     if (!err) {
@@ -537,6 +539,7 @@ app.post('/login', function (req, res) {
       console.log(body.licensekey)
       console.log(body.endDate)
       console.log(body.active)
+      console.log((typeof admin))
       req.session.organisationName = JSON.stringify(body.organisationName);
       req.session.organisationEmail = JSON.stringify(body.organisationEmail);
       req.session._id = JSON.stringify(body._id);
@@ -544,8 +547,6 @@ app.post('/login', function (req, res) {
       req.session.endDate = JSON.stringify(body.endDate);
       req.session.startDate = JSON.stringify(body.startDate);
       req.session.active = JSON.stringify(body.active);
-
-
 
     } else {
       console.log("Error _GET req.body.username : " + body);

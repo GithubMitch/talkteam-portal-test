@@ -64,7 +64,11 @@
 
 <section class="container main">
 	<div class="row intro">
+		<% if (typeof admin == 'undefined') { %>
 		<div class="col-12">
+		<% } else if (admin) { %>
+   	<div class="col-12" contenteditable="true">
+	  <% } %>
 			<h2>
 				TalkTeam	<br>
 				meeting app for IBM Connections

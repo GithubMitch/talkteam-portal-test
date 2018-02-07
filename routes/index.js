@@ -4,7 +4,10 @@
  */
 
 exports.index = function(req, res){
-  res.render('index.html', { username: req.session.user });
+  res.render('index.html', {
+    username: req.session.user,
+    admin: req.session.admin
+  });
 };
 exports.register = function(req, res){
   res.render('register.html', { username: req.session.user });
@@ -47,9 +50,10 @@ exports.toc_user = function(req, res){
     organisationName:req.session.organisationName,
     organisationEmail: req.session.organisationEmail,
     _id: req.session._id,
-    licensekey: req.session.licenseKey,
+    licensekey: req.session.licensekey,
     endDate: req.session.endDate,
     startDate: req.session.endDate,
-    active: req.session.active
+    active: req.session.active,
+    admin: req.session.admin
   });
 };
