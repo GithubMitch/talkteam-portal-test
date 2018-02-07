@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Favorites Organizer powered by Cloudant</title>
+	<title><%= title %></title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no"/>
 	<meta name="apple-mobile-web-app-capable" content="yes" />
@@ -65,10 +65,11 @@
 <section class="container main">
 	<div class="row intro">
 		<% if (typeof admin == 'undefined') { %>
-		<div class="col-12">
+		<div class="col-12 admin_cm">
 		<% } else if (admin) { %>
-   	<div class="col-12" contenteditable="true">
+   	<div class="col-12 admin_cm" contenteditable="true">
 	  <% } %>
+		<h1 id="demo"></h1>
 			<h2>
 				TalkTeam	<br>
 				meeting app for IBM Connections
@@ -86,7 +87,7 @@
 					TalkTeam offers a meeting solution for all kinds of teams. A team can consist of people from the internal organization, but it is also possible to add external participants. By capturing information centrally, it is clear to everyone what they are expected to do.
 			</p>
 		</div>
-		<div class="col-12 purplebox">
+		<div class="col-12 admin_cm purplebox">
 			<h3>
 				paperless and transparent
 			</h3>
@@ -103,7 +104,7 @@
 				All information is part of the collaboration platform IBM Connections, which makes it easy for those concerned to find the information.
 			</p>
 		</div>
-		<div class="col-12">
+		<div class="col-12 admin_cm">
 			<h3>
 				why do you need TalkTeam?
 			</h3>
@@ -127,9 +128,13 @@
 				</li>
 			</ul>
 		</div>
+		<% if (typeof admin == 'undefined') { %>
 
-		<table id='notes' class='records' border='0' cellspacing='0' cellpadding='0'><tbody></tbody></table>
-
+		<% } else if (admin) { %>
+			<div class="adminPanel">
+				<button id="admin_SafeButton" onClick='adminSafe()' name="button">Safe</button>
+			</div>
+		<% } %>
 </section>
 
 	<!-- <section>
@@ -169,6 +174,9 @@
 	</div> -->
 </div>
 <script type="text/javascript" src="/scripts/loginbutton.js"></script>
+<% if (admin) { %>
+	<script type="text/javascript" src="/scripts/admin_cm.js"></script>
+<% } %>
 
 	<script type="text/javascript">
 	$(document).ready(function() {
