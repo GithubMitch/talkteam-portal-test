@@ -132,8 +132,11 @@
 
 		<% } else if (admin) { %>
 			<div class="adminPanel">
-				<button id="admin_ApplyButton" name="button">Apply</button>
-				<button id="admin_SafeButton" name="button">Safe</button>
+				<form id="adminPost" method="post">
+					<input id="jsonParser" type="text" name="_jsonParser" hidden="true" value="">
+					<input id="admin_ApplyButton" name="button" value="Apply">
+					<input id="admin_SafeButton" name="button" value="Safe" >
+				</form>
 			</div>
 		<% } %>
 </section>

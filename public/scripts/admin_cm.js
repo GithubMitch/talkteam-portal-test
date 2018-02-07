@@ -1,80 +1,84 @@
 $(document).ready(function() {
-  var textboxAdmin = $(".admin_cm");
+  var node = $(".admin_cm");
   var currentPage = $("title").text();
+  var cmsNodes = [];
+  var jsonParser = $("#jsonParser");
+  i= -1;
 
-  //Set up Array
-  // var items = ['item1', 'item2', 'item3'];
-  // var nodes = [];
-
-  $( ".admin_cm" ).on( "click", function() {
-    // Check HTML with log
-    // console.log( $(this).html() );
-    // console.log(currentPage);
-    // console.log(nodes)
-  });
-
-  var i= -1;
-  $(textboxAdmin).each(function(){
+  $(node).each(function(){
       i++;
       var newClass='textboxAdmin'+i;
       $(this).attr('id',currentPage+ "_" +newClass);
       $(this).attr('contenteditable',"true");
-      $(this).val(i);
   });
 
-  // textboxAdmin.each(function(node){
-  //   nodes.push(
-  //     "id:" + this.id,
-  //     "text:" + this.innerHTML
-  //   );
+
+   $( "#admin_ApplyButton" ).on( "click", function() {
+     $(node).each(function(){
+         i++;
+         var jsonNode = domJSON.toJSON(this, {
+           attributes: ['id'],
+           metadata: false,
+           domProperties: {
+               exclude: true,
+               values: ['id']
+           },
+           serialProperties: {
+             exclude: true,
+             values: ['innerHTML']
+           },
+           deep: 0,
+           stringify: false
+         });
+         //push json string to jsonNodes Array
+         cmsNodes.push(jsonNode);
+     });
+
+     for (var i = 0; i < cmsNodes.length; i++) {
+         console.log(cmsNodes[i]);
+     };
+     jsonFile = {
+         "page":currentPage,
+         cmsNodes
+      };
+      // console.log(JSON.stringify(jsonFile))
+
+      $(jsonParser).attr("value",JSON.stringify(jsonFile));
+
+     var snapFragment = JSON.stringify(jsonFile);
+     console.log(snapFragment)
+     // $(someDOMElement0).replaceWith(snapFragment);
+   });
+
+   $( "#admin_SafeButton" ).on( "click", function() {
+     var snapFragment = $(jsonParser).val();
+     var dbFragment = JSON.stringify(dbFragment);
+     console.log(snapFragment)
+   });
+
+  // var someDOMElement0 = document.getElementById('home_textboxAdmin0');
+  // var someDOMElement1 = document.getElementById('home_textboxAdmin1');
+  // var jsonOutput = domJSON.toJSON(someDOMElement1, {
+  //   attributes: ['id'],
+  //   metadata: true,
+  //   domProperties: {
+  //       exclude: true,
+  //       values: ['id']
+  //   },
+  //   serialProperties: {
+  //     exclude: true,
+  //     values: ['innerHTML']
+  //   },
+  //   deep: 0,
+  //   stringify: false
   // });
-
-
-  for (var i = 0; i < textboxAdmin.length; i++) {
-      // console.log(textboxAdmin[i] , i);
-  }
-
-  var someDOMElement0 = document.getElementById('home_textboxAdmin0');
-  var someDOMElement1 = document.getElementById('home_textboxAdmin1');
-  var jsonOutput = domJSON.toJSON(someDOMElement1, {
-    attributes: [''],
-    metadata: true,
-    domProperties: {
-        exclude: true,
-        values: ['id']
-    },
-    serialProperties: {
-      exclude: true,
-      values: ['innerHTML']
-    },
-    deep: 0,
-    stringify: true
-  });
-  $( "#admin_SafeButton" ).on( "click", function() {
-    console.log( $(this).html() );
-    console.log( someDOMElement0 );
-    console.log( domJSON.toDOM(jsonOutput) );
-    var applyDomFragment = domJSON.toDOM(jsonOutput);
-    $(someDOMElement0).replaceWith(applyDomFragment);
-  });
-
-
-  // var sendValue = nodes;
-  // obj = JSON.parse(nodes);
-
-  // document.getElementById("demo").innerHTML =
-  // nodes;
-  // document.getElementById("demo").innerHTML =
-  // obj.page[0].node + "  +  " + obj.page[2].html;
-
-
-  // console.log(sendValue)
-
-
-
-
-  // console.log(jsonOutput);
-  // console.log(JSON.parse((jsonOutput)));
-
+  //
+  // $( "#admin_SafeButton" ).on( "click", function() {
+  //   console.log( $(this).html() );
+  //   console.log( someDOMElement0 );
+  //   console.log( domJSON.toDOM(jsonOutput) );
+  //   var applyDomFragment = domJSON.toDOM(cmsNodes);
+  //   $(someDOMElement0).replaceWith(applyDomFragment);
+  // });
 
 });

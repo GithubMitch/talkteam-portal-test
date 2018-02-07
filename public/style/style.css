@@ -339,7 +339,7 @@ dd {
 	right:20px;
 	bottom:20px;
 }
-.adminPanel button {
+.adminPanel input {
 	-webkit-appearance: button;
 	height: 42px;
 	background-color: #633689;
@@ -347,16 +347,18 @@ dd {
 	border-radius: 6px;
 	display: inline-block;
 	line-height: 42px;
-	padding: 0 20px;
 	border: 0;
 	cursor: pointer;
 	text-decoration: none;
 	font-size: 14px;
 	font-weight: 600;
-	transition:.3s ease all;
-	margin-left:20px;
+	padding: 0 20px;
+	transition: .3s ease all;
+	margin-left: 20px;
+	text-align: center;
+	width: 124px;
 }
-.adminPanel button:hover {
+.adminPanel input:hover {
 	background-color: #3f125e;
   color: #fff;
   text-decoration: none;
