@@ -78,35 +78,41 @@ if ('development' == app.get('env')) {
 //     console.log(' /restriced')
 //   });
 
+//TEST DB
+// var Cloudant = require('cloudant');
+// var username = "186bc4a1-0187-48b2-bc2d-b54267a7fce2-bluemix";
+// var password = "5e39c2c9728fc768ab2dc93f26c9eb9a62038517b813ac4ee1454136f3833182";
+// var cloudant = Cloudant({account:username, password:password});
 
+//REAL TALKTEAM DATABASE
 var Cloudant = require('cloudant');
-var username = "186bc4a1-0187-48b2-bc2d-b54267a7fce2-bluemix";
-var password = "5e39c2c9728fc768ab2dc93f26c9eb9a62038517b813ac4ee1454136f3833182";
+var username = "df3909e9-2680-472f-9deb-9638cf73c572-bluemix";
+var password = "6b0a6bfddb9da34d09680a00a78eecb14a4724bf99e2e426f0730ab5ebdf9cd7";
 var cloudant = Cloudant({account:username, password:password});
 
 app.post('/register', function(req, res) {
     var regUser = req.body.username;
     var regPassword = req.body.password;
 
-    // Create a new "talkteam_users" database.
-    cloudant.db.create('talkteam_users', function(err, res) {
+    // Create a new "talkteam_clients" database.
+    cloudant.db.create('talkteam_clients', function(err, res) {
       if (err) {
-          console.log('Could not create new db: ' + 'talkteam_users' + ', it might already exist.');
+          console.log('Could not create new db: ' + 'talkteam_clients' + ', it might already exist.');
       }
 
       // Specify the database we are going to use (alice)...
-      var talkteam_users = cloudant.db.use('talkteam_users')
+      var talkteam_clients = cloudant.db.use('talkteam_clients')
 
       // ...and insert a document in it.
-      talkteam_users.insert({
+      talkteam_clients.insert({
         user: regUser,
         password: regPassword
       }, regUser, function(err, body, header) {
         if (err) {
-          return console.log('[talkteam_users.insert] ', err.message);
+          return console.log('[talkteam_clients.insert] ', err.message);
         }
 
-        console.log('You have registered user '+ regUser);
+        console.log('You have registered user '+ regUser + ' in DB : talkteam_clients');
         console.log(body);
       });
 
@@ -159,7 +165,7 @@ function initDBConnection() {
 
 }
 
-initDBConnection();
+// initDBConnection();
 
 app.get('/', routes.index);
 app.get('/register', routes.register);
@@ -169,6 +175,7 @@ app.get('/admin', routes.admin);
 app.get('/thankyou', routes.thankyou);
 app.get('/login', routes.login);
 app.get('/content', routes.content);
+app.get('/toc_user', routes.toc_user);
 app.get('/logout', routes.logout);
 
 function createResponseData(id, name, value, attachments) {
@@ -520,18 +527,43 @@ var auth = function(req, res, next) {
 app.post('/login', function (req, res) {
   var user = req.body.username;
   var password = req.body.password;
+  var talkteam_clients = cloudant.db.use('talkteam_clients');
 
-  var talkteam_users = cloudant.db.use('talkteam_users');
+  talkteam_clients.get(req.body.username, function(err, body) {
+    if (!err) {
+      console.log(body.organisationName)
+      console.log(body.organisationEmail)
+      console.log(body._id)
+      console.log(body.licensekey)
+      console.log(body.endDate)
+      console.log(body.active)
+      req.session.organisationName = JSON.stringify(body.organisationName);
+      req.session.organisationEmail = JSON.stringify(body.organisationEmail);
+      req.session._id = JSON.stringify(body._id);
+      req.session.licensekey = JSON.stringify(body.licensekey);
+      req.session.endDate = JSON.stringify(body.endDate);
+      req.session.startDate = JSON.stringify(body.startDate);
+      req.session.active = JSON.stringify(body.active);
 
-  talkteam_users.get(user, function(err, data) {
+
+
+    } else {
+      console.log("Error _GET req.body.username : " + body);
+    }
+  });
+
+
+  talkteam_clients.get(user, function(err, data) {
     if (!user || !data) {
-      res.send('login failed');
+      console.log("Login failed: non existing user -" + user )
+      res.redirect('/login');
     } else if(user === data._id || password === data.password) {
       req.session.user = user;
       req.session.admin = true;
       // res.send("login success!");
       console.log('Username:' + data._id + '\n' + 'Password:'+ data.password);
-      res.redirect('/content');
+      console.log('is now logged in');
+      res.redirect('/toc_user');
       // res.render('/content.html', { username: req.session.user });
     }
   });
@@ -556,7 +588,6 @@ app.post('/login', function (req, res) {
 //     });
 //
 // });
-
 
 http.createServer(app).listen(app.get('port'), '0.0.0.0', function() {
     console.log('Express server listening on port ' + app.get('port'));

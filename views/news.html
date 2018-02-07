@@ -20,9 +20,11 @@
 		<header class = "fluid-container">
 			<div class="container">
 				<div class="row">
-					<div class="col-2 mr-auto">
+					<div class="col-3 mr-auto">
 						<!-- <img class="newappIcon" src="images/e-office_logo.svg"> -->
-						<img class="newappIcon" src="images/talkteam_logo.png">
+						<a class="logo" href="/">
+						  <img class="newappIcon" src="images/talkteam_logo.png">
+						</a>
 						<div class="login">
 							<% if (username) { %>
 								<span>Hello <%= username %></span>
@@ -33,7 +35,7 @@
 							<% } %>
 						</div>
 					</div>
-					<div class="col-2 col-sm-10 col-xs-10 col-auto">
+					<div class="col-2 col-sm-9 col-xs-9 col-auto">
 						<a id="hamburger" href="#mainmenu"></a>
 						<nav id="mainmenu">
 							<ul>

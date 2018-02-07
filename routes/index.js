@@ -41,3 +41,15 @@ exports.logout = function(req, res){
 exports.content = function(req, res){
   res.render('content.html', { username: req.session.user });
 };
+exports.toc_user = function(req, res){
+  res.render('toc_user.html', {
+    username: req.session.user,
+    organisationName:req.session.organisationName,
+    organisationEmail: req.session.organisationEmail,
+    _id: req.session._id,
+    licensekey: req.session.licenseKey,
+    endDate: req.session.endDate,
+    startDate: req.session.endDate,
+    active: req.session.active
+  });
+};

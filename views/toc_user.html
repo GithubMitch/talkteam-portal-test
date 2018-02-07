@@ -63,61 +63,27 @@
 	<div class="row intro">
 		<div class="col-12">
 			<h2>
-Welcome <%= username %>, this is a authorized environment !	<br>
+				Welcome, this is a authorized environment !	<br>
 			<span style="font-size: 10px;">u can only see this when you are logged in .</span>
 			</h2>
-			<h3>
-				meetings will be nice and smart
-			</h3>
-			<p>
-				Talk Team supports meeting preparations, the meetings themselves and the follow-up of action points. With TalkTeam, participants are directly involved in the agenda and meeting documents. By preparing your meetings online, there is much more time for content during the actual meeting! Meetings will no longer be endless, but concrete and to the point instead.
-			</p>
-			<p>
-					TalkTeam offers a meeting solution for all kinds of teams. A team can consist of people from the internal organization, but it is also possible to add external participants. By capturing information centrally, it is clear to everyone what they are expected to do.
-			</p>
+			<dl class="dl-horizontal">
+			  <dt>_id</dt>
+			  <dd><%= _id %></dd>
+			  <dt>Organisation</dt>
+			  <dd><%= organisationName %></dd>
+			  <dt>Email</dt>
+			  <dd><%= organisationEmail %></dd>
+			  <dt>License key</dt>
+			  <dd><%= licensekey %></dd>
+			  <dt>Active</dt>
+			  <dd><%= active %></dd>
+			  <dt>Start subscription</dt>
+			  <dd><%= startDate %></dd>
+			  <dt>Expiration date license</dt>
+			  <dd><%= endDate %></dd>
+			</dl>
+			<p><%= endDate %></p>
 		</div>
-		<div class="col-12 purplebox">
-			<h3>
-				paperless and transparent
-			</h3>
-			<p>
-				TalkTeam is a smart addition to IBM Connections. It integrates into the company-wide social platform and enriches IBM Connections with a number of useful tools. TalkTeam offers a clear meeting structure with information from a community and presents it in a simple way. You have a clear perception of each meeting.
-			</p>
-			<p>
-				A meeting consists of a number of participants. TalkTeam offers the possibility to organize a single meeting or a recurring meeting with a team. TalkTeam also shows your meeting directly on your calendar.
-			</p>
-			<p>
-				Participants can add agenda items and documents, and have the opportunity to take notes. During the meeting the agenda items are being discussed and action points and decisions can be specified.
-			</p>
-			<p>
-				All information is part of the collaboration platform IBM Connections, which makes it easy for those concerned to find the information.
-			</p>
-		</div>
-		<div class="col-12">
-			<h3>
-				why do you need TalkTeam?
-			</h3>
-			<ul>
-				<li>It supports processes within a single environment</li>
-				<li>Integration with internal directory of employees</li>
-				<li>
-					Integration with calendars
-				</li>
-				<li>
-					Agreements can be directly assigned
-				</li>
-				<li>
-					It enriches your collaboration platform
-				</li>
-				<li>
-					Ability to have online and paperless meetings, including people from outside your company
-				</li>
-				<li>
-					Available on multiple devices, also as a mobile app
-				</li>
-			</ul>
-		</div>
-
 		<table id='notes' class='records' border='0' cellspacing='0' cellpadding='0'><tbody></tbody></table>
 
 </section>
