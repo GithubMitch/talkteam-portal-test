@@ -54,9 +54,10 @@ app.use('/style', express.static(path.join(__dirname, '/views/style')));
 // app.use('/api', api); // redirect API calls
 
 app.use(express.static(path.join(__dirname, '/node_modules')));
+app.use('/lib', express.static(__dirname + '/node_modules/domjson/dist')); // redirect domJSON JS
 app.use('/js', express.static(__dirname + '/node_modules/bootstrap/dist/js')); // redirect bootstrap JS
-app.use('/js', express.static(__dirname + '/node_modules/jquery/dist')); // redirect JS jQuery
 app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css')); // redirect CSS bootstrap
+app.use('/js', express.static(__dirname + '/node_modules/jquery/dist')); // redirect JS jQuery
 
 app.use('/js', express.static(__dirname + '/node_modules/jquery.mmenu/dist')); // redirect jQuery MMenu
 app.use('/css', express.static(__dirname + '/node_modules/jquery.mmenu/dist')); // redirect CSS jQuery MMenu
@@ -528,8 +529,7 @@ app.post('/login', function (req, res) {
   var user = req.body.username;
   var password = req.body.password;
   var talkteam_clients = cloudant.db.use('talkteam_clients');
-  // var admin;
-  // var admin;
+
 
   talkteam_clients.get(req.body.username, function(err, body) {
     if (!err) {
@@ -539,13 +539,6 @@ app.post('/login', function (req, res) {
       console.log(body.licensekey)
       console.log(body.endDate)
       console.log(body.active)
-      req.session.organisationName = JSON.stringify(body.organisationName);
-      req.session.organisationEmail = JSON.stringify(body.organisationEmail);
-      req.session._id = JSON.stringify(body._id);
-      req.session.licensekey = JSON.stringify(body.licensekey);
-      req.session.endDate = JSON.stringify(body.endDate);
-      req.session.startDate = JSON.stringify(body.startDate);
-      req.session.active = JSON.stringify(body.active);
     } else {
       console.log("Error _GET req.body.username : " + body);
     }
@@ -559,6 +552,13 @@ app.post('/login', function (req, res) {
     } else if(user === data._id || password === data.password) {
       req.session.user = user;
       req.session.admin = true;
+      req.session.organisationName = JSON.stringify(data.organisationName);
+      req.session.organisationEmail = JSON.stringify(data.organisationEmail);
+      req.session._id = JSON.stringify(data._id);
+      req.session.licensekey = JSON.stringify(data.licensekey);
+      req.session.endDate = JSON.stringify(data.endDate);
+      req.session.startDate = JSON.stringify(data.startDate);
+      req.session.active = JSON.stringify(data.active);
       console.log('Username:' + data._id + '\n' + 'Password:'+ data.password);
       console.log('is now logged in');
       res.redirect('/toc_user');

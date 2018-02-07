@@ -67,6 +67,11 @@
 			<span style="font-size: 10px;">u can only see this when you are logged in .</span>
 			</h2>
 			<dl class="dl-horizontal">
+				<% if (admin) { %>
+					<legend>
+						Admin account
+					</legend>
+				<% } %>
 			  <dt>_id</dt>
 			  <dd><%= _id %></dd>
 			  <dt>Organisation</dt>

@@ -354,6 +354,7 @@ dd {
 	font-size: 14px;
 	font-weight: 600;
 	transition:.3s ease all;
+	margin-left:20px;
 }
 .adminPanel button:hover {
 	background-color: #3f125e;

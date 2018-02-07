@@ -132,7 +132,8 @@
 
 		<% } else if (admin) { %>
 			<div class="adminPanel">
-				<button id="admin_SafeButton" onClick='adminSafe()' name="button">Safe</button>
+				<button id="admin_ApplyButton" name="button">Apply</button>
+				<button id="admin_SafeButton" name="button">Safe</button>
 			</div>
 		<% } %>
 </section>
@@ -175,6 +176,7 @@
 </div>
 <script type="text/javascript" src="/scripts/loginbutton.js"></script>
 <% if (admin) { %>
+	<script src="./lib/domJSON.js"></script>
 	<script type="text/javascript" src="/scripts/admin_cm.js"></script>
 <% } %>
 
