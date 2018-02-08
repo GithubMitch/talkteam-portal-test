@@ -142,13 +142,14 @@
 			<div class="adminPanel">
 				<form id="adminPost" method="post">
 					<input id="jsonParser" type="text" name="_jsonParser" hidden="true" value="">
+					<input id="currentPageVar" type="text" name="currentPageVar" hidden="true" value='<%= title %>'>
 					<input id="admin_ApplyButton" name="button" value="Apply">
 					<input id="admin_SafeButton" name="button" value="Safe" type="submit">
 				</form>
 			</div>
 		<% } %>
 
-		<input id="jsonConverter" type="text" name="_jsonConverter" hidden="true" value='<%= _jsonConverter %>'
+		<input id="jsonConverter" type="text" name="_jsonConverter" hidden="true" value='<%= _jsonConverter %>'>
 </section>
 
 	<!-- <section>

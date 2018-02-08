@@ -81,7 +81,7 @@ $(document).ready(function() {
 
 
     });
-    $('#jsonConverter').remove();
+    // $('#jsonConverter').remove();
 
     $( "#admin_ResetButton" ).on( "click", function() {
       // $(jsonConverter).remove();
