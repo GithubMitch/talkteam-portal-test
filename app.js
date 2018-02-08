@@ -225,6 +225,7 @@ var saveDocument = function(id, name, value, response) {
 
 }
 
+
 app.get('/api/favorites/attach', function(request, response) {
     var doc = request.query.id;
     var key = request.query.key;
@@ -568,6 +569,12 @@ app.post('/login', function (req, res) {
 
 });
 
+app.post('/', function(req, res) {
+    var doc = req.body._jsonParser;
+    req.session._jsonConverter = doc;
+    console.log(doc)
+    res.redirect('/');
+});
 // Logout endpoint
 // app.get('/logout', function (req, res) {
 //   req.session.destroy();

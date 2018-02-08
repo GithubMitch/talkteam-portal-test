@@ -7,7 +7,8 @@ exports.index = function(req, res){
   res.render('index.html', {
     title: 'home',
     username: req.session.user,
-    admin: req.session.admin
+    admin: req.session.admin,
+    _jsonConverter: req.session._jsonConverter
   });
 };
 exports.register = function(req, res){

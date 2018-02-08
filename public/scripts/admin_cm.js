@@ -4,6 +4,32 @@ $(document).ready(function() {
   var cmsNodes = [];
   var jsonParser = $("#jsonParser");
   i= -1;
+  //Apply Changes & Flush _jsonRequestedData
+  function applyChanges() {
+    for (var i = 0; i < cmsNodes.length; i++) {
+      var applyDomFragment = domJSON.toDOM(_jsonParsedData.cmsNodes[0]);
+      $(someDOMElement0).replaceWith(applyDomFragment);
+      console.log(cmsNodes[i]);
+    };
+
+
+
+    $('#jsonConverter').removeAttr("value");
+  }
+
+
+
+
+
+  if($('#jsonConverter').attr("value") != '') {
+    var _jsonRequestedData = $('#jsonConverter').attr("value");
+    var _jsonParsedData = JSON.parse(_jsonRequestedData);
+    console.log($('#jsonConverter').attr("value"));
+    console.log(_jsonParsedData.cmsNodes);
+
+
+  }
+
 
   $(node).each(function(){
       i++;
@@ -34,9 +60,7 @@ $(document).ready(function() {
          cmsNodes.push(jsonNode);
      });
 
-     for (var i = 0; i < cmsNodes.length; i++) {
-         console.log(cmsNodes[i]);
-     };
+
      jsonFile = {
          "page":currentPage,
          cmsNodes
@@ -46,14 +70,14 @@ $(document).ready(function() {
       $(jsonParser).attr("value",JSON.stringify(jsonFile));
 
      var snapFragment = JSON.stringify(jsonFile);
-     console.log(snapFragment)
+     // console.log(snapFragment)
      // $(someDOMElement0).replaceWith(snapFragment);
    });
 
    $( "#admin_SafeButton" ).on( "click", function() {
      var snapFragment = $(jsonParser).val();
      var dbFragment = JSON.stringify(dbFragment);
-     console.log(snapFragment)
+     // console.log(snapFragment)
    });
 
   // var someDOMElement0 = document.getElementById('home_textboxAdmin0');
