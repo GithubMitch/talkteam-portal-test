@@ -339,6 +339,7 @@ dd {
 	right:20px;
 	bottom:20px;
 }
+button[type=submit] ,
 .adminPanel input {
 	-webkit-appearance: button;
 	height: 42px;
@@ -364,6 +365,37 @@ dd {
   text-decoration: none;
 }
 
+.loginForm input {
+	padding-left:10px;
+	display: inline-block;
+	vertical-align: middle;
+}
+.loginForm button {
+	-webkit-appearance: button;
+	height: 42px;
+	background-color: #633689;
+	color: #fff;
+	border-radius: 6px;
+	display: inline-block;
+	line-height: 42px;
+	border: 0;
+	cursor: pointer;
+	text-decoration: none;
+	font-size: 14px;
+	font-weight: 600;
+	padding: 0 20px;
+	transition: .3s ease all;
+	margin-left: 20px;
+	text-align: center;
+	width: 124px;
+	display: inline-block;
+	vertical-align: middle;
+}
+.loginForm button:hover {
+	background-color: #3f125e;
+  color: #fff;
+  text-decoration: none;
+}
 /* //// RESPONSIVE STYLE */
 /* // Extra small devices (portrait phones, less than 576px)
 // No media query since this is the default in Bootstrap */

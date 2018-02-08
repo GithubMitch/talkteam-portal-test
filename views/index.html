@@ -69,11 +69,10 @@
 		<% } else if (admin) { %>
    	<div class="col-12 admin_cm" contenteditable="true">
 	  <% } %>
-		<h1 id="demo"></h1>
-			<h2>
-				TalkTeam	<br>
-				meeting app for IBM Connections
-			</h2>
+		<h2>
+			TalkTeam
+			meeting app for IBM Connections
+		</h2>
 			<p>
 				Meetings are a waste of time? Losing overview of all submitted documents? Not clear which agreements have been made after the meeting? Meetings will be better, smarter and easier using TalkTeam. An app which uses the power of IBM Connections.
 			</p>
@@ -87,7 +86,12 @@
 					TalkTeam offers a meeting solution for all kinds of teams. A team can consist of people from the internal organization, but it is also possible to add external participants. By capturing information centrally, it is clear to everyone what they are expected to do.
 			</p>
 		</div>
+		<% if (typeof admin == 'undefined') { %>
 		<div class="col-12 admin_cm purplebox">
+		<% } else if (admin) { %>
+   	<div class="col-12 admin_cm purplebox" contenteditable="true">
+	  <% } %>
+
 			<h3>
 				paperless and transparent
 			</h3>
@@ -104,7 +108,11 @@
 				All information is part of the collaboration platform IBM Connections, which makes it easy for those concerned to find the information.
 			</p>
 		</div>
+		<% if (typeof admin == 'undefined') { %>
 		<div class="col-12 admin_cm">
+		<% } else if (admin) { %>
+   	<div class="col-12 admin_cm" contenteditable="true">
+	  <% } %>
 			<h3>
 				why do you need TalkTeam?
 			</h3>
