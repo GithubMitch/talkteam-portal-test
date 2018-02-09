@@ -146,10 +146,12 @@
 					<input id="admin_ApplyButton" name="button" value="Apply">
 					<input id="admin_SafeButton" name="button" value="Safe" type="submit">
 				</form>
+				<div id="setAdmin" hidden="true">toggle setAdmin</div>
 			</div>
 		<% } %>
 
 		<input id="jsonConverter" type="text" name="_jsonConverter" hidden="true" value='<%= _jsonConverter %>'>
+
 </section>
 
 	<!-- <section>
@@ -189,10 +191,8 @@
 	</div> -->
 </div>
 <script type="text/javascript" src="/scripts/loginbutton.js"></script>
-<% if (admin) { %>
-	<script src="./lib/domJSON.js"></script>
-	<script type="text/javascript" src="/scripts/admin_cm.js"></script>
-<% } %>
+<script src="./lib/domJSON.js"></script>
+<script type="text/javascript" src="/scripts/admin_cm.js"></script>
 
 	<script type="text/javascript">
 	$(document).ready(function() {

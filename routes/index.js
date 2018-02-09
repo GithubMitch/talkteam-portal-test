@@ -4,12 +4,49 @@
  */
 
 exports.index = function(req, res){
-  res.render('index.html', {
-    title: 'home',
-    username: req.session.user,
-    admin: req.session.admin,
-    _jsonConverter: req.session._jsonConverter
-  });
+  var Cloudant = require('cloudant');
+  var username = "df3909e9-2680-472f-9deb-9638cf73c572-bluemix";
+  var password = "6b0a6bfddb9da34d09680a00a78eecb14a4724bf99e2e426f0730ab5ebdf9cd7";
+  var cloudant = Cloudant({account:username, password:password});
+  var admin_db = cloudant.db.use('admin_db');
+  var db_freshContent = '';
+
+  if (req.session._jsonConverter){
+    console.log("REQ SESSION IS HERE");
+    res.render('index.html', {
+      title: 'home',
+      username: req.session.user,
+      admin: req.session.admin,
+      _jsonConverter: req.session._jsonConverter
+    });
+  } else {
+    admin_db.get('home', function(err, doc) {
+      console.log("REQ SESSION IS NOT THERE");
+      if (!err) {
+        db_freshContent = doc.reqContent;
+        console.log("GET found 1 entry: 'Home'");
+        console.log("retreived doc : \n" + doc);
+        res.render('index.html', {
+          title: 'home',
+          username: req.session.user,
+          admin: req.session.admin,
+          _jsonConverter: db_freshContent
+        });
+      } else {
+        console.log("ERROR finding : 'Home'" + err.message);
+        res.render('index.html', {
+          title: 'home',
+          username: req.session.user,
+          admin: req.session.admin,
+          _jsonConverter: db_freshContent
+        });
+      };
+      res.end();
+      return;
+    });
+
+  }
+
 };
 exports.register = function(req, res){
   res.render('register.html', {

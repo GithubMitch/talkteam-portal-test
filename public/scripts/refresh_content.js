@@ -1,67 +1,45 @@
 $(document).ready(function() {
   var node = $(".admin_cm");
-  var admin = '';
-  if ($("#setAdmin").length) {
-    admin = true;
-  } else {
-    admin = false;
-  }
   var currentPage = $("title").text();
-  cmsNodes = [];
+  var cmsNodes = [];
   var jsonParser = $("#jsonParser");
   i= -1;
-
-  console.log("Admin Account = ",admin)
-
 
   // for (var i = 0; i < cmsNodes.length; i++) {
   //   var applyDomFragment = domJSON.toDOM(jsonParsedData.cmsNodes[i]);
   //   console.log(applyDomFragment);
   // };
 
-
-    $(node).each(function(){
+  $(node).each(function(){
       i++;
       var newClass='textboxAdmin'+i;
       $(this).attr('id',currentPage+ "_" +newClass);
-      if (admin === true) {
-        $(this).attr('contenteditable',"true");
-      }
-    });
-
+      $(this).attr('contenteditable',"true");
+  });
 
    $( "#admin_ApplyButton" ).on( "click", function() {
-     cmsNodes = [];
-
-     node = $(".admin_cm");
-
      $(node).each(function(){
          // i++;
          var jsonNode = domJSON.toJSON(this, {
-           attributes: {
-             values: ['class', 'id']
+           attributes: ['id'],
+           metadata: true,
+           domProperties: {
+               exclude: true,
+               values: ['id']
            },
            deep: true,
-           domProperties: {
-             values: ['innerText', 'outerHTML']
-           },
-           stringify: false,
-           serialProperties:  false
+           stringify: false
          });
 
          //push json string to cmsNodes Array
          cmsNodes.push(jsonNode);
      });
+
      jsonFile = {
          "page":currentPage,
          cmsNodes
       };
-
-      console.log(jsonFile);
-
-
       $(jsonParser).attr("value",JSON.stringify(jsonFile));
-
       var snapFragment = JSON.stringify(jsonFile);
    });
 
@@ -73,7 +51,8 @@ $(document).ready(function() {
   if($('#jsonConverter').attr("value") != '') {
     var jsonRequestedData = document.getElementById("jsonConverter").getAttribute("value");
     var jsonParsedData = JSON.stringify(jsonRequestedData);
-
+    // var jsonRequestedData = $('#jsonConverter').attr("value");
+    // $('home_textboxAdmin0').replaceWith(domJSON.toDOM(jsonParsedData.cmsNodes[0]));
     var jsonOutput = JSON.parse(jsonRequestedData);
     var getcmsNodes = jsonOutput;
     var getcmsNodesString = "'"+getcmsNodes+"'"
@@ -91,8 +70,8 @@ $(document).ready(function() {
 
     $.each(getcmsNodes.cmsNodes, function(i, object) {
       var parsedElement = domJSON.toDOM(this);
-      node[i].replaceWith(parsedElement);
-      // node[i].remove();
+      node[i].replaceWith(parsedElement, node[i]);
+      node[i].remove();
       console.log(node[i])
       console.log(parsedElement)
       console.log("Applied snapshot values to node" + [i]);
