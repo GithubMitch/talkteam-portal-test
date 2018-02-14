@@ -14,6 +14,7 @@ body,html {
 /* header footer common */
 header {
 	padding-bottom:12px;
+	position: relative;
 }
 header, footer {
 	width: 100%;
@@ -24,7 +25,7 @@ header, footer {
 #mainmenu ul {
 	list-style:none;
 	padding:0 10px;
-	margin-top:1rem;
+	margin-top:.5rem;
   margin-bottom: 0;
 }
 #mainmenu ul li {
@@ -47,7 +48,10 @@ header, footer {
 	transition: border-bottom .25s ease;
 }
 
-#mainmenu ul li.english {
+#mainmenu ul li.lang a {
+	padding:0;
+}
+#mainmenu ul li.lang {
 	background-color: #8d6daa;
 	border-radius: 50%;
 	width: 36px;
@@ -56,15 +60,14 @@ header, footer {
 	text-align: center;
 	transition: background-color .25s ease;
 }
-#mainmenu ul li.english a:hover {
+#mainmenu ul li.lang a:hover {
 	text-decoration: none;
 	border-bottom: solid 1px #633689;
 }
-#mainmenu ul li.english:hover {
+#mainmenu ul li.lang:hover {
     background-color: #3f125e;
 		text-decoration: none;
 		border:none;
-
 }
 
 body {
@@ -276,7 +279,6 @@ a.logo {
 	background-size:contain;
 }
 header {
-	/* height: 100%; */
 	background:#633689;
 	overflow: auto;
 	display: flex;
@@ -432,12 +434,18 @@ button[type=submit] ,
 		padding:1rem;
 	}
 	#mainmenu {display:none;}
-	#hamburger {display:block;}
+	#hamburger {display:block;top:auto;bottom:18px;}
 	.login {display:block;white-space: nowrap;}
 }
 
 /* // Large devices (desktops, 992px and up) */
 @media (max-width: 992px) {
+	.login span {
+		display:block;
+	}
+	#mainmenu ul {
+		margin-top:1rem;
+	}
 }
 
 // Extra large devices (large desktops, 1200px and up)

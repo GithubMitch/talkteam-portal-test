@@ -26,6 +26,8 @@ var dbCredentials = {
     dbName: 'my_sample_db'
 };
 
+var currentURL;
+
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
 var logger = require('morgan');
@@ -92,6 +94,7 @@ var password = "6b0a6bfddb9da34d09680a00a78eecb14a4724bf99e2e426f0730ab5ebdf9cd7
 var cloudant = Cloudant({account:username, password:password});
 
 app.get('/', routes.index);
+app.get('/home', routes.index);
 app.get('/register', routes.register);
 app.get('/downloads', routes.downloads);
 app.get('/news', routes.news);
@@ -221,13 +224,57 @@ app.post('/login', function (req, res) {
   });
 });
 
-app.post('/', function(req, res) {
+// app.post('/', function(req, res) {
+//     var json = req.body._jsonParser;
+//     var currentPage = req.body.currentPageVar;
+//
+//     req.session._jsonConverter = json;
+//
+//     var admin_db = cloudant.db.use('admin_db');
+//
+//     admin_db.get(currentPage, function(err, doc) {
+//       if (!err) {
+//         console.log("GET found 1 entry:"+ currentPage);
+//         var rev = doc._rev;
+//         // ...and insert a document in it.
+//         admin_db.insert({
+//           _id: currentPage,
+//           _rev: rev,
+//           reqContent: json
+//         }, currentPage, function(err, body, header) {
+//           if (err) {
+//             console.log("Admin_db err");
+//           } else {
+//             console.log("GET succes finding entry:"+ currentPage);
+//           }
+//         });
+//         console.log("retreived doc : \n" + doc);
+//       };
+//       console.log("JSON STRING : \n" + json);
+//       res.redirect('/');
+//   });
+// // });
+
+app.post('/admin_cm/post', function(req, res) {
+  console.log("ADMIN POST - TOOK PLACE IN /ADMIN/POST ----> ROUTING FROM THIS PATH", req.url);
+
     var json = req.body._jsonParser;
     var currentPage = req.body.currentPageVar;
 
     req.session._jsonConverter = json;
+    console.log(req.session.lang + " = REQ.SES.LANG BEFORE INSERT")
+    if (req.session.lang == 'nl') {
+      req.session.lang = 'nl'
+      console.log('currentURL = ', req.url);
+      console.log('Language set  =  NL / Dutch');
+      var admin_db = cloudant.db.use('admin_db_nl');
+    } else {
+      req.session.lang = 'en'
+      console.log('currentURL = ', req.url);
+      console.log('Language set  =  Default - EN / English');
+      var admin_db = cloudant.db.use('admin_db');
+    }
 
-    var admin_db = cloudant.db.use('admin_db');
 
     admin_db.get(currentPage, function(err, doc) {
       if (!err) {
@@ -245,10 +292,11 @@ app.post('/', function(req, res) {
             console.log("GET succes finding entry:"+ currentPage);
           }
         });
-        console.log("retreived doc : \n" + doc);
+        // console.log("retreived doc : \n" + doc);
       };
-      console.log("JSON STRING : \n" + json);
-      res.redirect('/');
+      console.log("POST used : "+ admin_db + "\nIn language : "+ req.session.lang);
+      // console.log("JSON STRING : \n" + json);
+      res.redirect('/'+currentPage);
   });
 });
 

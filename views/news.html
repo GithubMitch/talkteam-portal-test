@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Favorites Organizer powered by Cloudant</title>
+	<title><%= title %></title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no"/>
 	<meta name="apple-mobile-web-app-capable" content="yes" />
@@ -89,7 +89,21 @@
 			</p>
 		</div>
 
+		<% if (typeof admin == 'undefined') { %>
 
+		<% } else if (admin) { %>
+			<div class="adminPanel">
+				<form id="adminPost" action="/admin_cm/post" method="post">
+					<input id="jsonParser" type="text" name="_jsonParser" hidden="true" value="">
+					<input id="currentPageVar" type="text" name="currentPageVar" hidden="true" value='<%= title %>'>
+					<input id="admin_ApplyButton" name="button" value="Apply">
+					<input id="admin_SafeButton" name="button" value="Save" type="submit">
+				</form>
+				<div id="setAdmin" hidden="true">toggle setAdmin</div>
+			</div>
+		<% } %>
+
+		<input id="jsonConverter" type="text" name="_jsonConverter" hidden="true" value='<%= _jsonConverter %>'>
 
 </section>
 
@@ -129,6 +143,8 @@
 	<br><br><br>
 	</div> -->
 </div>
+<script src="./lib/domJSON.js"></script>
+<script type="text/javascript" src="/scripts/admin_cm.js"></script>
 	<script type="text/javascript">
 	$(document).ready(function() {
 		 $("#mainmenu").mmenu({

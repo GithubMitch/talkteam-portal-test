@@ -3,8 +3,10 @@ $(document).ready(function() {
   var admin = '';
   if ($("#setAdmin").length) {
     admin = true;
+    console.log("admin = true");
   } else {
     admin = false;
+    console.log("admin = false");
   }
   var currentPage = $("title").text();
   cmsNodes = [];
@@ -13,21 +15,29 @@ $(document).ready(function() {
 
   console.log("Admin Account = ",admin)
 
-
-  // for (var i = 0; i < cmsNodes.length; i++) {
-  //   var applyDomFragment = domJSON.toDOM(jsonParsedData.cmsNodes[i]);
-  //   console.log(applyDomFragment);
-  // };
+  giveCMSClass();
 
 
+  function giveCMSClass() {
     $(node).each(function(){
       i++;
       var newClass='textboxAdmin'+i;
       $(this).attr('id',currentPage+ "_" +newClass);
-      if (admin === true) {
-        $(this).attr('contenteditable',"true");
-      }
     });
+  };
+
+  function adminEditable() {
+    if (admin === true) {
+      $(".admin_cm").each(function(){
+        $(this).attr('contenteditable',admin)
+      });
+    } else {
+      $(".admin_cm").each(function(){
+        $(this).attr('contenteditable',admin)
+      });
+    }
+  }
+
 
 
    $( "#admin_ApplyButton" ).on( "click", function() {
@@ -96,12 +106,7 @@ $(document).ready(function() {
       console.log(node[i])
       console.log(parsedElement)
       console.log("Applied snapshot values to node" + [i]);
-
-      // $.each(node, function() {
-      // });
-
-
-    });
+    }),adminEditable();
     // $('#jsonConverter').remove();
 
     $( "#admin_ResetButton" ).on( "click", function() {
@@ -110,4 +115,5 @@ $(document).ready(function() {
     });
 
   };
+  adminEditable();
 });

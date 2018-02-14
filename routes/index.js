@@ -2,26 +2,44 @@
 /*
  * GET home page.
  */
+ var Cloudant = require('cloudant');
+ var username = "df3909e9-2680-472f-9deb-9638cf73c572-bluemix";
+ var password = "6b0a6bfddb9da34d09680a00a78eecb14a4724bf99e2e426f0730ab5ebdf9cd7";
+ var cloudant = Cloudant({account:username, password:password});
+ var admin_db;
+ var db_freshContent = '';
 
 exports.index = function(req, res){
-  var Cloudant = require('cloudant');
-  var username = "df3909e9-2680-472f-9deb-9638cf73c572-bluemix";
-  var password = "6b0a6bfddb9da34d09680a00a78eecb14a4724bf99e2e426f0730ab5ebdf9cd7";
-  var cloudant = Cloudant({account:username, password:password});
-  var admin_db = cloudant.db.use('admin_db');
-  var db_freshContent = '';
+  if (req.url == "/?clang=nl") {
+    req.session.lang = 'nl';
+    console.log('currentURL = ', req.url);
+    console.log('Language set  =  NL / Dutch');
+    console.log('Using '+req.session.lang+' / DUTCH DB');
+    console.log(req.session.lang);
+    var admin_db = cloudant.db.use('admin_db_nl');
+  } else {
+  // } else if (req.session.lang == 'en' || typeof req.session.lang == 'undefined' || req.url == '/?clang=en') {
+    req.session.lang = 'en';
+    console.log('currentURL = ', req.url);
+    console.log('Language set  =  Default - EN / English');
+    console.log('Using '+req.session.lang+' / ENGLISH DB');
+    console.log(req.session.lang);
+    console.log(req.session.lang);
+    var admin_db = cloudant.db.use('admin_db');
+  };
 
   if (req.session._jsonConverter){
-    console.log("REQ SESSION IS HERE");
+    console.log("_jsonConverter REQ SESSION IS HERE");
     res.render('index.html', {
       title: 'home',
       username: req.session.user,
       admin: req.session.admin,
-      _jsonConverter: req.session._jsonConverter
+      _jsonConverter: req.session._jsonConverter,
+      lang: req.session.lang
     });
   } else {
     admin_db.get('home', function(err, doc) {
-      console.log("REQ SESSION IS NOT THERE");
+      console.log("_jsonConverter REQ SESSION IS NOT THERE");
       if (!err) {
         db_freshContent = doc.reqContent;
         console.log("GET found 1 entry: 'Home'");
@@ -30,7 +48,8 @@ exports.index = function(req, res){
           title: 'home',
           username: req.session.user,
           admin: req.session.admin,
-          _jsonConverter: db_freshContent
+          _jsonConverter: db_freshContent,
+          lang: req.session.lang
         });
       } else {
         console.log("ERROR finding : 'Home'" + err.message);
@@ -38,7 +57,8 @@ exports.index = function(req, res){
           title: 'home',
           username: req.session.user,
           admin: req.session.admin,
-          _jsonConverter: db_freshContent
+          _jsonConverter: db_freshContent,
+          lang: req.session.lang
         });
       };
       res.end();
@@ -67,11 +87,43 @@ exports.downloads = function(req, res){
   }
 };
 exports.news = function(req, res){
+  if (req.session._jsonConverter){
+    console.log("REQ SESSION IS HERE");
     res.render('news.html', {
-      title: 'News',
+      title: 'news',
       username: req.session.user,
-      admin: req.session.admin
+      admin: req.session.admin,
+      _jsonConverter: req.session._jsonConverter
     });
+  } else {
+    admin_db.get('news', function(err, doc) {
+      console.log("REQ SESSION IS NOT THERE");
+      if (!err) {
+        db_freshContent = doc.reqContent;
+        console.log("GET found 1 entry: 'news'");
+        console.log("retreived doc : \n" + doc);
+        res.render('news.html', {
+          title: 'news',
+          username: req.session.user,
+          admin: req.session.admin,
+          _jsonConverter: db_freshContent
+        });
+      } else {
+        console.log("ERROR finding : 'News'" + err.message);
+        res.render('news.html', {
+          title: 'news',
+          username: req.session.user,
+          admin: req.session.admin,
+          _jsonConverter: db_freshContent
+        });
+      };
+      res.end();
+      return;
+    });
+
+  }
+
+
 };
 exports.thankyou = function(req, res){
   res.render('thankyou.html', {
