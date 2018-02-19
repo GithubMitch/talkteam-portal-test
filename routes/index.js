@@ -10,7 +10,7 @@
  var db_freshContent = '';
 
 exports.index = function(req, res){
-  if (req.url == "/?clang=nl") {
+  if (req.url.includes("?clang=nl")) {
     req.session.lang = 'nl';
     console.log('currentURL = ', req.url);
     console.log('Language set  =  NL / Dutch');
@@ -87,13 +87,31 @@ exports.downloads = function(req, res){
   }
 };
 exports.news = function(req, res){
+  if (req.url.includes("?clang=nl")) {
+    console.log('currentURL = ', req.url);
+    console.log('Language set  =  NL / Dutch');
+    console.log('Using '+req.session.lang+' / DUTCH DB');
+    console.log(req.session.lang);
+    var admin_db = cloudant.db.use('admin_db_nl');
+  } else {
+  // } else if (req.session.lang == 'en' || typeof req.session.lang == 'undefined' || req.url == '/?clang=en') {
+    req.session.lang = 'en';
+    console.log('currentURL = ', req.url);
+    console.log('Language set  =  Default - EN / English');
+    console.log('Using '+req.session.lang+' / ENGLISH DB');
+    console.log(req.session.lang);
+    console.log(req.session.lang);
+    var admin_db = cloudant.db.use('admin_db');
+  };
+
   if (req.session._jsonConverter){
     console.log("REQ SESSION IS HERE");
     res.render('news.html', {
       title: 'news',
       username: req.session.user,
       admin: req.session.admin,
-      _jsonConverter: req.session._jsonConverter
+      _jsonConverter: req.session._jsonConverter,
+      lang: req.session.lang
     });
   } else {
     admin_db.get('news', function(err, doc) {
@@ -106,7 +124,8 @@ exports.news = function(req, res){
           title: 'news',
           username: req.session.user,
           admin: req.session.admin,
-          _jsonConverter: db_freshContent
+          _jsonConverter: db_freshContent,
+          lang: req.session.lang
         });
       } else {
         console.log("ERROR finding : 'News'" + err.message);
@@ -114,7 +133,8 @@ exports.news = function(req, res){
           title: 'news',
           username: req.session.user,
           admin: req.session.admin,
-          _jsonConverter: db_freshContent
+          _jsonConverter: db_freshContent,
+          lang: req.session.lang
         });
       };
       res.end();
