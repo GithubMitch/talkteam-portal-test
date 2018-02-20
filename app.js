@@ -295,6 +295,8 @@ app.post('/admin_cm/post', function(req, res) {
         // console.log("retreived doc : \n" + doc);
       };
       console.log("POST used : "+ admin_db + "\nIn language : "+ req.session.lang);
+      delete req.session._jsonConverter;
+      console.log("req.session._jsonConverter",req.session._jsonConverter);
       // console.log("JSON STRING : \n" + json);
       res.redirect('/'+currentPage);
   });

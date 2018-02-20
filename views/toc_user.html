@@ -42,12 +42,12 @@
 					<div class="col-3 mr-auto">
 						<!-- <img class="newappIcon" src="images/e-office_logo.svg"> -->
 						<a class="logo" href="/">
-						  <img class="newappIcon" src="images/talkteam_logo.png">
+							<img class="newappIcon" src="images/talkteam_logo1.png">
 						</a>
 						<div class="login">
 							<% if (username) { %>
-								<span>Hello <%= username %></span>
-								<a id="logoutButton" href="/logout">Logout</a>
+								<span><%= username %> <a id="logoutButton" href="/logout">Logout</a></span>
+
 							<% } %>
 							<% if (!username) { %>
 								<a id="loginButton" href="/login">Login</a>
@@ -55,17 +55,39 @@
 						</div>
 					</div>
 					<div class="col-2 col-sm-9 col-xs-9 col-auto">
+						<% if (typeof lang == 'undefined' || lang == 'en') { %>
+						<div class="mobile-lang">
+							<a href="/?clang=nl"><img src="images/nl.png" alt="Dutch flag" height="34" width="34"></a>
+						</div>
+						<% } else if (lang == 'nl') { %>
+							<div class="mobile-lang">
+								<a href="/?clang=en"><img src="images/en.png" alt="British flag" height="34" width="34"></a>
+							</div>
+						<% } %>
 						<a id="hamburger" href="#mainmenu"></a>
 						<nav id="mainmenu">
 							<ul>
-								<li><a href="/">Home</a></li>
-								<li><a href="/register">Register</a></li>
-								<li><a href="/downloads">Downloads</a></li>
-								<li><a href="/news">News</a></li>
-								<li class="english"><a href="/translate">EN</a></li>
+								<% if (typeof lang == 'undefined' || lang == 'en') { %>
+									<li><a href="/home">Home</a></li>
+									<li><a href="/register">Register</a></li>
+									<li><a href="/downloads">Downloads</a></li>
+									<li><a href="/news">News</a></li>
+								<% } else if (lang == 'nl') { %>
+									<li><a href="/home">Home</a></li>
+									<li><a href="/register">Registreer</a></li>
+									<li><a href="/downloads">Downloads</a></li>
+									<li><a href="/news">Nieuws</a></li>
+								<% } %>
+
+								<% if (typeof lang == 'undefined' || lang == 'en') { %>
+									<li class="lang"><a href="?clang=nl"><img src="images/nl.png" alt="Dutch flag" height="34" width="34"></a></li>
+								<% } else if (lang == 'nl') { %>
+									<li class="lang"><a href="?clang=en"><img src="images/en.png" alt="British flag" height="34" width="34"></a></li>
+								<% } %>
 							</ul>
 						</nav>
 					</div>
+				</div>
 			</div>
 		</header>
 
@@ -147,17 +169,6 @@
 	</div> -->
 </div>
 	<script type="text/javascript" src="/scripts/loginbutton.js"></script>
-	<script type="text/javascript">
-	$(document).ready(function() {
-		 $("#mainmenu").mmenu({
-				// options
-		 }, {
-				 // configuration
-				 clone:	'true',
-			});
-
-
-	});
-	</script>
+	<script type="text/javascript" src="/scripts/custom_menu.js"></script>
 </body>
 </html>

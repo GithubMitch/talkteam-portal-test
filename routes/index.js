@@ -10,7 +10,7 @@
  var db_freshContent = '';
 
 exports.index = function(req, res){
-  if (req.url.includes("?clang=nl")) {
+  if (req.url.includes("?clang=nl") || req.session.lang == 'nl') {
     req.session.lang = 'nl';
     console.log('currentURL = ', req.url);
     console.log('Language set  =  NL / Dutch');
@@ -18,12 +18,11 @@ exports.index = function(req, res){
     console.log(req.session.lang);
     var admin_db = cloudant.db.use('admin_db_nl');
   } else {
-  // } else if (req.session.lang == 'en' || typeof req.session.lang == 'undefined' || req.url == '/?clang=en') {
+    // } else if (req.session.lang == 'en' || typeof req.session.lang == 'undefined' || req.url == '/?clang=en') {
     req.session.lang = 'en';
     console.log('currentURL = ', req.url);
     console.log('Language set  =  Default - EN / English');
     console.log('Using '+req.session.lang+' / ENGLISH DB');
-    console.log(req.session.lang);
     console.log(req.session.lang);
     var admin_db = cloudant.db.use('admin_db');
   };
@@ -66,7 +65,6 @@ exports.index = function(req, res){
     });
 
   }
-
 };
 exports.register = function(req, res){
   res.render('register.html', {
@@ -80,14 +78,16 @@ exports.downloads = function(req, res){
     res.render('downloads.html', {
       title: 'Downloads',
       username: req.session.user,
-      admin: req.session.admin
+      admin: req.session.admin,
+      lang: req.session.lang
     });
   } else {
     res.redirect('/login');
   }
 };
 exports.news = function(req, res){
-  if (req.url.includes("?clang=nl")) {
+  if (req.url.includes("?clang=nl") || req.session.lang == 'nl') {
+    req.session.lang = 'nl';
     console.log('currentURL = ', req.url);
     console.log('Language set  =  NL / Dutch');
     console.log('Using '+req.session.lang+' / DUTCH DB');
@@ -99,7 +99,6 @@ exports.news = function(req, res){
     console.log('currentURL = ', req.url);
     console.log('Language set  =  Default - EN / English');
     console.log('Using '+req.session.lang+' / ENGLISH DB');
-    console.log(req.session.lang);
     console.log(req.session.lang);
     var admin_db = cloudant.db.use('admin_db');
   };
@@ -149,14 +148,16 @@ exports.thankyou = function(req, res){
   res.render('thankyou.html', {
     title: 'Thank you',
     username: req.session.user,
-    admin: req.session.admin
+    admin: req.session.admin,
+    lang: req.session.lang
   });
 };
 exports.admin = function(req, res){
   res.render('admin.html', {
     title: 'Admin',
     username: req.session.user,
-    admin: req.session.admin
+    admin: req.session.admin,
+    lang: req.session.lang
   });
 };
 exports.login = function(req, res){
@@ -166,7 +167,8 @@ exports.login = function(req, res){
     res.render('login.html', {
       title: 'Login',
       username: req.session.user,
-      admin: req.session.admin
+      admin: req.session.admin,
+      lang: req.session.lang
     });
   }
 };
@@ -174,7 +176,8 @@ exports.logout = function(req, res){
   res.render('logout.html', {
     title: 'Logout',
     username: req.session.user,
-    admin: req.session.admin
+    admin: req.session.admin,
+    lang: req.session.lang
   });
   req.session.destroy();
   // res.send("logout success!");
@@ -184,7 +187,8 @@ exports.content = function(req, res){
   res.render('content.html', {
     title: 'Content',
     username: req.session.user,
-    admin: req.session.admin
+    admin: req.session.admin,
+    lang: req.session.lang
   });
 };
 exports.toc_user = function(req, res){
@@ -198,6 +202,7 @@ exports.toc_user = function(req, res){
     endDate: req.session.endDate,
     startDate: req.session.endDate,
     active: req.session.active,
-    admin: req.session.admin
+    admin: req.session.admin,
+    lang: req.session.lang
   });
 };
