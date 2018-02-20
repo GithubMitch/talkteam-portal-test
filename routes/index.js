@@ -10,7 +10,12 @@
  var db_freshContent = '';
 
 exports.index = function(req, res){
-  if (req.url.includes("?clang=nl") || req.session.lang == 'nl') {
+
+  if (req.url.includes("?clang=nl")) {
+    console.log(!req.session.lang == 'en');
+    console.log(req.session.lang == 'en');
+    console.log(!req.session.lang == 'nl');
+    console.log(req.session.lang == 'nl');
     req.session.lang = 'nl';
     console.log('currentURL = ', req.url);
     console.log('Language set  =  NL / Dutch');
@@ -18,8 +23,8 @@ exports.index = function(req, res){
     console.log(req.session.lang);
     var admin_db = cloudant.db.use('admin_db_nl');
   } else {
-    // } else if (req.session.lang == 'en' || typeof req.session.lang == 'undefined' || req.url == '/?clang=en') {
     req.session.lang = 'en';
+    // } else if (req.session.lang == 'en' || typeof req.session.lang == 'undefined' || req.url == '/?clang=en') {
     console.log('currentURL = ', req.url);
     console.log('Language set  =  Default - EN / English');
     console.log('Using '+req.session.lang+' / ENGLISH DB');
@@ -203,6 +208,7 @@ exports.toc_user = function(req, res){
     startDate: req.session.endDate,
     active: req.session.active,
     admin: req.session.admin,
+    userlist: req.session.userlist,
     lang: req.session.lang
   });
 };

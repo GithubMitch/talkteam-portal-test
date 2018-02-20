@@ -44,24 +44,15 @@
 						<a class="logo" href="/">
 							<img class="newappIcon" src="images/talkteam_logo1.png">
 						</a>
-						<div class="login">
-							<% if (username) { %>
-								<span><%= username %> <a id="logoutButton" href="/logout">Logout</a></span>
-
-							<% } %>
-							<% if (!username) { %>
-								<a id="loginButton" href="/login">Login</a>
-							<% } %>
-						</div>
 					</div>
 					<div class="col-2 col-sm-9 col-xs-9 col-auto">
 						<% if (typeof lang == 'undefined' || lang == 'en') { %>
 						<div class="mobile-lang">
-							<a href="/?clang=nl"><img src="images/nl.png" alt="Dutch flag" height="34" width="34"></a>
+							<a href="?clang=nl"><img src="images/nl.png" alt="Dutch flag" height="34" width="34"></a>
 						</div>
 						<% } else if (lang == 'nl') { %>
 							<div class="mobile-lang">
-								<a href="/?clang=en"><img src="images/en.png" alt="British flag" height="34" width="34"></a>
+								<a href="?clang=en"><img src="images/en.png" alt="British flag" height="34" width="34"></a>
 							</div>
 						<% } %>
 						<a id="hamburger" href="#mainmenu"></a>
@@ -86,6 +77,14 @@
 								<% } %>
 							</ul>
 						</nav>
+						<div class="login">
+							<% if (username) { %>
+								<a id="logoutButton" href="/logout" style="margin-right: -4px">Logout</a>
+							<% } %>
+							<% if (!username) { %>
+								<a id="loginButton" href="/login">Login</a>
+							<% } %>
+						</div>
 					</div>
 				</div>
 			</div>

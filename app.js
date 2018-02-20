@@ -218,10 +218,19 @@ app.post('/login', function (req, res) {
       req.session.active = JSON.stringify(data.active);
       console.log('Username:' + data._id + '\n' + 'Password:'+ data.password);
       console.log('is now logged in');
-      res.redirect('/toc_user');
+      talkteam_clients.list({include_docs:true}, function (err, docs) {
+        // for (i = 0; i < docs.length; i++) {
+        //     console.log(docs.rows)
+        // }
+        console.log(err, docs.rows);
+        req.session.userlist = docs.rows;
+        res.redirect('/toc_user');
+      });
+
       // res.render('/content.html', { username: req.session.user });
     }
   });
+
 });
 
 // app.post('/', function(req, res) {
@@ -255,6 +264,10 @@ app.post('/login', function (req, res) {
 //   });
 // // });
 
+// app.post('/lang/post', function(req, res) {
+//   delete req.session.lang;
+//   res.redirect('/'+currentPage+);
+// });
 app.post('/admin_cm/post', function(req, res) {
   console.log("ADMIN POST - TOOK PLACE IN /ADMIN/POST ----> ROUTING FROM THIS PATH", req.url);
 

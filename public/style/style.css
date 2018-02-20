@@ -32,8 +32,10 @@ header, footer {
 #mainmenu ul {
 	list-style:none;
 	padding:0 10px;
-	margin-top:.5rem;
+	/* margin-top:.5rem; */
   margin-bottom: 0;
+	margin-top:1rem;
+
 }
 #mainmenu ul li {
 	display:inline;
@@ -229,9 +231,11 @@ a.logo {
 	vertical-align: middle;
 	font-size:12px;
 	color:#fff;
+	position: absolute;
+	right: 29px;
 }
 .login a {
-	color:inherit;
+	/* color:inherit; */
 }
 
 .appTitle {
@@ -413,6 +417,28 @@ button[type=submit] ,
   color: #fff;
   text-decoration: none;
 }
+
+.user {
+	border: 3px double #ccc;
+	padding: 0.5em;
+	overflow:hidden;
+	margin-bottom:3rem;
+}
+.user .userInfo li {
+	white-space: nowrap;
+}
+.user .userInfo{
+	list-style:none;
+	padding:0;
+	float:left;
+	width:45%;
+	font-weight:bold;
+}
+.user .userInfo:nth-of-type(2){
+	font-weight: normal;
+
+}
+
 /* //// RESPONSIVE STYLE */
 /* // Extra small devices (portrait phones, less than 576px)
 // No media query since this is the default in Bootstrap */
@@ -451,7 +477,7 @@ button[type=submit] ,
 	#mainmenu {display:none;}
 	#mm-mainmenu .lang {display:none;}
 	#hamburger {display:block;top:auto;bottom:20px;}
-	.login {display:block;white-space: nowrap;}
+	.login {display:block;white-space: nowrap;bottom: 0;right: 23px;}
 	header .mobile-lang {
 		display: inline-block;
 		position: absolute;
@@ -460,13 +486,25 @@ button[type=submit] ,
 	}
 }
 
+
+
+/* <% for(var i=0; i < userlist.length; i++) { %>
+	<table>
+			<tr>
+				<td><%= Object.keys(userlist[i].doc) %></td>
+				<td><%= Object.values(userlist[i].doc) %></td>
+			</tr>
+ </table>
+ <br>
+<% } %> */
+
+
+
+
 /* // Large devices (desktops, 992px and up) */
 @media (max-width: 992px) {
 	.login span {
 		display:block;
-	}
-	#mainmenu ul {
-		margin-top:1rem;
 	}
 }
 
