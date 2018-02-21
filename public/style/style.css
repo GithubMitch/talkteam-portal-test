@@ -577,37 +577,6 @@ border-bottom:1px solid #ccc;
 }
 
 
-<% if (userlist) { %>
-	<% userlist.forEach(function(user) { %>
-		<div class="user">
-			<h3>
-				<img class="user_icon" src="images/organisation_icon.png">
-				<%= user.doc.organisationName %>
-				<%= user.doc.orgName %>
-			</h3>
-			<ul class="userInfo">
-				<% Object.keys(user.doc).forEach(function(key) { %>
-					<li><%= key %></li>
-				<% }); %>
-			</ul>
-			<ul class="userInfo">
-				<% Object.values(user.doc).forEach(function(value) { %>
-					<li><%= value %></li>
-				<% }); %>
-			</ul>
-		</div>
-
-	<% }); %>
-<% } %>
-/* <% for(var i=0; i < userlist.length; i++) { %>
-	<table>
-			<tr>
-				<td><%= Object.keys(userlist[i].doc) %></td>
-				<td><%= Object.values(userlist[i].doc) %></td>
-			</tr>
- </table>
- <br>
-<% } %> */
 
 
 
