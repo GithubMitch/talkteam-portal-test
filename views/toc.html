@@ -134,22 +134,7 @@
 		<div class="col-12 list_all_users">
 			<% if (userlist) { %>
 
-				<% userlist.forEach(function(user) { %>
-					<legend>
-						<img class="admin_icon" src="images/organisation_icon.png">
-						<% if (organisationName) { %><%= organisationName %><% } %> account
-					</legend>
-					<dl class="dl-horizontal">
-						<% Object.entries(user.doc).forEach(([key, value]) => { %>
-							<dt>
-								<%= key %>
-							</dt>
-							<dd>
-								<%= value %>
-							</dd>
-						<% }); %>
-					</dl>
-				<% }); %>
+					<p><%= userlist %></p>
 
 			<% } %>
 		</div>

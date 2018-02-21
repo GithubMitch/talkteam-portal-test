@@ -11,6 +11,7 @@ var express = require('express'),
     fs = require('fs'),
     jade = require('jade'),
     session = require('express-session'),
+    MemoryStore = require('memorystore')(session),
     authorization = require('express-authorization'),
     createElement = require('create-element');
 
@@ -65,6 +66,9 @@ app.use('/js', express.static(__dirname + '/node_modules/jquery.mmenu/dist')); /
 app.use('/css', express.static(__dirname + '/node_modules/jquery.mmenu/dist')); // redirect CSS jQuery MMenu
 
 app.use(session({
+    store: new MemoryStore({
+      checkPeriod: 86400000 // prune expired entries every 24h
+    }),
     secret: '2C44-4D44-WppQ38S',
     resave: true,
     saveUninitialized: true
@@ -220,12 +224,15 @@ app.post('/login', function (req, res) {
       console.log('Username:' + data._id + '\n' + 'Password:'+ data.password);
       console.log('is now logged in');
       talkteam_clients.fetch({include_docs:true}, function (err, docs) {
-        // for (i = 0; i < docs.length; i++) {
-        //     console.log(docs.rows)
-        // }
 
-        console.log(err, docs.rows);
-        req.session.userlist = docs.rows;
+        var printUserlist = [];
+        docs.rows.forEach(function(user) {
+          console.log(user);
+          printUserlist.push(user.doc);
+        });
+
+        // console.log(err, docs.rows);
+        req.session.userlist = JSON.stringify(printUserlist);
         res.redirect('/toc');
         delete req.session.userlist
         console.log("GEWIST")
