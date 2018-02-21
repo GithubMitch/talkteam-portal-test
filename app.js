@@ -103,6 +103,7 @@ app.get('/thankyou', routes.thankyou);
 app.get('/login', routes.login);
 app.get('/content', routes.content);
 app.get('/toc_user', routes.toc_user);
+app.get('/faq', routes.faq);
 app.get('/logout', routes.logout);
 
 app.post('/register', function(req, res) {
@@ -209,7 +210,7 @@ app.post('/login', function (req, res) {
     } else if(user === data._id || password === data.password) {
       req.session.user = user;
       req.session.admin = true;
-      req.session.organisationName = JSON.stringify(data.organisationName);
+      req.session.organisationName = data.organisationName;
       req.session.organisationEmail = JSON.stringify(data.organisationEmail);
       req.session._id = JSON.stringify(data._id);
       req.session.licensekey = JSON.stringify(data.licensekey);

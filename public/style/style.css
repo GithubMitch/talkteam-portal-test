@@ -340,7 +340,8 @@ dl {
 dt {
 	float: left;
 	clear: left;
-	width:30%;
+	/* width:30%; */
+	width:45%;
 	text-align: right;
 	font-weight: bold;
 }
@@ -349,7 +350,7 @@ dt::after {
 }
 dd {
 	margin: 0 ;
-	margin-left: calc(30% + 20px) ;
+	margin-left: calc(45% + 20px) ;
 	text-align: left;
 	padding: 0 0 0.5em 0;
 }
@@ -424,6 +425,27 @@ button[type=submit] ,
 	overflow:hidden;
 	margin-bottom:3rem;
 }
+.user_icon ,
+.admin_icon  {
+	width:50px;
+	height:50px;
+}
+.user h3 {
+	display: block;
+width: 100%;
+max-width: 100%;
+padding: 0;
+margin-bottom: .5rem;
+font-size: 1.5rem;
+line-height: inherit;
+color: inherit;
+white-space: normal;
+border-bottom:1px solid #ccc;
+}
+.user .userInfo:nth-of-type(1) li:after {
+	content:':';
+	display:inline-block;
+}
 .user .userInfo li {
 	white-space: nowrap;
 }
@@ -433,11 +455,69 @@ button[type=submit] ,
 	float:left;
 	width:45%;
 	font-weight:bold;
+	text-align:right;
 }
 .user .userInfo:nth-of-type(2){
 	font-weight: normal;
+	text-align: left;
+	padding-left:20px;
+}
+
+/* FAQS */
+.question {
+	cursor: pointer;
+}
+.question:hover {
+}
+.question .answer {
+	display:none;
+	background:mintcream;
+
+	/* display:none; */
+}
+.question.active .answer {
+	display:block;
+}
+
+#faqform {
+	margin-top:3rem;
+	border:3px double #ccc;
+	padding:2em;
+}
+#faqform select{
+	display:inline-block;
+	width:45%;
+	height:42px;
+  padding: 0em .5em;
+}
+#faqform input{
+	display:inline-block;
+	width:45%;
+  padding: 0em .5em;
+}
+#faqform label{
+	display:inline-block;
+	width:45%;
+  padding: 0em .5em;
 
 }
+#faqform input[type=submit] {
+	width:100%;
+	display:block;
+	background:#35B297;
+	border:0;
+	color:#fff;
+	height:42px;
+}
+#form_organisation[type="text" i]:disabled {
+	background:url("../images/organisation_icon.png")no-repeat 10px center;
+  background-color:#fff;
+	background-size:18px;
+	padding-left: 40px;
+	font-size:.666em;
+}
+
+
 
 /* //// RESPONSIVE STYLE */
 /* // Extra small devices (portrait phones, less than 576px)
@@ -505,6 +585,10 @@ button[type=submit] ,
 @media (max-width: 992px) {
 	.login span {
 		display:block;
+	}
+	.user .userInfo{
+		text-align:left;
+		width:auto;
 	}
 }
 

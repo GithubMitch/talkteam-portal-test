@@ -212,3 +212,22 @@ exports.toc_user = function(req, res){
     lang: req.session.lang
   });
 };
+exports.faq = function(req, res){
+    if (!req.session._jsonConverter || req.session._jsonConverter){
+      req.session._jsonConverter = ''
+    }
+  res.render('faq.html', {
+    title: 'F.A.Q.',
+    username: req.session.user,
+    organisationName:req.session.organisationName,
+    organisationEmail: req.session.organisationEmail,
+    _id: req.session._id,
+    licensekey: req.session.licensekey,
+    endDate: req.session.endDate,
+    startDate: req.session.endDate,
+    active: req.session.active,
+    userlist: req.session.userlist,
+    lang: req.session.lang,
+    _jsonConverter: req.session._jsonConverter
+  });
+};
