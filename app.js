@@ -219,7 +219,7 @@ app.post('/login', function (req, res) {
       req.session.active = JSON.stringify(data.active);
       console.log('Username:' + data._id + '\n' + 'Password:'+ data.password);
       console.log('is now logged in');
-      talkteam_clients.list({include_docs:true}, function (err, docs) {
+      talkteam_clients.fetch({include_docs:true}, function (err, docs) {
         // for (i = 0; i < docs.length; i++) {
         //     console.log(docs.rows)
         // }
