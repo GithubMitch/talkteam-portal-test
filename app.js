@@ -223,21 +223,29 @@ app.post('/login', function (req, res) {
       req.session.active = JSON.stringify(data.active);
       console.log('Username:' + data._id + '\n' + 'Password:'+ data.password);
       console.log('is now logged in');
-      talkteam_clients.fetch({include_docs:true}, function (err, docs) {
+      talkteam_clients.fetch({include_docs:true}, function (err, data) {
 
-        var printUserlist = [];
-        docs.rows.forEach(function(user) {
-          Object.entries(user.doc).forEach(([key, value]) => {
-            var userDoc = (key,value);
-            printUserlist.push(userDoc);
-          });
+        var printUserlist = data.rows;
+        var userRows = [];
+        data.rows.forEach(function(rows) {
+          console.log(rows.doc);
+          userRows.push(rows.doc);
         });
+        // docs.rows.forEach(function(user) {
+        //   Object.entries(user).forEach(([key]) => {
+        //     var userKey = key;
+        //     // console.log(userKey);
+        //     printUserlist.push(userKey);
+        //   });
+        // });
+        // console.log(userRows);
+        // console.log(printUserlist)
 
-        // console.log(err, docs.rows);
+        req.session.userRows = userRows;
         req.session.userlist = printUserlist;
         res.redirect('/toc');
-        delete req.session.userlist
-        console.log("GEWIST")
+        delete req.session.userlist;
+        console.log("deleted userlist from req.session")
       });
 
       // res.render('/content.html', { username: req.session.user });

@@ -132,21 +132,21 @@
 			</dl>
 		</div>
 		<div class="col-12 list_all_users">
-			<% if (userlist) { %>
+			<% if (userRows) { %>
+				<% for(var i=0; i < userlist.length; i++) { %>
+					<dl>
+						<tr>
+						<% for(var j=0; j < userRows.length; j++) { %>
+								<dt><%= Object.keys(userRows[j])[j] %></dt>
+								<dd><%= Object.values(userRows[j])[j] %></dd>
+						<% } %>
+					</tr>
+					</dl>
+					<br>
 
-				<dl class="dl-horizontal">
-					<% Object.entries(userlist).forEach(([key, value]) => { %>
-						<dt>
-							<%= key %>
-						</dt>
-						<dd>
-							<%= value %>
-						</dd>
-					<% }); %>
-				</dl>
-
-			<% } %>
-		</div>
+					<% } %>
+				<% } %>
+			</div>
 
 </section>
 
