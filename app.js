@@ -227,12 +227,14 @@ app.post('/login', function (req, res) {
 
         var printUserlist = [];
         docs.rows.forEach(function(user) {
-          console.log(user);
-          printUserlist.push(user.doc);
+          Object.entries(user.doc).forEach(([key, value]) => {
+            var userDoc = (key,value);
+            printUserlist.push(userDoc);
+          });
         });
 
         // console.log(err, docs.rows);
-        req.session.userlist = JSON.stringify(printUserlist);
+        req.session.userlist = printUserlist;
         res.redirect('/toc');
         delete req.session.userlist
         console.log("GEWIST")

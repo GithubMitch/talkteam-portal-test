@@ -134,7 +134,16 @@
 		<div class="col-12 list_all_users">
 			<% if (userlist) { %>
 
-					<p><%= userlist %></p>
+				<dl class="dl-horizontal">
+					<% Object.entries(userlist).forEach(([key, value]) => { %>
+						<dt>
+							<%= key %>
+						</dt>
+						<dd>
+							<%= value %>
+						</dd>
+					<% }); %>
+				</dl>
 
 			<% } %>
 		</div>
