@@ -132,20 +132,20 @@
 			</dl>
 		</div>
 		<div class="col-12 list_all_users">
-			<% if (userRows) { %>
-				<% for(var i=0; i < userlist.length; i++) { %>
+			<!-- <% if (userRows) { %> -->
+				<% for(var i=0; i < userRows.length; i++) { %>
 					<dl>
 						<tr>
-						<% for(var j=0; j < userRows.length; j++) { %>
-								<dt><%= Object.keys(userRows[j])[j] %></dt>
-								<dd><%= Object.values(userRows[j])[j] %></dd>
+						<% for(var j=0; j < Object.keys(userRows[i]).length; j++) { %>
+								<dt><%= Object.keys(userRows[i])[j] %></dt>
+								<dd><%= Object.values(userRows[i])[j] %></dd>
 						<% } %>
 					</tr>
 					</dl>
 					<br>
 
 					<% } %>
-				<% } %>
+				<!-- <% } %> -->
 			</div>
 
 </section>

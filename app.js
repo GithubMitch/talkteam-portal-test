@@ -225,24 +225,25 @@ app.post('/login', function (req, res) {
       console.log('is now logged in');
       talkteam_clients.fetch({include_docs:true}, function (err, data) {
 
-        var printUserlist = data.rows;
+        var printUserlist = [];
         var userRows = [];
         data.rows.forEach(function(rows) {
           console.log(rows.doc);
           userRows.push(rows.doc);
         });
-        // docs.rows.forEach(function(user) {
-        //   Object.entries(user).forEach(([key]) => {
-        //     var userKey = key;
-        //     // console.log(userKey);
-        //     printUserlist.push(userKey);
-        //   });
-        // });
+        data.rows.forEach(function(user) {
+          Object.entries(user).forEach(([key]) => {
+            var userKey = key;
+            // console.log(userKey);
+            printUserlist.push(userKey);
+          });
+        });
         // console.log(userRows);
         // console.log(printUserlist)
 
         req.session.userRows = userRows;
         req.session.userlist = printUserlist;
+        console.log(printUserlist);
         res.redirect('/toc');
         delete req.session.userlist;
         console.log("deleted userlist from req.session")
