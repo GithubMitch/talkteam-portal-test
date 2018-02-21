@@ -196,9 +196,9 @@ exports.content = function(req, res){
     lang: req.session.lang
   });
 };
-exports.toc_user = function(req, res){
-  res.render('toc_user.html', {
-    title: 'toc_user',
+exports.toc = function(req, res){
+  res.render('toc.html', {
+    title: 'toc',
     username: req.session.user,
     organisationName:req.session.organisationName,
     organisationEmail: req.session.organisationEmail,

@@ -102,7 +102,7 @@ app.get('/admin', routes.admin);
 app.get('/thankyou', routes.thankyou);
 app.get('/login', routes.login);
 app.get('/content', routes.content);
-app.get('/toc_user', routes.toc_user);
+app.get('/toc', routes.toc);
 app.get('/faq', routes.faq);
 app.get('/logout', routes.logout);
 
@@ -225,7 +225,7 @@ app.post('/login', function (req, res) {
         // }
         console.log(err, docs.rows);
         req.session.userlist = docs.rows;
-        res.redirect('/toc_user');
+        res.redirect('/toc');
       });
 
       // res.render('/content.html', { username: req.session.user });
