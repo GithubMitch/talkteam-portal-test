@@ -208,8 +208,7 @@ exports.toc = function(req, res){
     startDate: req.session.endDate,
     active: req.session.active,
     admin: req.session.admin,
-    userlist: req.session.userlist,
-    lang: req.session.lang
+    userlist: req.session.userlist
   });
 };
 exports.faq = function(req, res){
