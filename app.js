@@ -223,9 +223,12 @@ app.post('/login', function (req, res) {
         // for (i = 0; i < docs.length; i++) {
         //     console.log(docs.rows)
         // }
+
         console.log(err, docs.rows);
         req.session.userlist = docs.rows;
         res.redirect('/toc');
+        delete req.session.userlist
+        console.log("GEWIST")
       });
 
       // res.render('/content.html', { username: req.session.user });
