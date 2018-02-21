@@ -132,6 +132,7 @@
 			</dl>
 		</div>
 		<div class="col-12 list_all_users">
+			<% if (userlist) { %>
 				<% userlist.forEach(function(user) { %>
 					<div class="user">
 						<h3>
@@ -156,7 +157,7 @@
 		        <dd><%= JSON.stringify(user.doc._id) %> -  %></dd> -->
 
 		    <% }); %>
-
+			<% } %>
 
 			<!-- <% for(var i=0; i < userlist.length; i++) { %>
 				<table>
