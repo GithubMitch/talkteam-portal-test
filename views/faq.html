@@ -110,6 +110,8 @@
         <div class="qlist">
           <div class="question">
             Where can i send in questions ?
+            <span class="closed">&#9650;</span>
+            <span class="opened">&#9660;</span>
             <div class="answer">
               If the F.A.Q. page left your question un-answered you might want to try our <a href="#faqform">form</a> down below.
             </div>
@@ -121,6 +123,8 @@
         <div class="qlist">
           <div class="question">
             Where can i send in questions ?
+            <span class="closed">&#9650;</span>
+            <span class="opened">&#9660;</span>
             <div class="answer">
               If the F.A.Q. page left your question un-answered you might want to try our <a href="#faqform">form</a> down below.
             </div>
@@ -132,6 +136,8 @@
         <div class="qlist">
           <div class="question">
             Where can i send in questions ?
+            <span class="closed">&#9650;</span>
+            <span class="opened">&#9660;</span>
             <div class="answer">
               If the F.A.Q. page left your question un-answered you might want to try our <a href="#faqform">form</a> down below.
             </div>
@@ -185,7 +191,10 @@
     var question = $(".question");
     $(question).on('click', function(){
       // var $(this) = $(this).find('.answer');
-      $(this).children('.answer').slideToggle();
+      $(this).children('.answer').slideToggle(function(){
+         $(this).parent('.question').toggleClass('active');
+      });
+
     })
     // $(currentLinkMM).parent().addClass('active');
   });

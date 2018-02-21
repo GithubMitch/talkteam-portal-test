@@ -467,13 +467,21 @@ border-bottom:1px solid #ccc;
 .question {
 	cursor: pointer;
 }
-.question:hover {
+.question .opened {
+	display:inline;
+}
+.question .closed {
+	display:none;
+}
+.question.active .opened{
+	display:none;
+}
+.question.active .closed{
+	display:inline;
 }
 .question .answer {
 	display:none;
 	background:mintcream;
-
-	/* display:none; */
 }
 .question.active .answer {
 	display:block;
@@ -516,6 +524,8 @@ border-bottom:1px solid #ccc;
 	padding-left: 40px;
 	font-size:.666em;
 }
+
+
 
 
 
