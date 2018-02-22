@@ -233,13 +233,10 @@
   $(document).ready(function() {
     var question = $(".question");
     $(question).on('click', function(){
-      // var $(this) = $(this).find('.answer');
       $(this).children('.answer').slideToggle(function(){
          $(this).parent('.question').toggleClass('active');
       });
-
     })
-    // $(currentLinkMM).parent().addClass('active');
   });
 </script>
 <script src="./lib/domJSON.js"></script>

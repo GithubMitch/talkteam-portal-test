@@ -1,6 +1,10 @@
 /* style.css
  * This file provides css styles.
  */
+.intro > .admin_cm:focus {
+	outline-color:#35B297;
+	margin-bottom: 1px;
+}
 
 html {
 	background-color: #f5f7fa;
@@ -16,6 +20,7 @@ body {
 
 /* header footer common */
 header {
+	height:103px;
 	padding-bottom:12px;
 	position: relative;
 }
@@ -23,7 +28,12 @@ header, footer {
 	width: 100%;
 	text-align: center;
 }
-
+header + .fluid-container .col {
+	box-shadow: inset 0 0px 12px black;
+}
+header + .fluid-container {
+	margin-bottom:-6rem;
+}
 .fluid-container {
 	overflow:hidden;
 	position: relative;
@@ -294,18 +304,21 @@ header {
 	display: flex;
 	flex-direction: column;
 	border-bottom: 1px solid purple;
-	box-shadow: 1px -4px 20px black;
+	/* box-shadow: 1px -4px 20px black; */
 	position: relative;
 	z-index: 999;
 }
 .bannerimg {
 	width:100%;
+	position: relative;
+	z-index: -1;
 }
 .intro {
-	margin-top:-6rem;
+	/* margin-top:-6rem; */
 	position: relative;
   background: rgba(255,255,255,.85);
 	background-color: #fff;
+  border: 3px double #35B297;
 }
 .intro div[class^="col-"] {
 	font-size: 20px;
@@ -497,9 +510,16 @@ border-bottom:1px solid #ccc;
 	display:none;
 	background:mintcream;
 	margin-bottom:3em;
+	background: #35B297;
+	color: #fff;
+	margin-bottom: 3em;
+	padding: 1.5em;
 }
 .question.active .answer {
 	display:block;
+}
+.qlist {
+	padding-bottom: 2em;
 }
 .general ,
 .personal ,
@@ -516,6 +536,11 @@ border-bottom:1px solid #ccc;
 	margin-bottom:.5em;
 	padding-bottom:.5em;
 	font-family: monospace;
+}
+
+#faqform input ,
+#faqform textarea  {
+	outline-color: #35B297:
 }
 
 #faqform {
@@ -552,7 +577,6 @@ border-bottom:1px solid #ccc;
 	width: calc(35% - 1%);
   padding: 0em .5em;
   text-align: left;
-
 }
 #faqform input[type=submit] {
 	width: calc(100% - .25%);
@@ -648,6 +672,9 @@ border-bottom:1px solid #ccc;
 
 /* // Large devices (desktops, 992px and up) */
 @media (max-width: 992px) {
+	#mainmenu ul {
+		padding-left:0;
+	}
 	.login span {
 		display:block;
 	}
