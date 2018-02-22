@@ -14,7 +14,7 @@ var express = require('express'),
     MemoryStore = require('memorystore')(session),
     authorization = require('express-authorization'),
     createElement = require('create-element'),
-    babel-polyfill = require("babel-polyfill");
+    babelPolyfill = require("babel-polyfill");
 
 var app = express();
 
