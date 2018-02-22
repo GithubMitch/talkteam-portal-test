@@ -1,6 +1,7 @@
 /**
  * Module dependencies.
  */
+import 'babel-polyfill';
 
 var express = require('express'),
     routes = require('./routes'),

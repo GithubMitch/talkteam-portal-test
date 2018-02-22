@@ -6,6 +6,7 @@
     "start": "node app.js"
   },
   "dependencies": {
+    "babel-polyfill": "^6.26.0",
     "body-parser": "1.17.x",
     "bootstrap": "^4.0.0",
     "browserify": "^15.2.0",
