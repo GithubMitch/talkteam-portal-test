@@ -113,7 +113,7 @@ app.get('/toc', routes.toc);
 app.get('/faq', routes.faq);
 app.get('/logout', routes.logout);
 
-app.post('/register', function(req, res) {
+app.post('/post/registerform', function(req, res) {
     var regUser = req.body.username;
     var regPassword = req.body.password;
 

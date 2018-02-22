@@ -36,7 +36,6 @@
 
 <body>
 	<div id="wrap">
-
 		<header class = "fluid-container">
 			<div class="container">
 				<div class="row">
@@ -60,17 +59,21 @@
 						<nav id="mainmenu">
 							<ul>
 								<% if (typeof lang == 'undefined' || lang == 'en') { %>
-									<li><a href="/home">Home</a></li>
-									<li><a href="/register">Register</a></li>
-									<li><a href="/downloads">Downloads</a></li>
-									<li><a href="/faq">F.A.Q</a></li>
-									<li><a href="/news">News</a></li>
+								  <li><a href="/home">Home</a></li>
+									<% if (!username) { %>
+										<li><a href="/register">Register</a></li>
+									<% } %>
+								  <li><a href="/downloads">Downloads</a></li>
+								  <li><a href="/faq">F.A.Q</a></li>
+								  <li><a href="/news">News</a></li>
 								<% } else if (lang == 'nl') { %>
-									<li><a href="/home">Home</a></li>
-									<li><a href="/register">Registreer</a></li>
-									<li><a href="/downloads">Downloads</a></li>
-									<li><a href="/faq">F.A.Q</a></li>
-									<li><a href="/news">Nieuws</a></li>
+								  <li><a href="/home">Home</a></li>
+									<% if (!username) { %>
+										<li><a href="/register">Registreer</a></li>
+									<% } %>
+								  <li><a href="/downloads">Downloads</a></li>
+								  <li><a href="/faq">F.A.Q</a></li>
+								  <li><a href="/news">Nieuws</a></li>
 								<% } %>
 
 								<% if (typeof lang == 'undefined' || lang == 'en') { %>
@@ -133,9 +136,13 @@
 			</dl>
 		</div>
 		<div class="col-12 list_all_users">
-			<!-- <% if (userRows) { %> -->
+			<% if (admin) { %>
 				<% for(var i=0; i < userRows.length; i++) { %>
-					<dl>
+					<dl class="dl-horizontal">
+						<legend>
+							<img class="admin_icon" src="images/organisation_icon.png">
+							<%= organisationName %>
+						</legend>
 						<tr>
 						<% for(var j=0; j < Object.keys(userRows[i]).length; j++) { %>
 								<dt><%= Object.keys(userRows[i])[j] %></dt>
@@ -146,7 +153,7 @@
 					<br>
 
 					<% } %>
-				<!-- <% } %> -->
+				<% } %>
 			</div>
 
 </section>
@@ -189,5 +196,22 @@
 </div>
 	<script type="text/javascript" src="/scripts/loginbutton.js"></script>
 	<script type="text/javascript" src="/scripts/custom_menu.js"></script>
+	<script type="text/javascript">
+	$(document).ready(function() {
+		// Removing _rev because its unnecesary info taking up row space
+		var dt = $("dt");
+		for (i = 0; i < dt.length; i++) {
+	    if (dt[i].innerHTML == '_rev') {
+				$(dt[i]).nextUntil( function () {
+					$(this).remove();
+					console.log('removed DD');
+				});
+				dt[i].remove();
+				console.log("Removed element")
+			}
+
+		};
+	});
+	</script>
 </body>
 </html>

@@ -60,13 +60,19 @@
 							<ul>
 								<% if (typeof lang == 'undefined' || lang == 'en') { %>
 									<li><a href="/home">Home</a></li>
-									<li><a href="/register">Register</a></li>
+									<% if (!username) { %>
+										<li><a href="/register">Register</a></li>
+									<% } %>
 									<li><a href="/downloads">Downloads</a></li>
+									<li><a href="/faq">F.A.Q</a></li>
 									<li><a href="/news">News</a></li>
 								<% } else if (lang == 'nl') { %>
 									<li><a href="/home">Home</a></li>
-									<li><a href="/register">Registreer</a></li>
+									<% if (!username) { %>
+										<li><a href="/register">Registreer</a></li>
+									<% } %>
 									<li><a href="/downloads">Downloads</a></li>
+									<li><a href="/faq">F.A.Q</a></li>									
 									<li><a href="/news">Nieuws</a></li>
 								<% } %>
 
@@ -102,12 +108,17 @@
 		<div class="col-12">
 			<h2>Login</h2>
 			<br>
-			<form class="loginForm" method="post">
-				<h3>Login here</h3>
-				<br>
-				<input type="text" name="username" value="200077317">
-				<input type="text" name="password" value="nonechecked">
-				<button type="submit" name="button">Login</button>
+			<span>Login here with your username and password</span>
+			<form id="loginForm" class="loginForm shortForm" method="post">
+				<div>
+						<label>Username:</label>
+						<input type="text" name="username" value="200077317">
+				</div>
+				<div>
+						<label>Username:</label>
+						<input type="text" name="password" value="nonechecked">
+				</div>
+				<input type="submit" name="button" value="login">
 			</form>
 		</div>
 	</div>

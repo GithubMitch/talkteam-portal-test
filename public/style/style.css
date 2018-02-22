@@ -234,9 +234,6 @@ a.logo {
 	position: absolute;
 	right: 29px;
 }
-.login a {
-	/* color:inherit; */
-}
 
 .appTitle {
 	padding: 15px;
@@ -332,12 +329,16 @@ header {
 	list-style:inside;
 	text-align:left;
 }
-
-dl {
+dl.dl-horizontal legend{
+	margin-top: .5em;
+	padding-bottom: .5em;
+	border-bottom: 1px solid #ccc;
+}
+dl.dl-horizontal {
 	border: 3px double #ccc;
 	padding: 0.5em;
 }
-dt {
+.dl-horizontal dt {
 	float: left;
 	clear: left;
 	/* width:30%; */
@@ -345,10 +346,10 @@ dt {
 	text-align: right;
 	font-weight: bold;
 }
-dt::after {
+.dl-horizontal dt::after {
 	content: ":";
 }
-dd {
+.dl-horizontal dd {
 	margin: 0 ;
 	margin-left: calc(45% + 20px) ;
 	text-align: left;
@@ -360,8 +361,13 @@ dd {
 	bottom:20px;
 	z-index:999;
 }
+.shortForm {
+	max-width:300px;
+	margin:auto;
+}
+
 button[type=submit] ,
-#regForm input[type=submit] ,
+.shortForm input[type=submit] ,
 .adminPanel input {
 	-webkit-appearance: button;
 	height: 42px;
@@ -385,6 +391,10 @@ button[type=submit] ,
 	background-color: #3f125e;
   color: #fff;
   text-decoration: none;
+}
+.shortForm input[type=submit] {
+	margin:0;
+	margin-top:1em;
 }
 
 .loginForm input {
@@ -427,8 +437,8 @@ button[type=submit] ,
 }
 .user_icon ,
 .admin_icon  {
-	width:50px;
-	height:50px;
+	width:30px;
+	height:30px;
 }
 .user h3 {
 	display: block;
@@ -466,6 +476,10 @@ border-bottom:1px solid #ccc;
 /* FAQS */
 .question {
 	cursor: pointer;
+	transition: .6s ease color;
+}
+.question:hover {
+	color:#35B297;
 }
 .question .opened {
 	display:inline;
@@ -482,9 +496,26 @@ border-bottom:1px solid #ccc;
 .question .answer {
 	display:none;
 	background:mintcream;
+	margin-bottom:3em;
 }
 .question.active .answer {
 	display:block;
+}
+.general ,
+.personal ,
+.banking  {
+	display:block;
+	margin-bottom:1.5em;
+	margin-top:1em;
+}
+.general h3,
+.personal h3,
+.banking h3 {
+	font-size:1.75em;
+	border-bottom:1px solid #ccc;
+	margin-bottom:.5em;
+	padding-bottom:.5em;
+	font-family: monospace;
 }
 
 #faqform {
@@ -492,40 +523,62 @@ border-bottom:1px solid #ccc;
 	border:3px double #ccc;
 	padding:2em;
 }
+#faqform textarea {
+	display:inline-block;
+	width:65%;
+	padding: 0em .5em;
+	vertical-align: top;
+	margin-bottom: .5rem;
+}
 #faqform select{
 	display:inline-block;
-	width:45%;
-	height:42px;
+	width:65%;
+	height:38px;
   padding: 0em .5em;
+	margin-bottom: .5rem;
+	text-transform: capitalize;
 }
 #faqform input{
 	display:inline-block;
-	width:45%;
+	width:65%;
   padding: 0em .5em;
+	margin-bottom: .5rem;
+}
+#faqform label[for="form_question"] {
+	vertical-align: top;
 }
 #faqform label{
 	display:inline-block;
-	width:45%;
+	width: calc(35% - 1%);
   padding: 0em .5em;
+  text-align: left;
 
 }
 #faqform input[type=submit] {
-	width:100%;
+	width: calc(100% - .25%);
 	display:block;
 	background:#35B297;
 	border:0;
 	color:#fff;
 	height:42px;
+	margin:auto;
 }
 #form_organisation[type="text" i]:disabled {
 	background:url("../images/organisation_icon.png")no-repeat 10px center;
   background-color:#fff;
 	background-size:18px;
+	border: 1px solid #aaa;
+	box-shadow: inset 0 0 black;
+	opacity:.6;
 	padding-left: 40px;
-	font-size:.666em;
 }
-
-
+#form_email[type="text" i]:disabled {
+  background-color:#fff;
+	background-size:18px;
+	border: 1px solid #aaa;
+	box-shadow: inset 0 0 black;
+	opacity:.6;
+}
 
 
 
@@ -545,6 +598,16 @@ border-bottom:1px solid #ccc;
 	header .col-3.mr-auto {
 		text-align:center;
 	}
+	#faqform label {padding:0;margin-bottom:.25em;}
+	#faqform select,
+	#faqform input,
+	#faqform label ,
+	#faqform textarea {
+		width:100%;
+		max-height:100px;
+	}
+	.dl-horizontal dt ,
+	.dl-horizontal dd {text-align:center;width:100%;margin:0;}
 }
 
 /* // Medium devices (tablets, 768px and up) */
@@ -574,71 +637,13 @@ border-bottom:1px solid #ccc;
 		right: 90px;
 		bottom: 20px;
 	}
+	#faqform select {
+		height:26px;
+	}
+	.shortForm {
+		max-width:218px;
+	}
 }
-
-
-<% userlist.forEach(function(user) { %>
-	<legend>
-		<img class="admin_icon" src="images/organisation_icon.png">
-		<% if (organisationName) { %><%= organisationName %><% } %> account
-	</legend>
-	<dl class="dl-horizontal">
-		<% Object.entries(user.doc).forEach(([key, value]) => { %>
-			<dt>
-				<%= key %>
-			</dt>
-			<dd>
-				<%= value %>
-			</dd>
-		<% }); %>
-	</dl>
-<% }); %>
-
-<% if (userlist) { %>
-	<% userlist.forEach(function(user) { %>
-		<div class="user">
-			<h3>
-				<img class="user_icon" src="images/organisation_icon.png">
-				<%= user.doc.organisationName %>
-				<%= user.doc.orgName %>
-			</h3>
-			<ul class="userInfo">
-				<% Object.keys(user.doc).forEach(function(key) { %>
-					<li><%= key %></li>
-				<% }); %>
-			</ul>
-			<ul class="userInfo">
-				<% Object.values(user.doc).forEach(function(value) { %>
-					<li><%= value %></li>
-				<% }); %>
-			</ul>
-		</div>
-
-	<% }); %>
-<% } %>
-/* <% for(var i=0; i < userlist.length; i++) { %>
-	<table>
-			<tr>
-				<td><%= Object.keys(userlist[i].doc) %></td>
-				<td><%= Object.values(userlist[i].doc) %></td>
-			</tr>
- </table>
- <br>
-<% } %> */
-
-var printUserlist = [];
-docs.rows.forEach(function(user) {
-	Object.entries(user.doc).forEach(([key, value]) => {
-		var userKey = key;
-		var userVal = value;
-		console.log(userKey , userVal);
-		printUserlist.push(userKey + ":" + userVal);
-
-	});
-});
-console.log(printUserlist);
-
-req.session.userlist = printUserlist;
 
 
 /* // Large devices (desktops, 992px and up) */

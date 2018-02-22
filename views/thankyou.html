@@ -47,13 +47,23 @@
 					<div class="col-2 col-sm-9 col-xs-9 col-auto">
 						<a id="hamburger" href="#mainmenu"></a>
 						<nav id="mainmenu">
-							<ul>
-								<li><a href="/">Home</a></li>
-								<li><a href="/register">Register</a></li>
-								<li><a href="/downloads">Downloads</a></li>
-								<li><a href="/news">News</a></li>
-								<li class="english"><a href="/translate">EN</a></li>
-							</ul>
+							<% if (typeof lang == 'undefined' || lang == 'en') { %>
+							  <li><a href="/home">Home</a></li>
+								<% if (!username) { %>
+									<li><a href="/register">Register</a></li>
+								<% } %>
+							  <li><a href="/downloads">Downloads</a></li>
+							  <li><a href="/faq">F.A.Q</a></li>
+							  <li><a href="/news">News</a></li>
+							<% } else if (lang == 'nl') { %>
+							  <li><a href="/home">Home</a></li>
+								<% if (!username) { %>
+									<li><a href="/register">Registreer</a></li>
+								<% } %>
+							  <li><a href="/downloads">Downloads</a></li>
+							  <li><a href="/faq">F.A.Q</a></li>
+							  <li><a href="/news">Nieuws</a></li>
+							<% } %>
 						</nav>
 						<div class="login">
 							<% if (username) { %>

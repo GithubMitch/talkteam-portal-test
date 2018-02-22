@@ -59,15 +59,21 @@
 						<nav id="mainmenu">
 							<ul>
 								<% if (typeof lang == 'undefined' || lang == 'en') { %>
-									<li><a href="/home">Home</a></li>
-									<li><a href="/register">Register</a></li>
-									<li><a href="/downloads">Downloads</a></li>
-									<li><a href="/news">News</a></li>
+								  <li><a href="/home">Home</a></li>
+									<% if (!username) { %>
+										<li><a href="/register">Register</a></li>
+									<% } %>
+								  <li><a href="/downloads">Downloads</a></li>
+								  <li><a href="/faq">F.A.Q</a></li>
+								  <li><a href="/news">News</a></li>
 								<% } else if (lang == 'nl') { %>
-									<li><a href="/home">Home</a></li>
-									<li><a href="/register">Registreer</a></li>
-									<li><a href="/downloads">Downloads</a></li>
-									<li><a href="/news">Nieuws</a></li>
+								  <li><a href="/home">Home</a></li>
+									<% if (!username) { %>
+										<li><a href="/register">Registreer</a></li>
+									<% } %>
+								  <li><a href="/downloads">Downloads</a></li>
+								  <li><a href="/faq">F.A.Q</a></li>
+								  <li><a href="/news">Nieuws</a></li>
 								<% } %>
 
 								<% if (typeof lang == 'undefined' || lang == 'en') { %>
@@ -104,7 +110,6 @@
 			<h2>
 				Frequently asked questions
 			</h2>
-
       <div class="general">
         <h3>General</h3>
         <div class="qlist">
@@ -116,17 +121,50 @@
               If the F.A.Q. page left your question un-answered you might want to try our <a href="#faqform">form</a> down below.
             </div>
           </div>
+					<div class="question">
+						Cliche live-edge squid, lyft shoreditch ?
+						<span class="closed">&#9650;</span>
+						<span class="opened">&#9660;</span>
+						<div class="answer">
+							This is the best answer to your question.
+						</div>
+					</div>
+					<div class="question">
+						+1 jianbing fanny pack mixtape copper mug ?
+						<span class="closed">&#9650;</span>
+						<span class="opened">&#9660;</span>
+						<div class="answer">
+							Meditation cardigan fixie before they sold out 90's listicle distillery.
+						</div>
+					</div>
         </div>
       </div>
       <div class="personal">
         <h3>Personal</h3>
         <div class="qlist">
           <div class="question">
-            Where can i send in questions ?
+            Sartorial synth brooklyn distillery wolf. Hexagon schlitz ?
             <span class="closed">&#9650;</span>
             <span class="opened">&#9660;</span>
             <div class="answer">
-              If the F.A.Q. page left your question un-answered you might want to try our <a href="#faqform">form</a> down below.
+              lumbersexual jianbing heirloom authentic.
+							fixie before they sold out 90's listicle distillery you might want to try
+            </div>
+          </div>
+          <div class="question">
+            Man braid typewriter drinking vinegar ?
+            <span class="closed">&#9650;</span>
+            <span class="opened">&#9660;</span>
+            <div class="answer">
+              franzen craft beer viral adaptogen tote bag kickstarter cliche.
+            </div>
+          </div>
+          <div class="question">
+						Four loko palo santo skateboard bespoke?
+            <span class="closed">&#9650;</span>
+            <span class="opened">&#9660;</span>
+            <div class="answer">
+							Post-ironic tofu sartorial bespoke venmo before they sold out church-key.
             </div>
           </div>
         </div>
@@ -135,31 +173,36 @@
         <h3>Banking</h3>
         <div class="qlist">
           <div class="question">
-            Where can i send in questions ?
+						polaroid blog sriracha?
             <span class="closed">&#9650;</span>
             <span class="opened">&#9660;</span>
             <div class="answer">
-              If the F.A.Q. page left your question un-answered you might want to try our <a href="#faqform">form</a> down below.
+							3 wolf moon pop-up banjo cronut
             </div>
           </div>
         </div>
       </div>
 
+			<% if (_id) { %>
+				<form id="faqform" class="" action="/post/faq" method="post">
+					<label for="form_subject">Subject:</label>
+					<select id="form_subject" name="subject">
+						<option value="general">general</option>
+						<option value="personal">personal</option>
+						<option value="banking">banking</option>
+						<option value="technical">technical</option>
+					</select>
+					<label for="form_organisation">Organisation:</label>
+					<input id="form_organisation" type="text" name="form_organisation" title="<%= organisationName %>" value="<%= organisationName %>" disabled="disabled">
+					<label for="form_email">Email:</label>
+					<input id="form_email" type="text" name="form_email" title="<%= JSON.parse(organisationEmail) %>" value="<%= JSON.parse(organisationEmail) %>" disabled="disabled">
+					<label for="form_question">Question:</label>
+					<textarea id="form_question" name="form_question" rows="8"></textarea>
+					<input type="submit" name="" value="Send">
+				</form>
+			<% } %>
 
-      <form id="faqform" class="" action="/post/faq" method="post">
-        <label for="form_subject">Subject:</label>
-        <select id="form_subject" name="subject">
-          <option value="general">general</option>
-          <option value="personal">personal</option>
-          <option value="banking">banking</option>
-          <option value="technical">technical</option>
-        </select>
-        <label for="form_organisation">Organisation:</label>
-        <input id="form_organisation" type="text" name="form_organisation" value="<%= organisationName %>" disabled="disabled">
-        <label for="form_question">Question:</label>
-        <input id="form_question" type="text" name="form_question">
-        <input type="submit" name="" value="Send">
-      </form>
+
 		</div>
 
 		<% if (typeof admin == 'undefined') { %>
