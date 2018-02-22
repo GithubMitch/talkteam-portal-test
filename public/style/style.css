@@ -577,8 +577,68 @@ border-bottom:1px solid #ccc;
 }
 
 
+<% userlist.forEach(function(user) { %>
+	<legend>
+		<img class="admin_icon" src="images/organisation_icon.png">
+		<% if (organisationName) { %><%= organisationName %><% } %> account
+	</legend>
+	<dl class="dl-horizontal">
+		<% Object.entries(user.doc).forEach(([key, value]) => { %>
+			<dt>
+				<%= key %>
+			</dt>
+			<dd>
+				<%= value %>
+			</dd>
+		<% }); %>
+	</dl>
+<% }); %>
 
+<% if (userlist) { %>
+	<% userlist.forEach(function(user) { %>
+		<div class="user">
+			<h3>
+				<img class="user_icon" src="images/organisation_icon.png">
+				<%= user.doc.organisationName %>
+				<%= user.doc.orgName %>
+			</h3>
+			<ul class="userInfo">
+				<% Object.keys(user.doc).forEach(function(key) { %>
+					<li><%= key %></li>
+				<% }); %>
+			</ul>
+			<ul class="userInfo">
+				<% Object.values(user.doc).forEach(function(value) { %>
+					<li><%= value %></li>
+				<% }); %>
+			</ul>
+		</div>
 
+	<% }); %>
+<% } %>
+/* <% for(var i=0; i < userlist.length; i++) { %>
+	<table>
+			<tr>
+				<td><%= Object.keys(userlist[i].doc) %></td>
+				<td><%= Object.values(userlist[i].doc) %></td>
+			</tr>
+ </table>
+ <br>
+<% } %> */
+
+var printUserlist = [];
+docs.rows.forEach(function(user) {
+	Object.entries(user.doc).forEach(([key, value]) => {
+		var userKey = key;
+		var userVal = value;
+		console.log(userKey , userVal);
+		printUserlist.push(userKey + ":" + userVal);
+
+	});
+});
+console.log(printUserlist);
+
+req.session.userlist = printUserlist;
 
 
 /* // Large devices (desktops, 992px and up) */
