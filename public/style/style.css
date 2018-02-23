@@ -346,6 +346,7 @@ dl.dl-horizontal legend{
 	margin-top: .5em;
 	padding-bottom: .5em;
 	border-bottom: 1px solid #ccc;
+	cursor:pointer;
 }
 dl.dl-horizontal {
 	border: 3px double #ccc;
@@ -358,6 +359,7 @@ dl.dl-horizontal {
 	width:45%;
 	text-align: right;
 	font-weight: bold;
+	display:none;
 }
 .dl-horizontal dt::after {
 	content: ":";
@@ -367,6 +369,7 @@ dl.dl-horizontal {
 	margin-left: calc(45% + 20px) ;
 	text-align: left;
 	padding: 0 0 0.5em 0;
+	display:none;
 }
 .adminPanel {
 	position:fixed;
@@ -494,16 +497,18 @@ border-bottom:1px solid #ccc;
 .question:hover {
 	color:#35B297;
 }
-.question .opened {
+.opened {
 	display:inline;
+	margin-left:5px;
 }
-.question .closed {
+.closed {
+	display:none;
+	margin-left:5px;
+}
+.active .opened{
 	display:none;
 }
-.question.active .opened{
-	display:none;
-}
-.question.active .closed{
+.active .closed{
 	display:inline;
 }
 .question .answer {

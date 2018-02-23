@@ -139,7 +139,7 @@
 					<dl class="dl-horizontal">
 						<legend>
 							<img class="admin_icon" src="images/organisation_icon.png">
-							<%= organisationName %>
+							<%= organisationName %><span class="closed">&#9650;</span><span class="opened">&#9660;</span>
 						</legend>
 						<tr>
 						<% for(var j=0; j < Object.keys(userRows[i]).length; j++) { %>
@@ -176,6 +176,21 @@
 				dt[i].remove();
 			}
 		};
+
+		var userTable = $(".list_all_users .dl-horizontal");
+		$(userTable).on('click', function(){
+			$(this).children('dt').slideToggle(function(){
+
+			});
+			var $el = $(this);
+			setTimeout(function () {
+				$el.toggleClass('active');
+			}, 500);
+			$(this).children('dd').slideToggle(function(){});
+			// $(this).children('dd').slideToggle(function(){
+			// 	 $(this).parent('.question').toggleClass('active');
+			// });
+		})
 	});
 	</script>
 </body>
