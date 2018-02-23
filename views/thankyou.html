@@ -40,30 +40,48 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-3 mr-auto">
+						<!-- <img class="newappIcon" src="images/e-office_logo.svg"> -->
 						<a class="logo" href="/">
-						  <img class="newappIcon" src="images/talkteam_logo1.png">
+							<img class="newappIcon" src="images/talkteam_logo1.png">
 						</a>
 					</div>
 					<div class="col-2 col-sm-9 col-xs-9 col-auto">
+						<% if (typeof lang == 'undefined' || lang == 'en') { %>
+						<div class="mobile-lang">
+							<a href="?clang=nl"><img src="images/nl.png" alt="Dutch flag" height="34" width="34"></a>
+						</div>
+						<% } else if (lang == 'nl') { %>
+							<div class="mobile-lang">
+								<a href="?clang=en"><img src="images/en.png" alt="British flag" height="34" width="34"></a>
+							</div>
+						<% } %>
 						<a id="hamburger" href="#mainmenu"></a>
 						<nav id="mainmenu">
-							<% if (typeof lang == 'undefined' || lang == 'en') { %>
-							  <li><a href="/home">Home</a></li>
-								<% if (!username) { %>
-									<li><a href="/register">Register</a></li>
+							<ul>
+								<% if (typeof lang == 'undefined' || lang == 'en') { %>
+								  <li><a href="/home">Home</a></li>
+									<% if (!username) { %>
+										<li><a href="/register">Register</a></li>
+									<% } %>
+								  <li><a href="/downloads">Downloads</a></li>
+								  <li><a href="/faq">F.A.Q</a></li>
+								  <li><a href="/news">News</a></li>
+								<% } else if (lang == 'nl') { %>
+								  <li><a href="/home">Home</a></li>
+									<% if (!username) { %>
+										<li><a href="/register">Registreer</a></li>
+									<% } %>
+								  <li><a href="/downloads">Downloads</a></li>
+								  <li><a href="/faq">F.A.Q</a></li>
+								  <li><a href="/news">Nieuws</a></li>
 								<% } %>
-							  <li><a href="/downloads">Downloads</a></li>
-							  <li><a href="/faq">F.A.Q</a></li>
-							  <li><a href="/news">News</a></li>
-							<% } else if (lang == 'nl') { %>
-							  <li><a href="/home">Home</a></li>
-								<% if (!username) { %>
-									<li><a href="/register">Registreer</a></li>
+
+								<% if (typeof lang == 'undefined' || lang == 'en') { %>
+									<li class="lang"><a href="?clang=nl"><img src="images/nl.png" alt="Dutch flag" height="34" width="34"></a></li>
+								<% } else if (lang == 'nl') { %>
+									<li class="lang"><a href="?clang=en"><img src="images/en.png" alt="British flag" height="34" width="34"></a></li>
 								<% } %>
-							  <li><a href="/downloads">Downloads</a></li>
-							  <li><a href="/faq">F.A.Q</a></li>
-							  <li><a href="/news">Nieuws</a></li>
-							<% } %>
+							</ul>
 						</nav>
 						<div class="login">
 							<% if (username) { %>
@@ -76,7 +94,7 @@
 					</div>
 				</div>
 			</div>
-	</header>
+		</header>
 
 <div class="fluid-container">
 	<div class="row">

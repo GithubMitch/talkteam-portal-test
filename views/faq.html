@@ -184,9 +184,9 @@
       </div>
 
 			<% if (_id) { %>
-				<form id="faqform" class="" action="/faqform/post" method="post">
+				<form id="faqform" action="/faqform/post" method="post">
 					<label for="form_subject">Subject:</label>
-					<select id="form_subject" name="subject">
+					<select id="form_subject" name="subject" value="">
 						<option value="general">general</option>
 						<option value="personal">personal</option>
 						<option value="banking">banking</option>
@@ -198,7 +198,7 @@
 					<input id="form_email" type="text" name="form_email" title="<%= JSON.parse(organisationEmail) %>" value="<%= JSON.parse(organisationEmail) %>" disabled="disabled">
 					<label for="form_question">Question:</label>
 					<textarea id="form_question" name="form_question" rows="8"></textarea>
-					<input type="submit" name="" value="Send">
+					<input type="submit" name="button" value="Send">
 				</form>
 			<% } %>
 
@@ -237,6 +237,9 @@
          $(this).parent('.question').toggleClass('active');
       });
     })
+		function run() {
+				document.getElementById("srt").value = document.getElementById("Ultra").value;
+		}
   });
 </script>
 <script src="./lib/domJSON.js"></script>

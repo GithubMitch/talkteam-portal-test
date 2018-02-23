@@ -79,7 +79,7 @@ app.use(session({
 }));
 
 mailer.extend(app, {
-  from: 'no-reply@TalkTeam-portal.com',
+  from: 'no-reply@gmail.com',
   host: 'smtp.gmail.com', // hostname
   secureConnection: true, // use SSL
   port: 465, // port for secure SMTP
@@ -307,15 +307,18 @@ app.post('/login', function (req, res) {
 //   res.redirect('/'+currentPage+);
 // });
 app.post('/faqform/post', function(req, res) {
+  console.log('MAIL IS SEND WITH :' + req.body.form_organisation , req.body.form_subject , req.body.form_email, req.body.form_question )
   app.mailer.send(
     {
-      template: 'faqmail.html' // REQUIRED
+      template: 'faqmail.html', // REQUIRED
+      from: 'no-reply@gmail.com'
     },
     {
       to: 'mitchell.seedorf@e-office.com',
       subject: req.body.form_subject,
       otherProperty: 'Other Property',
-      title: req.body.form_organisation
+      title: req.body.form_organisation,
+      body: req.body.form_question
     },
     function (err) {
       if (err) {
