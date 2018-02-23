@@ -276,7 +276,21 @@ a.logo {
 .appinfo {
 	padding: 10px;
 }
-
+/* CSS FOR DROPDOWN triangle */
+.opened {
+	display:inline;
+	margin-left:5px;
+}
+.closed {
+	display:none;
+	margin-left:5px;
+}
+.active .opened{
+	display:none;
+}
+.active .closed{
+	display:inline;
+}
 
 /* //// CUSTOM style */
 #wrap {
@@ -347,6 +361,16 @@ dl.dl-horizontal legend{
 	padding-bottom: .5em;
 	border-bottom: 1px solid #ccc;
 	cursor:pointer;
+	transition:.3s ease color;
+}
+dl.dl-horizontal:hover{
+	color:#35B297;
+}
+dl.dl-horizontal.active legend {
+	color:#35B297;
+}
+dl.dl-horizontal.active {
+  outline: #35B297 1px solid;
 }
 dl.dl-horizontal {
 	border: 3px double #ccc;
@@ -496,20 +520,6 @@ border-bottom:1px solid #ccc;
 }
 .question:hover {
 	color:#35B297;
-}
-.opened {
-	display:inline;
-	margin-left:5px;
-}
-.closed {
-	display:none;
-	margin-left:5px;
-}
-.active .opened{
-	display:none;
-}
-.active .closed{
-	display:inline;
 }
 .question .answer {
 	display:none;

@@ -14,7 +14,8 @@ var express = require('express'),
     MemoryStore = require('memorystore')(session),
     authorization = require('express-authorization'),
     createElement = require('create-element'),
-    babelPolyfill = require("babel-polyfill");
+    babelPolyfill = require("babel-polyfill"),
+    mailer = require('express-mailer');
 
 var app = express();
 
@@ -76,6 +77,18 @@ app.use(session({
     resave: true,
     saveUninitialized: true
 }));
+
+mailer.extend(app, {
+  from: 'no-reply@TalkTeam-portal.com',
+  host: 'smtp.gmail.com', // hostname
+  secureConnection: true, // use SSL
+  port: 465, // port for secure SMTP
+  transportMethod: 'SMTP', // default is SMTP. Accepts anything that nodemailer accepts
+  auth: {
+    user: 'mseedorf2018@gmail.com',
+    pass: 'onelove1'
+  }
+});
 
 // development only
 if ('development' == app.get('env')) {
@@ -293,6 +306,41 @@ app.post('/login', function (req, res) {
 //   delete req.session.lang;
 //   res.redirect('/'+currentPage+);
 // });
+app.post('/faqform/post', function(req, res) {
+  app.mailer.send(
+    {
+      template: 'faqmail.html' // REQUIRED
+    },
+    {
+      to: 'mitchell.seedorf@e-office.com',
+      subject: req.body.form_subject,
+      otherProperty: 'Other Property',
+      title: req.body.form_organisation
+    },
+    function (err) {
+      if (err) {
+        // handle error
+        console.log(err);
+        res.send('There was an error rendering the email');
+        return;
+      };
+        // mail sent!
+        res.redirect('/thankyou');
+    }
+  );
+    // res.mailer.render('faqmail.html', {
+    //   to: 'mitchell.seedorf@e-office.com',
+    //   subject: 'Test Email',
+    //   otherProperty: 'Other Property',
+    //   title: req.body.form_organisation
+    // }, function (err, message) {
+    //   if (err) {
+    //
+    //   }
+    //   res.header('Content-Type', 'text/plain');
+    //   res.send(message);
+    // });
+});
 app.post('/admin_cm/post', function(req, res) {
   console.log("ADMIN POST - TOOK PLACE IN /ADMIN/POST ----> ROUTING FROM THIS PATH", req.url);
 

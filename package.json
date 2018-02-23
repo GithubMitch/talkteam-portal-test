@@ -19,6 +19,7 @@
     "errorhandler": "1.5.x",
     "express": "4.15.x",
     "express-authorization": "^1.0.0",
+    "express-mailer": "^0.3.1",
     "express-session": "^1.15.6",
     "jade": "^1.11.0",
     "jquery": "^3.3.1",

@@ -176,7 +176,7 @@
 				dt[i].remove();
 			}
 		};
-
+		// User tables are now dropdown
 		var userTable = $(".list_all_users .dl-horizontal");
 		$(userTable).on('click', function(){
 			$(this).children('dt').slideToggle(function(){
@@ -187,9 +187,6 @@
 				$el.toggleClass('active');
 			}, 500);
 			$(this).children('dd').slideToggle(function(){});
-			// $(this).children('dd').slideToggle(function(){
-			// 	 $(this).parent('.question').toggleClass('active');
-			// });
 		})
 	});
 	</script>
