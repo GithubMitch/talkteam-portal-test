@@ -31,28 +31,27 @@
 	<script src="/js/jquery.min.js"></script>
 	<script src="/js/bootstrap.min.js"></script>
 	<script src="/js/jquery.mmenu.all.js"></script>
+	<script src="/js/polyfill.js"></script>
 </head>
 
 <body>
 	<div id="wrap">
-
 		<header class = "fluid-container">
 			<div class="container">
 				<div class="row">
 					<div class="col-3 mr-auto">
-						<!-- <img class="newappIcon" src="images/e-office_logo.svg"> -->
 						<a class="logo" href="/">
-							<img class="newappIcon" src="images/talkteam_logo1.png"><%= lang %>
+							<img class="newappIcon" src="images/talkteam_logo1.png">
 						</a>
 					</div>
 					<div class="col-2 col-sm-9 col-xs-9 col-auto">
 						<% if (typeof lang == 'undefined' || lang == 'en') { %>
 						<div class="mobile-lang">
-							<a href="?clang=nl"><img src="images/nl.png" alt="Dutch flag" height="34" width="34"></a>
+							<a href="/?clang=nl"><img src="images/nl.png" alt="Dutch flag" height="34" width="34"></a>
 						</div>
 						<% } else if (lang == 'nl') { %>
 							<div class="mobile-lang">
-								<a href="?clang=en"><img src="images/en.png" alt="British flag" height="34" width="34"></a>
+								<a href="/?clang=en"><img src="images/en.png" alt="British flag" height="34" width="34"></a>
 							</div>
 						<% } %>
 						<a id="hamburger" href="#mainmenu"></a>
@@ -106,47 +105,78 @@
 
 <section class="container main">
 	<div class="row intro">
-		<div class="col-12 admin_cm">
+		<div class="col-12">
 			<h2>
-				News & Updates
+				Welcome, this is a authorized environment !	<br>
+			<span style="font-size: 10px;">u can only see this when you are logged in .</span>
 			</h2>
-			<p>
-				Meetings are a waste of time? Losing overview of all submitted documents? Not clear which agreements have been made after the meeting? Meetings will be better, smarter and easier using TalkTeam. An app which uses the power of IBM Connections.
-			</p>
-		</div>
-		<div class="col-12 admin_cm purplebox">
-			<h3>
-				paperless and transparent
-			</h3>
-			<p>
-				TalkTeam is a smart addition to IBM Connections. It integrates into the company-wide social platform and enriches IBM Connections with a number of useful tools. TalkTeam offers a clear meeting structure with information from a community and presents it in a simple way. You have a clear perception of each meeting.
-			</p>
-			<p>
-				A meeting consists of a number of participants. TalkTeam offers the possibility to organize a single meeting or a recurring meeting with a team. TalkTeam also shows your meeting directly on your calendar.
-			</p>
-			<p>
-				Participants can add agenda items and documents, and have the opportunity to take notes. During the meeting the agenda items are being discussed and action points and decisions can be specified.
-			</p>
-			<p>
-				All information is part of the collaboration platform IBM Connections, which makes it easy for those concerned to find the information.
-			</p>
-		</div>
+			<dl class="dl-horizontal">
+				<% if (admin) { %>
+					<legend>
+						<img class="admin_icon" src="images/admin_icon.png">
+						Admin account
+					</legend>
+				<% } %>
+				<% if (_id) { %>
+					<dt>_id</dt>
+					<dd><%= _id %></dd>
+				<% } %>
+				<% if (username) { %>
+					<dt>username</dt>
+					<dd><%= username %></dd>
+				<% } %>
 
-		<% if (typeof admin == 'undefined') { %>
+				<% if (organisationName) { %>
+					<dt>Organisation</dt>
+					<dd><%= organisationName %></dd>
+				<% } %>
 
-		<% } else if (admin) { %>
-			<div class="adminPanel">
-				<form id="adminPost" action="/admin_cm/post" method="post">
-					<input id="jsonParser" type="text" name="_jsonParser" hidden="true" value="">
-					<input id="currentPageVar" type="text" name="currentPageVar" hidden="true" value='<%= title %>'>
-					<input id="admin_ApplyButton" name="button" value="Apply">
-					<input id="admin_SafeButton" name="button" value="Save" type="submit">
-				</form>
-				<div id="setAdmin" hidden="true">toggle setAdmin</div>
+				<% if (organisationEmail) { %>
+					<dt>Email</dt>
+					<dd><%= organisationEmail %></dd>
+				<% } %>
+
+				<% if (licensekey) { %>
+					<dt>License key</dt>
+					<dd><%= licensekey %></dd>
+				<% } %>
+
+				<% if (active) { %>
+					<dt>Active</dt>
+				  <dd><%= active %></dd>
+				<% } %>
+
+				<% if (startDate) { %>
+					<dt>Start subscription</dt>
+				  <dd><%= startDate %></dd>
+				<% } %>
+
+				<% if (endDate) { %>
+					<dt>Expiration date license</dt>
+				  <dd><%= endDate %></dd>
+				<% } %>
+			</dl>
+		</div>
+		<div class="col-12 list_all_users">
+			<% if (admin) { %>
+				<% for(var i=0; i < userRows.length; i++) { %>
+					<dl class="dl-horizontal">
+						<legend>
+							<img class="admin_icon" src="images/organisation_icon.png">
+							<%= userRows[i].orgName || userRows[i].organisationName %><span class="closed">&#9650;</span><span class="opened">&#9660;</span>
+						</legend>
+						<tr>
+						<% for(var j=0; j < Object.keys(userRows[i]).length; j++) { %>
+								<dt><%= Object.keys(userRows[i])[j] %></dt>
+								<dd><%= Object.values(userRows[i])[j] %></dd>
+						<% } %>
+					</tr>
+					</dl>
+					<br>
+
+					<% } %>
+				<% } %>
 			</div>
-		<% } %>
-
-		<input id="jsonConverter" type="text" name="_jsonConverter" hidden="true" value='<%= _jsonConverter %>'>
 
 </section>
 
@@ -156,8 +186,33 @@
 		</div>
 	</footer>
 </div>
-<script src="./lib/domJSON.js"></script>
-<script type="text/javascript" src="/scripts/admin_cm.js"></script>
-<script type="text/javascript" src="/scripts/custom_menu.js"></script>
+	<script type="text/javascript" src="/scripts/loginbutton.js"></script>
+	<script type="text/javascript" src="/scripts/custom_menu.js"></script>
+	<script type="text/javascript">
+	$(document).ready(function() {
+		// Removing _rev because its unnecesary info taking up row space
+		var dt = $("dt");
+		for (i = 0; i < dt.length; i++) {
+	    if (dt[i].innerHTML == '_rev') {
+				$(dt[i]).nextUntil( function () {
+					$(this).remove();
+				});
+				dt[i].remove();
+			}
+		};
+		// User tables are now dropdown
+		var userTable = $(".list_all_users .dl-horizontal");
+		$(userTable).on('click', function(){
+			$(this).children('dt').slideToggle(function(){
+
+			});
+			var $el = $(this);
+			setTimeout(function () {
+				$el.toggleClass('active');
+			}, 500);
+			$(this).children('dd').slideToggle(function(){});
+		})
+	});
+	</script>
 </body>
 </html>

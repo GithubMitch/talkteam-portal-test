@@ -6,20 +6,31 @@
     "start": "node app.js"
   },
   "dependencies": {
+    "babel-polyfill": "^6.26.0",
     "body-parser": "1.17.x",
     "bootstrap": "^4.0.0",
     "browserify": "^15.2.0",
     "cloudant": "1.7.x",
     "connect-multiparty": "2.0.x",
+    "create-element": "^0.2.3",
+    "domjson": "^0.1.2",
+    "dotenv": "^5.0.0",
     "ejs": "2.5.x",
     "errorhandler": "1.5.x",
     "express": "4.15.x",
+    "express-authorization": "^1.0.0",
+    "express-mailer": "^0.3.1",
+    "express-session": "^1.15.6",
+    "jade": "^1.11.0",
     "jquery": "^3.3.1",
     "jquery.mmenu": "^7.0.1",
+    "memorystore": "^1.6.0",
     "method-override": "2.3.x",
     "morgan": "1.8.x",
+    "nano": "^6.4.2",
     "popper": "^1.0.1",
-    "popper.js": "^1.12.9"
+    "popper.js": "^1.12.9",
+    "superlogin": "^0.6.1"
   },
   "repository": {},
   "engines": {

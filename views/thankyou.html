@@ -42,7 +42,7 @@
 					<div class="col-3 mr-auto">
 						<!-- <img class="newappIcon" src="images/e-office_logo.svg"> -->
 						<a class="logo" href="/">
-							<img class="newappIcon" src="images/talkteam_logo1.png"><%= lang %>
+							<img class="newappIcon" src="images/talkteam_logo1.png">
 						</a>
 					</div>
 					<div class="col-2 col-sm-9 col-xs-9 col-auto">
@@ -107,47 +107,12 @@
 <section class="container main">
 	<div class="row intro">
 		<div class="col-12 admin_cm">
-			<h2>
-				News & Updates
-			</h2>
+			<h2>Thank you !</h2>
 			<p>
-				Meetings are a waste of time? Losing overview of all submitted documents? Not clear which agreements have been made after the meeting? Meetings will be better, smarter and easier using TalkTeam. An app which uses the power of IBM Connections.
+				For making use of our services.
 			</p>
 		</div>
-		<div class="col-12 admin_cm purplebox">
-			<h3>
-				paperless and transparent
-			</h3>
-			<p>
-				TalkTeam is a smart addition to IBM Connections. It integrates into the company-wide social platform and enriches IBM Connections with a number of useful tools. TalkTeam offers a clear meeting structure with information from a community and presents it in a simple way. You have a clear perception of each meeting.
-			</p>
-			<p>
-				A meeting consists of a number of participants. TalkTeam offers the possibility to organize a single meeting or a recurring meeting with a team. TalkTeam also shows your meeting directly on your calendar.
-			</p>
-			<p>
-				Participants can add agenda items and documents, and have the opportunity to take notes. During the meeting the agenda items are being discussed and action points and decisions can be specified.
-			</p>
-			<p>
-				All information is part of the collaboration platform IBM Connections, which makes it easy for those concerned to find the information.
-			</p>
-		</div>
-
-		<% if (typeof admin == 'undefined') { %>
-
-		<% } else if (admin) { %>
-			<div class="adminPanel">
-				<form id="adminPost" action="/admin_cm/post" method="post">
-					<input id="jsonParser" type="text" name="_jsonParser" hidden="true" value="">
-					<input id="currentPageVar" type="text" name="currentPageVar" hidden="true" value='<%= title %>'>
-					<input id="admin_ApplyButton" name="button" value="Apply">
-					<input id="admin_SafeButton" name="button" value="Save" type="submit">
-				</form>
-				<div id="setAdmin" hidden="true">toggle setAdmin</div>
-			</div>
-		<% } %>
-
-		<input id="jsonConverter" type="text" name="_jsonConverter" hidden="true" value='<%= _jsonConverter %>'>
-
+	</div>
 </section>
 
 	<footer class="fluid-container">
@@ -156,8 +121,9 @@
 		</div>
 	</footer>
 </div>
-<script src="./lib/domJSON.js"></script>
-<script type="text/javascript" src="/scripts/admin_cm.js"></script>
-<script type="text/javascript" src="/scripts/custom_menu.js"></script>
+	<script type="text/javascript" src="/scripts/util.js"></script>
+	<!-- <script type="text/javascript" src="/scripts/index.js"></script> -->
+	<script type="text/javascript" src="/scripts/custom_menu.js"></script>
+
 </body>
 </html>

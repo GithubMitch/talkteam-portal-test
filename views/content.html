@@ -42,55 +42,50 @@
 					<div class="col-3 mr-auto">
 						<!-- <img class="newappIcon" src="images/e-office_logo.svg"> -->
 						<a class="logo" href="/">
-							<img class="newappIcon" src="images/talkteam_logo1.png"><%= lang %>
+							<img class="newappIcon" src="images/talkteam_logo1.png">
 						</a>
+						<div class="login">
+							<% if (username) { %>
+								<span><%= username %> <a id="logoutButton" href="/logout">Logout</a></span>
+
+							<% } %>
+							<% if (!username) { %>
+								<a id="loginButton" href="/login">Login</a>
+							<% } %>
+						</div>
 					</div>
 					<div class="col-2 col-sm-9 col-xs-9 col-auto">
 						<% if (typeof lang == 'undefined' || lang == 'en') { %>
 						<div class="mobile-lang">
-							<a href="?clang=nl"><img src="images/nl.png" alt="Dutch flag" height="34" width="34"></a>
+							<a href="/?clang=nl"><img src="images/nl.png" alt="Dutch flag" height="34" width="34"></a>
 						</div>
 						<% } else if (lang == 'nl') { %>
 							<div class="mobile-lang">
-								<a href="?clang=en"><img src="images/en.png" alt="British flag" height="34" width="34"></a>
+								<a href="/?clang=en"><img src="images/en.png" alt="British flag" height="34" width="34"></a>
 							</div>
 						<% } %>
 						<a id="hamburger" href="#mainmenu"></a>
 						<nav id="mainmenu">
 							<ul>
 								<% if (typeof lang == 'undefined' || lang == 'en') { %>
-								  <li><a href="/home">Home</a></li>
-									<% if (!username) { %>
-										<li><a href="/register">Register</a></li>
-									<% } %>
-								  <li><a href="/downloads">Downloads</a></li>
-								  <li><a href="/faq">F.A.Q</a></li>
-								  <li><a href="/news">News</a></li>
+									<li><a href="/home">Home</a></li>
+									<li><a href="/register">Register</a></li>
+									<li><a href="/downloads">Downloads</a></li>
+									<li><a href="/news">News</a></li>
 								<% } else if (lang == 'nl') { %>
-								  <li><a href="/home">Home</a></li>
-									<% if (!username) { %>
-										<li><a href="/register">Registreer</a></li>
-									<% } %>
-								  <li><a href="/downloads">Downloads</a></li>
-								  <li><a href="/faq">F.A.Q</a></li>
-								  <li><a href="/news">Nieuws</a></li>
+									<li><a href="/home">Home</a></li>
+									<li><a href="/register">Registreer</a></li>
+									<li><a href="/downloads">Downloads</a></li>
+									<li><a href="/news">Nieuws</a></li>
 								<% } %>
 
 								<% if (typeof lang == 'undefined' || lang == 'en') { %>
-									<li class="lang"><a href="?clang=nl"><img src="images/nl.png" alt="Dutch flag" height="34" width="34"></a></li>
+									<li class="lang"><a href="/?clang=nl"><img src="images/nl.png" alt="Dutch flag" height="34" width="34"></a></li>
 								<% } else if (lang == 'nl') { %>
-									<li class="lang"><a href="?clang=en"><img src="images/en.png" alt="British flag" height="34" width="34"></a></li>
+									<li class="lang"><a href="/?clang=en"><img src="images/en.png" alt="British flag" height="34" width="34"></a></li>
 								<% } %>
 							</ul>
 						</nav>
-						<div class="login">
-							<% if (username) { %>
-								<a id="logoutButton" href="/logout" style="margin-right: -4px">Logout</a>
-							<% } %>
-							<% if (!username) { %>
-								<a id="loginButton" href="/login">Login</a>
-							<% } %>
-						</div>
 					</div>
 				</div>
 			</div>
@@ -99,7 +94,8 @@
 <div class="fluid-container">
 	<div class="row">
 		<div class="col">
-			<img class="bannerimg" src="images/silhoutte2.jpg">
+			<img class="bannerimg" src="images/bannerblurred.png">
+			<!-- <img class="bannerimg" src="images/banner_talkteam1.png"> -->
 		</div>
 	</div>
 </div>
@@ -108,10 +104,17 @@
 	<div class="row intro">
 		<div class="col-12 admin_cm">
 			<h2>
-				News & Updates
+Welcome <%= username %>, this is a authorized environment !	<br>
+			<span style="font-size: 10px;">u can only see this when you are logged in .</span>
 			</h2>
+			<h3>
+				meetings will be nice and smart
+			</h3>
 			<p>
-				Meetings are a waste of time? Losing overview of all submitted documents? Not clear which agreements have been made after the meeting? Meetings will be better, smarter and easier using TalkTeam. An app which uses the power of IBM Connections.
+				Talk Team supports meeting preparations, the meetings themselves and the follow-up of action points. With TalkTeam, participants are directly involved in the agenda and meeting documents. By preparing your meetings online, there is much more time for content during the actual meeting! Meetings will no longer be endless, but concrete and to the point instead.
+			</p>
+			<p>
+					TalkTeam offers a meeting solution for all kinds of teams. A team can consist of people from the internal organization, but it is also possible to add external participants. By capturing information centrally, it is clear to everyone what they are expected to do.
 			</p>
 		</div>
 		<div class="col-12 admin_cm purplebox">
@@ -131,22 +134,32 @@
 				All information is part of the collaboration platform IBM Connections, which makes it easy for those concerned to find the information.
 			</p>
 		</div>
+		<div class="col-12 admin_cm">
+			<h3>
+				why do you need TalkTeam?
+			</h3>
+			<ul>
+				<li>It supports processes within a single environment</li>
+				<li>Integration with internal directory of employees</li>
+				<li>
+					Integration with calendars
+				</li>
+				<li>
+					Agreements can be directly assigned
+				</li>
+				<li>
+					It enriches your collaboration platform
+				</li>
+				<li>
+					Ability to have online and paperless meetings, including people from outside your company
+				</li>
+				<li>
+					Available on multiple devices, also as a mobile app
+				</li>
+			</ul>
+		</div>
 
-		<% if (typeof admin == 'undefined') { %>
-
-		<% } else if (admin) { %>
-			<div class="adminPanel">
-				<form id="adminPost" action="/admin_cm/post" method="post">
-					<input id="jsonParser" type="text" name="_jsonParser" hidden="true" value="">
-					<input id="currentPageVar" type="text" name="currentPageVar" hidden="true" value='<%= title %>'>
-					<input id="admin_ApplyButton" name="button" value="Apply">
-					<input id="admin_SafeButton" name="button" value="Save" type="submit">
-				</form>
-				<div id="setAdmin" hidden="true">toggle setAdmin</div>
-			</div>
-		<% } %>
-
-		<input id="jsonConverter" type="text" name="_jsonConverter" hidden="true" value='<%= _jsonConverter %>'>
+		<table id='notes' class='records' border='0' cellspacing='0' cellpadding='0'><tbody></tbody></table>
 
 </section>
 
@@ -156,8 +169,7 @@
 		</div>
 	</footer>
 </div>
-<script src="./lib/domJSON.js"></script>
-<script type="text/javascript" src="/scripts/admin_cm.js"></script>
-<script type="text/javascript" src="/scripts/custom_menu.js"></script>
+	<script type="text/javascript" src="/scripts/loginbutton.js"></script>
+	<script type="text/javascript" src="/scripts/custom_menu.js"></script>
 </body>
 </html>

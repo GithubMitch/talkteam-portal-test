@@ -42,7 +42,7 @@
 					<div class="col-3 mr-auto">
 						<!-- <img class="newappIcon" src="images/e-office_logo.svg"> -->
 						<a class="logo" href="/">
-							<img class="newappIcon" src="images/talkteam_logo1.png"><%= lang %>
+							<img class="newappIcon" src="images/talkteam_logo1.png">
 						</a>
 					</div>
 					<div class="col-2 col-sm-9 col-xs-9 col-auto">
@@ -108,28 +108,101 @@
 	<div class="row intro">
 		<div class="col-12 admin_cm">
 			<h2>
-				News & Updates
+				Frequently asked questions
 			</h2>
-			<p>
-				Meetings are a waste of time? Losing overview of all submitted documents? Not clear which agreements have been made after the meeting? Meetings will be better, smarter and easier using TalkTeam. An app which uses the power of IBM Connections.
-			</p>
-		</div>
-		<div class="col-12 admin_cm purplebox">
-			<h3>
-				paperless and transparent
-			</h3>
-			<p>
-				TalkTeam is a smart addition to IBM Connections. It integrates into the company-wide social platform and enriches IBM Connections with a number of useful tools. TalkTeam offers a clear meeting structure with information from a community and presents it in a simple way. You have a clear perception of each meeting.
-			</p>
-			<p>
-				A meeting consists of a number of participants. TalkTeam offers the possibility to organize a single meeting or a recurring meeting with a team. TalkTeam also shows your meeting directly on your calendar.
-			</p>
-			<p>
-				Participants can add agenda items and documents, and have the opportunity to take notes. During the meeting the agenda items are being discussed and action points and decisions can be specified.
-			</p>
-			<p>
-				All information is part of the collaboration platform IBM Connections, which makes it easy for those concerned to find the information.
-			</p>
+      <div class="general">
+        <h3>General</h3>
+        <div class="qlist">
+          <div class="question">
+            Where can i send in questions ?
+            <span class="closed">&#9650;</span>
+            <span class="opened">&#9660;</span>
+            <div class="answer">
+              If the F.A.Q. page left your question un-answered you might want to try our <a href="#faqform">form</a> down below.
+            </div>
+          </div>
+					<div class="question">
+						Cliche live-edge squid, lyft shoreditch ?
+						<span class="closed">&#9650;</span>
+						<span class="opened">&#9660;</span>
+						<div class="answer">
+							This is the best answer to your question.
+						</div>
+					</div>
+					<div class="question">
+						+1 jianbing fanny pack mixtape copper mug ?
+						<span class="closed">&#9650;</span>
+						<span class="opened">&#9660;</span>
+						<div class="answer">
+							Meditation cardigan fixie before they sold out 90's listicle distillery.
+						</div>
+					</div>
+        </div>
+      </div>
+      <div class="personal">
+        <h3>Personal</h3>
+        <div class="qlist">
+          <div class="question">
+            Sartorial synth brooklyn distillery wolf. Hexagon schlitz ?
+            <span class="closed">&#9650;</span>
+            <span class="opened">&#9660;</span>
+            <div class="answer">
+              lumbersexual jianbing heirloom authentic.
+							fixie before they sold out 90's listicle distillery you might want to try
+            </div>
+          </div>
+          <div class="question">
+            Man braid typewriter drinking vinegar ?
+            <span class="closed">&#9650;</span>
+            <span class="opened">&#9660;</span>
+            <div class="answer">
+              franzen craft beer viral adaptogen tote bag kickstarter cliche.
+            </div>
+          </div>
+          <div class="question">
+						Four loko palo santo skateboard bespoke?
+            <span class="closed">&#9650;</span>
+            <span class="opened">&#9660;</span>
+            <div class="answer">
+							Post-ironic tofu sartorial bespoke venmo before they sold out church-key.
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="banking">
+        <h3>Banking</h3>
+        <div class="qlist">
+          <div class="question">
+						polaroid blog sriracha?
+            <span class="closed">&#9650;</span>
+            <span class="opened">&#9660;</span>
+            <div class="answer">
+							3 wolf moon pop-up banjo cronut
+            </div>
+          </div>
+        </div>
+      </div>
+
+			<% if (_id) { %>
+				<form id="faqform" action="/faqform/post" method="post">
+					<label for="form_subject">Subject:</label>
+					<select id="form_subject" name="form_subject" value="">
+						<option value="general">General</option>
+						<option value="personal"><p></p>ersonal</option>
+						<option value="banking">Banking</option>
+						<option value="technical">Technical</option>
+					</select>
+					<label for="form_organisation">Organisation:</label>
+					<input id="form_organisation" type="text" name="form_organisation" title="<%= organisationName %>" value="<%= organisationName %>">
+					<label for="form_email">Email:</label>
+					<input id="form_email" type="text" name="form_email" title="<%= JSON.parse(organisationEmail) %>" value="<%= JSON.parse(organisationEmail) %>">
+					<label for="form_question">Question:</label>
+					<textarea id="form_question" name="form_question" rows="8"></textarea>
+					<input type="submit" name="button" value="Send">
+				</form>
+			<% } %>
+
+
 		</div>
 
 		<% if (typeof admin == 'undefined') { %>
@@ -154,8 +227,21 @@
 		<div class="row-12">
 			Copyright 2018 <a href="http://www.e-office.com">E-Office</a>
 		</div>
-	</footer>
+
 </div>
+<script type="text/javascript">
+  $(document).ready(function() {
+    var question = $(".question");
+    $(question).on('click', function(){
+      $(this).children('.answer').slideToggle(function(){
+         $(this).parent('.question').toggleClass('active');
+      });
+    })
+		// function run() {
+		// 		document.getElementById("srt").value = document.getElementById("form_subject").value;
+		// }
+  });
+</script>
 <script src="./lib/domJSON.js"></script>
 <script type="text/javascript" src="/scripts/admin_cm.js"></script>
 <script type="text/javascript" src="/scripts/custom_menu.js"></script>

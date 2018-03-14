@@ -1,38 +1,65 @@
 /* style.css
  * This file provides css styles.
  */
+.intro > .admin_cm:focus {
+	outline-color:#35B297;
+	margin-bottom: 1px;
+}
 
-body,html {
+html {
 	background-color: #f5f7fa;
 	width: 100%;
-	height: 100%;
+	min-height: 100%;
 	margin: 0 auto;
 	font-family: Lato,sans-serif;
 	color: #283D56;
 }
+body {
+	height:100%;
+}
 
 /* header footer common */
+header {
+	height:103px;
+	padding-bottom:12px;
+	position: relative;
+}
 header, footer {
 	width: 100%;
 	text-align: center;
 }
-
+header + .fluid-container .col {
+	box-shadow: inset 0 0px 12px black;
+}
+header + .fluid-container {
+	margin-bottom:-6rem;
+}
+.fluid-container {
+	overflow:hidden;
+	position: relative;
+}
 #mainmenu {text-align:right;}
 #mainmenu ul {
 	list-style:none;
 	padding:0 10px;
+	/* margin-top:.5rem; */
+  margin-bottom: 0;
 	margin-top:1rem;
+
 }
 #mainmenu ul li {
 	display:inline;
-	margin-left:37px;
+	margin-left:20px;
 }
+
 #mainmenu ul li a:hover {
 	border-bottom: solid 1px #8d6daa;
 	text-decoration: none;
+	color: #8d6daa;
 }
 #mainmenu ul li a {
 	color: #fff;
+  color: #35B297;
 	text-transform: uppercase;
 	font-size: 15px;
 	display: inline-block;
@@ -42,9 +69,14 @@ header, footer {
 	border-bottom: solid 1px transparent;
 	transition: border-bottom .25s ease;
 }
+#mainmenu ul li.active a {
+	border-bottom:1px solid #35B297;
+}
 
-#mainmenu ul li.english {
-	background-color: #8d6daa;
+#mainmenu ul li.lang a {
+	padding:0;
+}
+#mainmenu ul li.lang {
 	border-radius: 50%;
 	width: 36px;
 	height: 36px;
@@ -52,15 +84,14 @@ header, footer {
 	text-align: center;
 	transition: background-color .25s ease;
 }
-#mainmenu ul li.english a:hover {
+#mainmenu ul li.lang a:hover {
 	text-decoration: none;
-	border-bottom: solid 1px #633689;
+	border-bottom: solid 1px transparent;
 }
-#mainmenu ul li.english:hover {
-    background-color: #3f125e;
+#mainmenu ul li.lang:hover {
+    /* background-color: #3f125e; */
 		text-decoration: none;
 		border:none;
-
 }
 
 body {
@@ -70,11 +101,14 @@ body {
 h2,h3,h4 {
 	margin:0;
 }
-
-
-.container {
-
+select ,
+input ,
+textarea  {
+	outline-color: #35B297;
 }
+
+a {color:#35B297;}
+a:hover {color:#8d6daa;}
 
 .banner {
 	background: #5586D6;
@@ -91,6 +125,8 @@ header {
 footer {
 	padding: 10px;
 	font-size: .8rem;
+	background: #fff;
+	margin-top: 4em;
 }
 .title, .tips {
 	height: 30px;
@@ -173,16 +209,12 @@ table {
 }
 
 tr:hover .deleteBtn {
-
 	cursor: pointer;
 }
-
 
 .tableRows{
 	border: 2px solid #DFE3E6
 }
-
-
 
 .fieldname {
 	text-align: right;
@@ -193,17 +225,25 @@ tr:hover .deleteBtn {
 	color: red;
 	font-weight:normal;
 }
+a.logo {
+	display:inline-block;
+	padding;
+}
 .newappIcon {
-  display: block;
+  display: inline;
+	min-width:34px;
   max-width: 100px;
-  max-height: 100px;
+  max-height: 70px;
   margin: 0 auto;
-	padding: 10px;
-	border: 1px solid white;
-	border-radius: 5px;
-	background: #8d6daa;
-	opacity: 1;
-  margin-bottom: 12px;
+	vertical-align: middle;
+}
+.login {
+	display:inline;
+	vertical-align: middle;
+	font-size:12px;
+	color:#fff;
+	position: absolute;
+	right: 29px;
 }
 
 .appTitle {
@@ -237,7 +277,21 @@ tr:hover .deleteBtn {
 .appinfo {
 	padding: 10px;
 }
-
+/* CSS FOR DROPDOWN triangle */
+.opened {
+	display:inline;
+	margin-left:5px;
+}
+.closed {
+	display:none;
+	margin-left:5px;
+}
+.active .opened{
+	display:none;
+}
+.active .closed{
+	display:inline;
+}
 
 /* //// CUSTOM style */
 #wrap {
@@ -250,27 +304,36 @@ tr:hover .deleteBtn {
 	top:15px;
 	right:20px;
 	background:red;
-	width:40px;
-	height:40px;
-	background: url("../images/whamburger.png")no-repeat center;
-	background-size:contain;
+	width:34px;
+	height:34px;
+	background: url(../images/whamburger.png)no-repeat center;
+	background-size: 69%;
+	background-color: #35B297;
+	border-radius: 50%;
 }
+header .mobile-lang {display:none;}
 header {
-	/* height: 100%; */
 	background:#633689;
+	background:#fff;
 	overflow: auto;
 	display: flex;
 	flex-direction: column;
+	border-bottom: 1px solid purple;
+	/* box-shadow: 1px -4px 20px black; */
+	position: relative;
+	z-index: 999;
 }
 .bannerimg {
 	width:100%;
-	/* position:absolute; */
+	position: relative;
+	z-index: -1;
 }
 .intro {
-	margin-top:-6rem;
+	/* margin-top:-6rem; */
 	position: relative;
   background: rgba(255,255,255,.85);
 	background-color: #fff;
+  border: 3px double #35B297;
 }
 .intro div[class^="col-"] {
 	font-size: 20px;
@@ -286,6 +349,7 @@ header {
 }
 .purplebox {
 	background-color: #8d6daa;
+	background-color: #35B297;
 	color: #fff;
 }
 .intro ul {
@@ -293,6 +357,262 @@ header {
 	list-style:inside;
 	text-align:left;
 }
+dl.dl-horizontal legend{
+	margin-top: .5em;
+	padding-bottom: .5em;
+	border-bottom: 1px solid #ccc;
+	cursor:pointer;
+	transition:.3s ease color;
+}
+dl.dl-horizontal:hover{
+	color:#35B297;
+}
+dl.dl-horizontal.active legend {
+	color:#35B297;
+}
+dl.dl-horizontal.active {
+  outline: #35B297 1px solid;
+}
+dl.dl-horizontal {
+	border: 3px double #ccc;
+	padding: 0.5em;
+}
+.dl-horizontal dt {
+	float: left;
+	clear: left;
+	/* width:30%; */
+	width:45%;
+	text-align: right;
+	font-weight: bold;
+}
+.dl-horizontal dt::after {
+	content: ":";
+}
+.dl-horizontal dd {
+	margin: 0 ;
+	margin-left: calc(45% + 20px) ;
+	text-align: left;
+	padding: 0 0 0.5em 0;
+}
+.adminPanel {
+	position:fixed;
+	right:20px;
+	bottom:20px;
+	z-index:999;
+}
+.shortForm {
+	max-width:300px;
+	margin:auto;
+}
+
+button[type=submit] ,
+.shortForm input[type=submit] ,
+.adminPanel input {
+	-webkit-appearance: button;
+	height: 42px;
+	background-color: #633689;
+	color: #fff;
+	border-radius: 6px;
+	display: inline-block;
+	line-height: 42px;
+	border: 0;
+	cursor: pointer;
+	text-decoration: none;
+	font-size: 14px;
+	font-weight: 600;
+	padding: 0 20px;
+	transition: .3s ease all;
+	margin-left: 20px;
+	text-align: center;
+	width: 124px;
+}
+.adminPanel input:hover {
+	background-color: #3f125e;
+  color: #fff;
+  text-decoration: none;
+}
+.shortForm input[type=submit] {
+	margin:0;
+	margin-top:1em;
+}
+
+.loginForm input {
+	padding-left:10px;
+	display: inline-block;
+	vertical-align: middle;
+}
+.loginForm button {
+	-webkit-appearance: button;
+	height: 42px;
+	background-color: #633689;
+	color: #fff;
+	border-radius: 6px;
+	display: inline-block;
+	line-height: 42px;
+	border: 0;
+	cursor: pointer;
+	text-decoration: none;
+	font-size: 14px;
+	font-weight: 600;
+	padding: 0 20px;
+	transition: .3s ease all;
+	margin-left: 20px;
+	text-align: center;
+	width: 124px;
+	display: inline-block;
+	vertical-align: middle;
+}
+.loginForm button:hover {
+	background-color: #3f125e;
+  color: #fff;
+  text-decoration: none;
+}
+
+.user {
+	border: 3px double #ccc;
+	padding: 0.5em;
+	overflow:hidden;
+	margin-bottom:3rem;
+}
+.user_icon ,
+.admin_icon  {
+	width:30px;
+	height:30px;
+}
+.user h3 {
+	display: block;
+width: 100%;
+max-width: 100%;
+padding: 0;
+margin-bottom: .5rem;
+font-size: 1.5rem;
+line-height: inherit;
+color: inherit;
+white-space: normal;
+border-bottom:1px solid #ccc;
+}
+.user .userInfo:nth-of-type(1) li:after {
+	content:':';
+	display:inline-block;
+}
+.user .userInfo li {
+	white-space: nowrap;
+}
+.user .userInfo{
+	list-style:none;
+	padding:0;
+	float:left;
+	width:45%;
+	font-weight:bold;
+	text-align:right;
+}
+.user .userInfo:nth-of-type(2){
+	font-weight: normal;
+	text-align: left;
+	padding-left:20px;
+}
+
+/* FAQS */
+.question {
+	cursor: pointer;
+	transition: .6s ease color;
+}
+.question:hover {
+	color:#35B297;
+}
+.question .answer {
+	display:none;
+	background:mintcream;
+	margin-bottom:3em;
+	background: #35B297;
+	color: #fff;
+	margin-bottom: 3em;
+	padding: 1.5em;
+}
+.question.active .answer {
+	display:block;
+}
+.qlist {
+	padding-bottom: 2em;
+}
+.general ,
+.personal ,
+.banking  {
+	display:block;
+	margin-bottom:1.5em;
+	margin-top:1em;
+}
+.general h3,
+.personal h3,
+.banking h3 {
+	font-size:1.75em;
+	border-bottom:1px solid #ccc;
+	margin-bottom:.5em;
+	padding-bottom:.5em;
+	font-family: monospace;
+}
+
+#faqform {
+	margin-top:3rem;
+	border:3px double #ccc;
+	padding:2em;
+}
+#faqform textarea {
+	display:inline-block;
+	width:65%;
+	padding: 0em .5em;
+	vertical-align: top;
+	margin-bottom: .5rem;
+}
+#faqform select{
+	display:inline-block;
+	width:65%;
+	height:38px;
+  padding: 0em .5em;
+	margin-bottom: .5rem;
+	text-transform: capitalize;
+}
+#faqform input{
+	display:inline-block;
+	width:65%;
+  padding: 0em .5em;
+	margin-bottom: .5rem;
+}
+#faqform label[for="form_question"] {
+	vertical-align: top;
+}
+#faqform label{
+	display:inline-block;
+	width: calc(35% - 1%);
+  padding: 0em .5em;
+  text-align: left;
+}
+#faqform input[type=submit] {
+	width: calc(100% - .25%);
+	display:block;
+	background:#35B297;
+	border:0;
+	color:#fff;
+	height:42px;
+	margin:auto;
+}
+#form_organisation[type="text" i]:disabled {
+	background:url("../images/organisation_icon.png")no-repeat 10px center;
+  background-color:#fff;
+	background-size:18px;
+	border: 1px solid #aaa;
+	box-shadow: inset 0 0 black;
+	opacity:.6;
+	padding-left: 40px;
+}
+#form_email[type="text" i]:disabled {
+  background-color:#fff;
+	background-size:18px;
+	border: 1px solid #aaa;
+	box-shadow: inset 0 0 black;
+	opacity:.6;
+}
+
 
 
 /* //// RESPONSIVE STYLE */
@@ -304,7 +624,23 @@ header {
 	.intro {
 		margin-top:-2rem;
 	}
-
+	.newappIcon {
+		margin-bottom:0;
+		min-width:45px;
+	}
+	header .col-3.mr-auto {
+		text-align:center;
+	}
+	#faqform label {padding:0;margin-bottom:.25em;}
+	#faqform select,
+	#faqform input,
+	#faqform label ,
+	#faqform textarea {
+		width:100%;
+		max-height:100px;
+	}
+	.dl-horizontal dt ,
+	.dl-horizontal dd {text-align:center;width:100%;margin:0;}
 }
 
 /* // Medium devices (tablets, 768px and up) */
@@ -325,11 +661,36 @@ header {
 		padding:1rem;
 	}
 	#mainmenu {display:none;}
-	#hamburger {display:block;}
+	#mm-mainmenu .lang {display:none;}
+	#hamburger {display:block;top:auto;bottom:20px;}
+	.login {display:block;white-space: nowrap;bottom: 0;right: 23px;}
+	header .mobile-lang {
+		display: inline-block;
+		position: absolute;
+		right: 90px;
+		bottom: 20px;
+	}
+	#faqform select {
+		height:26px;
+	}
+	.shortForm {
+		max-width:218px;
+	}
 }
+
 
 /* // Large devices (desktops, 992px and up) */
 @media (max-width: 992px) {
+	#mainmenu ul {
+		padding-left:0;
+	}
+	.login span {
+		display:block;
+	}
+	.user .userInfo{
+		text-align:left;
+		width:auto;
+	}
 }
 
 // Extra large devices (large desktops, 1200px and up)
