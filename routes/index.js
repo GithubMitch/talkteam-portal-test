@@ -10,8 +10,8 @@
  var db_freshContent = '';
 
 exports.index = function(req, res){
-
-  if (req.url.includes("?clang=nl")) {
+  req.session.en = 'en';
+  if (!req.session.lang == req.session.en || req.url.includes("?clang=nl")) {
     console.log(!req.session.lang == 'en');
     console.log(req.session.lang == 'en');
     console.log(!req.session.lang == 'nl');
@@ -34,12 +34,16 @@ exports.index = function(req, res){
 
   if (req.session._jsonConverter){
     console.log("_jsonConverter REQ SESSION IS HERE");
-    res.render('index.html', {
-      title: 'home',
-      username: req.session.user,
-      admin: req.session.admin,
-      _jsonConverter: req.session._jsonConverter,
-      lang: req.session.lang
+    req.session.reload( function (err) {
+      console.log("session reload")
+      res.render('index.html', {
+        title: 'home',
+        username: req.session.user,
+        admin: req.session.admin,
+        _jsonConverter: req.session._jsonConverter,
+        lang: req.session.lang
+      });
+      console.log("session rendered new lang :", req.session.lang);
     });
   } else {
     admin_db.get('home', function(err, doc) {
@@ -48,13 +52,23 @@ exports.index = function(req, res){
         db_freshContent = doc.reqContent;
         console.log("GET found 1 entry: 'Home'");
         console.log("retreived doc : \n" + doc);
-        res.render('index.html', {
-          title: 'home',
-          username: req.session.user,
-          admin: req.session.admin,
-          _jsonConverter: db_freshContent,
-          lang: req.session.lang
+        req.session.save( function(err) {
+            req.session.reload( function (err) {
+              console.log("session reload")
+              console.log("old lang:", req.session.lang);
+
+              res.render('index.html', {
+                title: 'home',
+                username: req.session.user,
+                admin: req.session.admin,
+                _jsonConverter: db_freshContent,
+                lang: req.session.lang
+              });
+            });
         });
+        console.log("session rendered new lang :", req.session.lang);
+
+        // res.end(delete req.session.lang);
       } else {
         console.log("ERROR finding : 'Home'" + err.message);
         res.render('index.html', {
@@ -65,7 +79,7 @@ exports.index = function(req, res){
           lang: req.session.lang
         });
       };
-      res.end();
+      // res.end(delete req.session.lang);
       return;
     });
 
@@ -197,21 +211,26 @@ exports.content = function(req, res){
   });
 };
 exports.toc = function(req, res){
-  res.render('toc.html', {
-    title: 'toc',
-    username: req.session.user,
-    organisationName:req.session.organisationName,
-    organisationEmail: req.session.organisationEmail,
-    _id: req.session._id,
-    licensekey: req.session.licensekey,
-    endDate: req.session.endDate,
-    startDate: req.session.endDate,
-    active: req.session.active,
-    admin: req.session.admin,
-    userRows: req.session.userRows,
-    userlist: req.session.userlist,
-    userdocs: req.session.userDocs
-  });
+  if (!req.session.user) {
+    console.log("User is there");
+    res.redirect('login')
+  } else {
+    res.render('toc.html', {
+      title: 'toc',
+      username: req.session.user,
+      organisationName:req.session.organisationName,
+      organisationEmail: req.session.organisationEmail,
+      _id: req.session._id,
+      licensekey: req.session.licensekey,
+      endDate: req.session.endDate,
+      startDate: req.session.endDate,
+      active: req.session.active,
+      admin: req.session.admin,
+      userRows: req.session.userRows,
+      userlist: req.session.userlist,
+      userdocs: req.session.userDocs
+    });
+  }
 };
 exports.faq = function(req, res){
     if (!req.session._jsonConverter || req.session._jsonConverter){

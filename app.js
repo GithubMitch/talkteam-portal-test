@@ -210,9 +210,11 @@ app.post('/login', function (req, res) {
   var user = req.body.username;
   var password = req.body.password;
   var talkteam_clients = cloudant.db.use('talkteam_clients');
+  console.log(user);
 
   talkteam_clients.get(req.body.username, function(err, body) {
     if (!err) {
+      console.log("Found this profile:")
       console.log(body.organisationName)
       console.log(body.organisationEmail)
       console.log(body._id)
@@ -228,10 +230,13 @@ app.post('/login', function (req, res) {
       console.log("Login failed: non existing user -" + user )
       res.redirect('/login');
     } else if(user === data._id || password === data.password) {
+      if (data.adminName) {
+        console.log("THIS IS A ADMIN ACCOUNT")
+        req.session.admin = true;
+      }
       req.session.user = user;
-      req.session.admin = true;
-      req.session.organisationName = data.organisationName;
-      req.session.organisationEmail = JSON.stringify(data.organisationEmail);
+      req.session.organisationName = (data.organisationName || data.orgName);
+      req.session.organisationEmail = JSON.stringify(data.organisationEmail) ;
       req.session._id = JSON.stringify(data._id);
       req.session.licensekey = JSON.stringify(data.licensekey);
       req.session.endDate = JSON.stringify(data.endDate);
@@ -239,12 +244,15 @@ app.post('/login', function (req, res) {
       req.session.active = JSON.stringify(data.active);
       console.log('Username:' + data._id + '\n' + 'Password:'+ data.password);
       console.log('is now logged in');
+      console.log(req.session.licensekey);
+
+
       talkteam_clients.fetch({include_docs:true}, function (err, data) {
 
         var printUserlist = [];
         var userRows = [];
         data.rows.forEach(function(rows) {
-          console.log(rows.doc);
+          // console.log(rows.doc);
           userRows.push(rows.doc);
         });
         data.rows.forEach(function(user) {
@@ -311,14 +319,16 @@ app.post('/faqform/post', function(req, res) {
   app.mailer.send(
     {
       template: 'faqmail.html', // REQUIRED
-      from: 'no-reply@gmail.com'
+      from: req.body.form_email
     },
     {
-      to: 'mitchell.seedorf@e-office.com',
-      subject: req.body.form_subject,
-      otherProperty: 'Other Property',
-      title: req.body.form_organisation,
-      body: req.body.form_question
+      to: 'm.seedorf@live.nl',
+      subject: "Question @ " + req.body.form_subject,
+      department: req.body.form_subject,
+      organisation: req.body.form_organisation,
+      customer: req.body.form_email,
+      question: req.body.form_question,
+      otherProperty: 'Other Property'
     },
     function (err) {
       if (err) {

@@ -117,20 +117,44 @@
 						Admin account
 					</legend>
 				<% } %>
-			  <dt>_id</dt>
-			  <dd><%= _id %></dd>
-			  <dt>Organisation</dt>
-			  <dd><%= organisationName %></dd>
-			  <dt>Email</dt>
-			  <dd><%= organisationEmail %></dd>
-			  <dt>License key</dt>
-			  <dd><%= licensekey %></dd>
-			  <dt>Active</dt>
-			  <dd><%= active %></dd>
-			  <dt>Start subscription</dt>
-			  <dd><%= startDate %></dd>
-			  <dt>Expiration date license</dt>
-			  <dd><%= endDate %></dd>
+				<% if (_id) { %>
+					<dt>_id</dt>
+					<dd><%= _id %></dd>
+				<% } %>
+				<% if (username) { %>
+					<dt>username</dt>
+					<dd><%= username %></dd>
+				<% } %>
+
+				<% if (organisationName) { %>
+					<dt>Organisation</dt>
+					<dd><%= organisationName %></dd>
+				<% } %>
+
+				<% if (organisationEmail) { %>
+					<dt>Email</dt>
+					<dd><%= organisationEmail %></dd>
+				<% } %>
+
+				<% if (licensekey) { %>
+					<dt>License key</dt>
+					<dd><%= licensekey %></dd>
+				<% } %>
+
+				<% if (active) { %>
+					<dt>Active</dt>
+				  <dd><%= active %></dd>
+				<% } %>
+
+				<% if (startDate) { %>
+					<dt>Start subscription</dt>
+				  <dd><%= startDate %></dd>
+				<% } %>
+
+				<% if (endDate) { %>
+					<dt>Expiration date license</dt>
+				  <dd><%= endDate %></dd>
+				<% } %>
 			</dl>
 		</div>
 		<div class="col-12 list_all_users">
@@ -139,7 +163,7 @@
 					<dl class="dl-horizontal">
 						<legend>
 							<img class="admin_icon" src="images/organisation_icon.png">
-							<%= organisationName %><span class="closed">&#9650;</span><span class="opened">&#9660;</span>
+							<%= userRows[i].orgName || userRows[i].organisationName %><span class="closed">&#9650;</span><span class="opened">&#9660;</span>
 						</legend>
 						<tr>
 						<% for(var j=0; j < Object.keys(userRows[i]).length; j++) { %>

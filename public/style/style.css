@@ -101,6 +101,11 @@ body {
 h2,h3,h4 {
 	margin:0;
 }
+select ,
+input ,
+textarea  {
+	outline-color: #35B297;
+}
 
 a {color:#35B297;}
 a:hover {color:#8d6daa;}
@@ -204,16 +209,12 @@ table {
 }
 
 tr:hover .deleteBtn {
-
 	cursor: pointer;
 }
-
 
 .tableRows{
 	border: 2px solid #DFE3E6
 }
-
-
 
 .fieldname {
 	text-align: right;
@@ -383,7 +384,6 @@ dl.dl-horizontal {
 	width:45%;
 	text-align: right;
 	font-weight: bold;
-	display:none;
 }
 .dl-horizontal dt::after {
 	content: ":";
@@ -393,7 +393,6 @@ dl.dl-horizontal {
 	margin-left: calc(45% + 20px) ;
 	text-align: left;
 	padding: 0 0 0.5em 0;
-	display:none;
 }
 .adminPanel {
 	position:fixed;
@@ -551,11 +550,6 @@ border-bottom:1px solid #ccc;
 	margin-bottom:.5em;
 	padding-bottom:.5em;
 	font-family: monospace;
-}
-
-#faqform input ,
-#faqform textarea  {
-	outline-color: #35B297:
 }
 
 #faqform {

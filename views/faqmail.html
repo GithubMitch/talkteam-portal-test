@@ -1,40 +1,31 @@
+
 <!DOCTYPE html>
+
 <html>
 	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	</head>
+	<div id="wrap">
 
-	<body>
-		<div id="wrap">
-
-			<header class = "fluid-container" style="background-color: #35B297;">
-				HEADER
-			</header>
-
-			<div class="fluid-container">
-				<div class="row">
-					<div class="col">
-						<img class="bannerimg" src="images/silhoutte2.jpg">
-					</div>
-				</div>
-			</div>
-
-			<section class="container main" style="background-color: #eee;">
-				<div class="row intro">
-					<div class="col-12">
-							<h1>TEST</h1>
-							<h2><%= title %></h2>
-							<p><%= body %></p>
-					</div>
-				</div>
-			</section>
-
-			<footer class="fluid-container" style="background-color: #35B297;">
-				<div class="row-12">
-					FOOTER
-					Copyright 2018 <a href="http://www.e-office.com">E-Office</a>
-				</div>
-			</footer>
-
+		<div class="header" style="background-color: #dedede;color:#fff;padding: 1em;">
+			<img style="margin-right:1em;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAlCAYAAAAwYKuzAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAABAhJREFUeNrMWEtME0EY/lvotpa+ECoURB4aiIAUReOJCGoAo0IPXEhMwAgkJmIwevd1Uw/4JtEEDshJI1GPCOVgjEF0MYhpFCkILfIIhQKBKtSZZbds2+3S7VLkS7bdncnOfPO/95e43W5g4+KhO7noTwfi4LjXfYWEDYAEE0SkTOi+AV3JsHnoxQdhPZP0sxVdbeiA1Jyk7uBtHT2oha2Fs4hksxTd5G5BchhN2NyksLVh2uoEIXIjF0s17oTDpUaISdCCpXsYet70wvS4c0O82C2WXF5JNlTeLPEaW3C64G51K9h/Toa67HVGxUNiyEXvUPuRw1CqCahpKBd1cIagVZT0ThkDzsUaVGBIiw11abOUFSTDBoVa8X8laLPYA85hOxzsHRFNUJQE+98NgOWjjXOuveWTmKVJCVMshOLJCiUBRbX5kJQRB1O2GWost3A35RyT9jkgO75DjEEHSo0cOls+UAcRApTqJBTBrNePTf0/5E9g2S3MmrdFIZasV/BhF5YA/vwFIKKhIjcJWvPTPNON9S8FkaQIZr56hHOx2eJc0S7Pr4TBRdAhpLvAfe44JdUbpY3BvtiFCBZI6TJLq5BJwuTD8wAr3+Bhn50KOThmCnUSqu6KISThjDRwofcX9a8zBF04OZhcjD24TIWpYpIuHl+REdBeWATHklOpx6d9X6DmfVdw2y3OCvZgRoKeGCiT80vx1r4DHnIY1dk5cGbP3rBK3ougiuCvvo4mJvqN5WiCVFlcPAxbpoQEbStD0BOkDTL0ExFYitZZfzX9XloKajfV+wF4UPtMiPBWCX49fd7BrmZkygAElWpoGx2BOZfLM2Sfc0K7c4ayzfVQbB2DxQVXyAWrGV2VlJcppDDh9ImH0bHgLq+gbjHBnjEbqAk5JKjUQBafpMbUrU0oQAcmoJ0WRg7FQDNnLtZH4BzmbYvPc/avqYogIC8+AdK3x1D3zNjl9Cz+cD2xFLKTMBL0QK/2Jpii0ay70AkOBxKBIS+CyA5J9iCWYkTUGkkssfWgk8t5kongetDK9dHksUOMDCTFfhyzF1bg7dCgV/zjQsfoaAArR04XIXXQnQQ/bSFcDfarrplNECNTgxwGSbL8cwfU2VMhVbWmarkUR6RVj+9zjMN92yDo9ZGrNuxX97tw4jdxEUBlXorvvmyf8BBEajajsmvItz+zuqELXkxYACYCnzSRP5fzFcT1dHfD6JuH2U7C4Npmf5jTTaIqrkLBjyCSYjPLVjYS5Dok8fwlXhWzUEDbY4FPU6krwMZcLTSstjIuifCQbKDbgEd4Wx906jOJEReyZTLElh7TpyS9Wh/hACKJNdBJHzrkajhs3S0cFXBvRfRCWILhvNBHWZWY9/8JMAD3NbwnJIBvpwAAAABJRU5ErkJggg==" alt="logo.jpg">
+			<span style="font-size:40px;">TalkTeam Support : Question</span>
 		</div>
-	</body>
+
+		<div class="container main" style="padding:1em;">
+				<h3>Soort vraag: <%= department %></h3>
+				<h3>Account: <%= organisation %></h3>
+				<h4>Vraag:</h4>
+				<pre style=""><%= question %></pre>
+				<br>
+				<p>Stuur uw antwoord naar : <a href="mailto:<%= customer %>"></a><%= customer %></p>
+		</div>
+
+		<div class="footer" style="background-color: #dedede;color:#fff;padding:1em;">
+			<div class="row-12">
+				Copyright 2018 <a style="color:#35B297;margin-left:1em;" href="http://www.e-office.com">E-Office</a>
+			</div>
+		</div>
+
+	</div>
 </html>
