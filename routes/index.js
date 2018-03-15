@@ -8,34 +8,37 @@
  var cloudant = Cloudant({account:username, password:password});
  var admin_db;
  var db_freshContent = '';
+ var defaultLang = 'en';
 
 exports.index = function(req, res){
-  req.session.en = 'en';
-  if (!req.session.lang == req.session.en || req.url.includes("?clang=nl")) {
-    console.log(!req.session.lang == 'en');
-    console.log(req.session.lang == 'en');
-    console.log(!req.session.lang == 'nl');
-    console.log(req.session.lang == 'nl');
+  console.log("before rendering : ", req.session.lang)
+  if (req.url.includes("?clang=nl")) {
+    delete req.session.lang;
     req.session.lang = 'nl';
-    console.log('currentURL = ', req.url);
-    console.log('Language set  =  NL / Dutch');
-    console.log('Using '+req.session.lang+' / DUTCH DB');
-    console.log(req.session.lang);
+    console.log("1", req.session.lang)
+  } else if (req.url.includes("?clang=en")) {
+    delete req.session.lang;
+    req.session.lang = 'en';
+    console.log("1", req.session.lang)
+  } else {
+    console.log("no language var !")
+  };
+
+  console.log("before rendering oldLang: ", req.session.oldLang)
+  if (req.session.lang == 'nl') {
+    console.log("2", req.session.lang)
+    req.session.oldLang = 'en';
     var admin_db = cloudant.db.use('admin_db_nl');
   } else {
-    req.session.lang = 'en';
-    // } else if (req.session.lang == 'en' || typeof req.session.lang == 'undefined' || req.url == '/?clang=en') {
-    console.log('currentURL = ', req.url);
-    console.log('Language set  =  Default - EN / English');
-    console.log('Using '+req.session.lang+' / ENGLISH DB');
-    console.log(req.session.lang);
+    console.log("2", req.session.lang)
+    req.session.oldLang = 'nl';
     var admin_db = cloudant.db.use('admin_db');
   };
 
   if (req.session._jsonConverter){
     console.log("_jsonConverter REQ SESSION IS HERE");
-    req.session.reload( function (err) {
-      console.log("session reload")
+    // req.session.reload( function (err) {
+      // console.log("session reload")
       res.render('index.html', {
         title: 'home',
         username: req.session.user,
@@ -43,8 +46,8 @@ exports.index = function(req, res){
         _jsonConverter: req.session._jsonConverter,
         lang: req.session.lang
       });
-      console.log("session rendered new lang :", req.session.lang);
-    });
+      // console.log("session rendered new lang :", req.session.lang);
+    // });
   } else {
     admin_db.get('home', function(err, doc) {
       console.log("_jsonConverter REQ SESSION IS NOT THERE");
@@ -52,10 +55,10 @@ exports.index = function(req, res){
         db_freshContent = doc.reqContent;
         console.log("GET found 1 entry: 'Home'");
         console.log("retreived doc : \n" + doc);
-        req.session.save( function(err) {
-            req.session.reload( function (err) {
-              console.log("session reload")
-              console.log("old lang:", req.session.lang);
+        // req.session.save( function(err) {
+        //     req.session.reload( function (err) {
+              // console.log("session reload")
+              console.log("session rendered this lang :",  req.session.lang);
 
               res.render('index.html', {
                 title: 'home',
@@ -64,11 +67,9 @@ exports.index = function(req, res){
                 _jsonConverter: db_freshContent,
                 lang: req.session.lang
               });
-            });
-        });
-        console.log("session rendered new lang :", req.session.lang);
-
-        // res.end(delete req.session.lang);
+        //     });
+        // });
+        // console.log("old lang:", req.session.lang);
       } else {
         console.log("ERROR finding : 'Home'" + err.message);
         res.render('index.html', {
@@ -79,11 +80,14 @@ exports.index = function(req, res){
           lang: req.session.lang
         });
       };
-      // res.end(delete req.session.lang);
       return;
     });
-
   }
+      console.log("newlang = ",req.session.lang);
+      console.log("deleted req.session.lang");
+      console.log("session.lang = ",req.session.lang);
+      console.log("oldlang = ",req.session.oldLang);
+
 };
 exports.register = function(req, res){
   res.render('register.html', {
@@ -105,20 +109,27 @@ exports.downloads = function(req, res){
   }
 };
 exports.news = function(req, res){
-  if (req.url.includes("?clang=nl") || req.session.lang == 'nl') {
+  console.log("before rendering : ", req.session.lang)
+  if (req.url.includes("?clang=nl")) {
+    delete req.session.lang;
     req.session.lang = 'nl';
-    console.log('currentURL = ', req.url);
-    console.log('Language set  =  NL / Dutch');
-    console.log('Using '+req.session.lang+' / DUTCH DB');
-    console.log(req.session.lang);
+    console.log("1", req.session.lang)
+  } else if (req.url.includes("?clang=en")) {
+    delete req.session.lang;
+    req.session.lang = 'en';
+    console.log("1", req.session.lang)
+  } else {
+    console.log("no language var !")
+  };
+
+  console.log("before rendering oldLang: ", req.session.oldLang)
+  if (req.session.lang == 'nl') {
+    console.log("2", req.session.lang)
+    req.session.oldLang = 'en';
     var admin_db = cloudant.db.use('admin_db_nl');
   } else {
-  // } else if (req.session.lang == 'en' || typeof req.session.lang == 'undefined' || req.url == '/?clang=en') {
-    req.session.lang = 'en';
-    console.log('currentURL = ', req.url);
-    console.log('Language set  =  Default - EN / English');
-    console.log('Using '+req.session.lang+' / ENGLISH DB');
-    console.log(req.session.lang);
+    console.log("2", req.session.lang)
+    req.session.oldLang = 'nl';
     var admin_db = cloudant.db.use('admin_db');
   };
 
