@@ -262,3 +262,50 @@ exports.faq = function(req, res){
     _jsonConverter: req.session._jsonConverter
   });
 };
+exports.blog = function(req, res){
+  //Timestamp
+  var today = new Date();
+  var dd = today.getDate();
+  var mm = today.getMonth()+1; //January is 0!
+  var yyyy = today.getFullYear();
+  if(dd<10) {
+      dd = '0'+dd
+  }
+  if(mm<10) {
+      mm = '0'+mm
+  }
+  timeStamp = yyyy + '-' + mm + '-' + dd;
+  var blog = cloudant.db.use('blog');
+
+  blog.fetch({include_docs:true}, function (err, data) {
+    var blog_posts = [];
+    data.rows.forEach(function(rows) {
+      blog_posts.push(rows.doc);
+    });
+    req.session.blog_posts = blog_posts;
+    // console.log(printblogRows);
+    // delete req.session.userlist;
+    res.render('blog/blog.html', {
+      title: 'BLOG',
+      username: req.session.user,
+      organisationName:req.session.organisationName,
+      organisationEmail: req.session.organisationEmail,
+      _id: req.session._id,
+      licensekey: req.session.licensekey,
+      endDate: req.session.endDate,
+      startDate: req.session.endDate,
+      active: req.session.active,
+      userlist: req.session.userlist,
+      lang: req.session.lang,
+      _jsonConverter: req.session._jsonConverter,
+      blog_posts: blog_posts,
+      timeStamp: timeStamp
+    });
+  });
+
+  if (!req.session._jsonConverter || req.session._jsonConverter){
+    req.session._jsonConverter = ''
+  }
+
+
+};

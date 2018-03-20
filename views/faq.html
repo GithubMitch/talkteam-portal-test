@@ -193,9 +193,9 @@
 						<option value="technical">Technical</option>
 					</select>
 					<label for="form_organisation">Organisation:</label>
-					<input id="form_organisation" type="text" name="form_organisation" title="<%= organisationName %>" value="<%= organisationName %>">
+					<input id="form_organisation" type="text" name="form_organisation" title="<%= organisationName || orgName %>" value="<%= organisationName || orgName %>">
 					<label for="form_email">Email:</label>
-					<input id="form_email" type="text" name="form_email" title="<%= JSON.parse(organisationEmail) %>" value="<%= JSON.parse(organisationEmail) %>">
+					<input id="form_email" type="text" name="form_email" title="<%= JSON.parse(organisationEmail || adminEmail) %>" value="<%= JSON.parse(organisationEmail || adminEmail) %>">
 					<label for="form_question">Question:</label>
 					<textarea id="form_question" name="form_question" rows="8"></textarea>
 					<input type="submit" name="button" value="Send">
