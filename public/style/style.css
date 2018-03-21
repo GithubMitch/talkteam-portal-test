@@ -19,6 +19,7 @@ body {
 }
 
 /* #wrap > header #wrap > footer common */
+#wrap header .col-sm-9 {padding:0;}
 #wrap > header {
 	height:103px;
 	padding-bottom:12px;
@@ -247,6 +248,7 @@ a.logo {
 	color:#fff;
 	position: absolute;
 	right: 29px;
+	right:14px;
 }
 
 .appTitle {
@@ -626,7 +628,7 @@ border-bottom:1px solid #ccc;
 	text-align:center;
 	display:block;
 	margin:2em auto;
-	width:760px;
+	max-width:760px;
 	padding:1em 2em;
 	position: relative;
 }
@@ -725,7 +727,12 @@ border-bottom:1px solid #ccc;
 	#mainmenu {display:none;}
 	#mm-mainmenu .lang {display:none;}
 	#hamburger {display:block;top:auto;bottom:20px;}
-	.login {display:block;white-space: nowrap;bottom: 0;right: 23px;}
+	.login {
+		display:block;
+		white-space: nowrap;
+		bottom: 0;
+		right: 23px;
+	}
 	#wrap > header .mobile-lang {
 		display: inline-block;
 		position: absolute;

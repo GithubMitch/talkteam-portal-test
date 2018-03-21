@@ -11,7 +11,7 @@
  var defaultLang = 'en';
 
 exports.index = function(req, res){
-  console.log("before rendering : ", req.session.lang)
+  console.log("before rendering : ", req.session.lang);
   if (req.url.includes("?clang=nl")) {
     delete req.session.lang;
     req.session.lang = 'nl';
@@ -55,21 +55,15 @@ exports.index = function(req, res){
         db_freshContent = doc.reqContent;
         console.log("GET found 1 entry: 'Home'");
         console.log("retreived doc : \n" + doc);
-        // req.session.save( function(err) {
-        //     req.session.reload( function (err) {
-              // console.log("session reload")
-              console.log("session rendered this lang :",  req.session.lang);
+        console.log("session rendered this lang :",  req.session.lang);
 
-              res.render('index.html', {
-                title: 'home',
-                username: req.session.user,
-                admin: req.session.admin,
-                _jsonConverter: db_freshContent,
-                lang: req.session.lang
-              });
-        //     });
-        // });
-        // console.log("old lang:", req.session.lang);
+          res.render('index.html', {
+            title: 'home',
+            username: req.session.user,
+            admin: req.session.admin,
+            _jsonConverter: db_freshContent,
+            lang: req.session.lang
+          });
       } else {
         console.log("ERROR finding : 'Home'" + err.message);
         res.render('index.html', {
@@ -83,29 +77,148 @@ exports.index = function(req, res){
       return;
     });
   }
-      console.log("newlang = ",req.session.lang);
-      console.log("deleted req.session.lang");
-      console.log("session.lang = ",req.session.lang);
-      console.log("oldlang = ",req.session.oldLang);
 
 };
 exports.register = function(req, res){
-  res.render('register.html', {
-    title: 'Register',
-    username: req.session.user,
-    admin: req.session.admin
-  });
-};
-exports.downloads = function(req, res){
-  if (req.session.user){
-    res.render('downloads.html', {
-      title: 'Downloads',
+  console.log("before rendering : ", req.session.lang)
+  if (req.url.includes("?clang=nl")) {
+    delete req.session.lang;
+    req.session.lang = 'nl';
+    console.log("1", req.session.lang)
+  } else if (req.url.includes("?clang=en")) {
+    delete req.session.lang;
+    req.session.lang = 'en';
+    console.log("1", req.session.lang)
+  } else {
+    console.log("no language var !")
+  };
+
+  console.log("before rendering oldLang: ", req.session.oldLang)
+  if (req.session.lang == 'nl') {
+    console.log("2", req.session.lang)
+    req.session.oldLang = 'en';
+    var admin_db = cloudant.db.use('admin_db_nl');
+  } else {
+    console.log("2", req.session.lang)
+    req.session.oldLang = 'nl';
+    var admin_db = cloudant.db.use('admin_db');
+  };
+
+  if (req.session._jsonConverter){
+    console.log("REQ SESSION IS HERE");
+    res.render('register.html', {
+      title: 'Register',
       username: req.session.user,
       admin: req.session.admin,
+      _jsonConverter: req.session._jsonConverter,
       lang: req.session.lang
     });
   } else {
-    res.redirect('/login');
+    admin_db.get('news', function(err, doc) {
+      console.log("REQ SESSION IS NOT THERE");
+      if (!err) {
+        db_freshContent = doc.reqContent;
+        console.log("GET found 1 entry: 'news'");
+        console.log("retreived doc : \n" + doc);
+        res.render('register.html', {
+          title: 'Register',
+          username: req.session.user,
+          admin: req.session.admin,
+          _jsonConverter: db_freshContent,
+          lang: req.session.lang
+        });
+      } else {
+        console.log("ERROR finding : 'News'" + err.message);
+        res.render('register.html', {
+          title: 'Register',
+          username: req.session.user,
+          admin: req.session.admin,
+          _jsonConverter: db_freshContent,
+          lang: req.session.lang
+        });
+      };
+      res.end();
+      return;
+    });
+
+  }
+
+};
+exports.downloads = function(req, res){
+  console.log("before rendering : ", req.session.lang)
+  if (req.url.includes("?clang=nl")) {
+    delete req.session.lang;
+    req.session.lang = 'nl';
+    console.log("1", req.session.lang)
+  } else if (req.url.includes("?clang=en")) {
+    delete req.session.lang;
+    req.session.lang = 'en';
+    console.log("1", req.session.lang)
+  } else {
+    console.log("no language var !")
+  };
+
+  console.log("before rendering oldLang: ", req.session.oldLang)
+  if (req.session.lang == 'nl') {
+    console.log("2", req.session.lang)
+    req.session.oldLang = 'en';
+    var admin_db = cloudant.db.use('admin_db_nl');
+  } else {
+    console.log("2", req.session.lang)
+    req.session.oldLang = 'nl';
+    var admin_db = cloudant.db.use('admin_db');
+  };
+
+  if (req.session._jsonConverter){
+    console.log("REQ SESSION IS HERE");
+    if (req.session.user){
+      res.render('downloads.html', {
+        title: 'downloads',
+        username: req.session.user,
+        admin: req.session.admin,
+        _jsonConverter: req.session._jsonConverter,
+        lang: req.session.lang
+      });
+    } else {
+      res.redirect('/login');
+    }
+  } else {
+    admin_db.get('downloads', function(err, doc) {
+      console.log("REQ SESSION IS NOT THERE");
+      if (!err) {
+        db_freshContent = doc.reqContent;
+        console.log("GET found 1 entry: 'downloads'");
+        console.log("retreived doc : \n" + doc);
+        if (req.session.user){
+          res.render('downloads.html', {
+            title: 'downloads',
+            username: req.session.user,
+            admin: req.session.admin,
+            _jsonConverter: db_freshContent,
+
+            lang: req.session.lang
+          });
+        } else {
+          res.redirect('/login');
+        }
+      } else {
+        console.log("ERROR finding : 'Downloads'" + err.message);
+        if (req.session.user){
+          res.render('downloads.html', {
+            title: 'downloads',
+            username: req.session.user,
+            admin: req.session.admin,
+            _jsonConverter: db_freshContent,
+
+            lang: req.session.lang
+          });
+        } else {
+          res.redirect('/login');
+        }
+      };
+      res.end();
+      return;
+    });
   }
 };
 exports.news = function(req, res){
@@ -169,10 +282,7 @@ exports.news = function(req, res){
       res.end();
       return;
     });
-
   }
-
-
 };
 exports.thankyou = function(req, res){
   res.render('thankyou.html', {
@@ -223,7 +333,7 @@ exports.content = function(req, res){
 };
 exports.toc = function(req, res){
   if (!req.session.user) {
-    console.log("User is there");
+    console.log("User not logged in , please login");
     res.redirect('login')
   } else {
     res.render('toc.html', {
@@ -263,6 +373,9 @@ exports.faq = function(req, res){
   });
 };
 exports.blog = function(req, res){
+  if (!req.session._jsonConverter || req.session._jsonConverter){
+    req.session._jsonConverter = ''
+  }
   //Timestamp
   var today = new Date();
   var dd = today.getDate();
@@ -274,7 +387,9 @@ exports.blog = function(req, res){
   if(mm<10) {
       mm = '0'+mm
   }
-  timeStamp = yyyy + '-' + mm + '-' + dd;
+  timeStamp = yyyy + mm + dd;
+  timeStampFormat = dd + '-' + mm + '-' + yyyy;
+  console.log(timeStamp, timeStampFormat);
   var blog = cloudant.db.use('blog');
 
   blog.fetch({include_docs:true}, function (err, data) {
@@ -282,6 +397,12 @@ exports.blog = function(req, res){
     data.rows.forEach(function(rows) {
       blog_posts.push(rows.doc);
     });
+  function descPostDates() {
+    blog_posts.sort(function(a, b){return b.blogpost_date-a.blogpost_date});
+
+  }
+  descPostDates();
+
     req.session.blog_posts = blog_posts;
     // console.log(printblogRows);
     // delete req.session.userlist;
@@ -298,14 +419,10 @@ exports.blog = function(req, res){
       userlist: req.session.userlist,
       lang: req.session.lang,
       _jsonConverter: req.session._jsonConverter,
+      admin: req.session.admin,
       blog_posts: blog_posts,
-      timeStamp: timeStamp
+      timeStamp: timeStamp,
+      timeStampFormat: timeStampFormat
     });
   });
-
-  if (!req.session._jsonConverter || req.session._jsonConverter){
-    req.session._jsonConverter = ''
-  }
-
-
 };

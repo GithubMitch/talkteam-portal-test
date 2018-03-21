@@ -48,11 +48,11 @@
 					<div class="col-2 col-sm-9 col-xs-9 col-auto">
 						<% if (typeof lang == 'undefined' || lang == 'en') { %>
 						<div class="mobile-lang">
-							<a href="/?clang=nl"><img src="images/nl.png" alt="Dutch flag" height="34" width="34"></a>
+							<a href="?clang=nl"><img src="images/nl.png" alt="Dutch flag" height="34" width="34"></a>
 						</div>
 						<% } else if (lang == 'nl') { %>
 							<div class="mobile-lang">
-								<a href="/?clang=en"><img src="images/en.png" alt="British flag" height="34" width="34"></a>
+								<a href="?clang=en"><img src="images/en.png" alt="British flag" height="34" width="34"></a>
 							</div>
 						<% } %>
 						<a id="hamburger" href="#mainmenu"></a>
@@ -77,9 +77,9 @@
 								<% } %>
 
 								<% if (typeof lang == 'undefined' || lang == 'en') { %>
-									<li class="lang"><a href="/?clang=nl"><img src="images/nl.png" alt="Dutch flag" height="34" width="34"></a></li>
+									<li class="lang"><a href="?clang=nl"><img src="images/nl.png" alt="Dutch flag" height="34" width="34"></a></li>
 								<% } else if (lang == 'nl') { %>
-									<li class="lang"><a href="/?clang=en"><img src="images/en.png" alt="British flag" height="34" width="34"></a></li>
+									<li class="lang"><a href="?clang=en"><img src="images/en.png" alt="British flag" height="34" width="34"></a></li>
 								<% } %>
 							</ul>
 						</nav>
@@ -106,7 +106,11 @@
 
 <section class="container main">
 	<div class="row intro">
+		<% if (typeof admin == 'undefined') { %>
 		<div class="col-12 admin_cm">
+		<% } else if (admin) { %>
+   	<div class="col-12 admin_cm" contenteditable="true">
+	  <% } %>
 			<h2>
 				Downloads
 			</h2>
@@ -123,7 +127,11 @@
 					TalkTeam offers a meeting solution for all kinds of teams. A team can consist of people from the internal organization, but it is also possible to add external participants. By capturing information centrally, it is clear to everyone what they are expected to do.
 			</p>
 		</div>
+		<% if (typeof admin == 'undefined') { %>
 		<div class="col-12 admin_cm purplebox">
+		<% } else if (admin) { %>
+   	<div class="col-12 admin_cm purplebox" contenteditable="true">
+	  <% } %>
 			<h3>
 				paperless and transparent
 			</h3>
@@ -140,6 +148,23 @@
 				All information is part of the collaboration platform IBM Connections, which makes it easy for those concerned to find the information.
 			</p>
 		</div>
+
+		<% if (typeof admin == 'undefined') { %>
+		<% } else if (admin) { %>
+			<div class="adminPanel">
+				<form id="adminPost" action="/admin_cm/post" method="post">
+					<input id="jsonParser" type="text" name="_jsonParser" hidden="true" value="">
+					<input id="currentPageVar" type="text" name="currentPageVar" hidden="true" value='<%= title %>'>
+					<input id="admin_ApplyButton" name="button" value="Apply">
+					<input id="admin_SafeButton" name="button" value="Save" type="submit">
+				</form>
+				<div id="setAdmin" hidden="true">toggle setAdmin</div>
+			</div>
+		<% } %>
+
+		<input id="jsonConverter" type="text" name="_jsonConverter" hidden="true" value='<%= _jsonConverter %>'>
+
+
 </section>
 
 	<footer class="fluid-container">
@@ -148,6 +173,8 @@
 		</div>
 	</footer>
 </div>
+<script src="./lib/domJSON.js"></script>
+<script type="text/javascript" src="/scripts/admin_cm.js"></script>
 	<script type="text/javascript" src="/scripts/custom_menu.js"></script>
 </body>
 </html>

@@ -105,22 +105,10 @@
 </div>
 
 <section class="container main">
-		<article class="blog_post">
-			<header>
-				Blog post EXAMPLE markup
-			</header>
-			<div class="body">
-				<pre>This is a blog_post !</pre>
-			</div>
-			<footer>
-				20/03/2018
-			</footer>
-		</article>
 
 		<% for(var i=0; i < blog_posts.length; i++) { %>
 			<article class="blog_post">
 				<% if (typeof admin == 'undefined') { %>
-
 				<% } else if (admin) { %>
 					<form id="blog_delete_form" method="post" action="/delete/blog_post" class="shortForm">
 						<input type="hidden" name="blogpost_title" value="<%= blog_posts[i].blogpost_title %>">
@@ -135,7 +123,7 @@
 					<pre><%= blog_posts[i].blogpost_body %></pre>
 				</div>
 				<footer>
-					<pre><%= blog_posts[i].blogpost_date %></pre>
+					<pre><%= blog_posts[i].blogpost_date_format %></pre>
 				</footer>
 			</article>
 		<% } %>
@@ -154,28 +142,13 @@
 						<textarea type="text" name="blogpost_body"/></textarea>
 					</div>
 					<footer>
-						<pre>Date: <%= timeStamp %></pre>
+						<pre>Date: <%= timeStampFormat %></pre>
 						<input type="hidden" name="blogpost_date" value="<%= timeStamp %>"/>
+						<input type="hidden" name="blogpost_date_format" value="<%= timeStampFormat %>"/>
 					</footer>
 					<input type="submit">
 				</form>
 			</article>
-		<% } %>
-
-
-
-		<% if (typeof admin == 'undefined') { %>
-
-		<% } else if (admin) { %>
-			<div class="adminPanel">
-				<form id="adminPost" action="/admin_cm/post" method="post">
-					<input id="jsonParser" type="text" name="_jsonParser" hidden="true" value="">
-					<input id="currentPageVar" type="text" name="currentPageVar" hidden="true" value='<%= title %>'>
-					<input id="admin_ApplyButton" name="button" value="Apply">
-					<input id="admin_SafeButton" name="button" value="Save" type="submit">
-				</form>
-				<div id="setAdmin" hidden="true">toggle setAdmin</div>
-			</div>
 		<% } %>
 
 		<input id="jsonConverter" type="text" name="_jsonConverter" hidden="true" value='<%= _jsonConverter %>'>

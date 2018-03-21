@@ -137,6 +137,7 @@ app.post('/post/registerform', function(req, res) {
         }
 
         console.log('You have registered user '+ regUser + ' in DB : talkteam_clients');
+        console.log(body);
       });
 
     });
@@ -148,12 +149,17 @@ app.post('/login', function (req, res) {
   var user = req.body.username;
   var password = req.body.password;
   var talkteam_clients = cloudant.db.use('talkteam_clients');
+  console.log(user);
 
   talkteam_clients.get(req.body.username, function(err, body) {
     if (!err) {
       console.log("Found this profile:")
-      console.log("_id: ",body._id)
-
+      console.log(body.organisationName)
+      console.log(body.organisationEmail)
+      console.log(body._id)
+      console.log(body.licensekey)
+      console.log(body.endDate)
+      console.log(body.active)
     } else {
       console.log(err);
     }
@@ -164,7 +170,7 @@ app.post('/login', function (req, res) {
       res.redirect('/login');
     } else if(user === data._id || password === data.password) {
       if (data.adminName) {
-        console.log("THIS IS A ADMIN ACCOUNT");
+        console.log("THIS IS A ADMIN ACCOUNT")
         req.session.admin = true;
       }
       req.session.user = user;
@@ -193,6 +199,7 @@ app.post('/login', function (req, res) {
 
         req.session.userRows = userRows;
         req.session.userlist = printUserlist;
+        console.log(printUserlist);
         res.redirect('/toc');
         delete req.session.userlist;
         console.log("deleted userlist from req.session")
@@ -242,19 +249,26 @@ app.post('/faqform/post', function(req, res) {
     // });
 });
 app.post('/admin_cm/post', function(req, res) {
+  console.log("ADMIN POST - TOOK PLACE IN /ADMIN/POST ----> ROUTING FROM THIS PATH", req.url);
 
   var json = req.body._jsonParser;
   var currentPage = req.body.currentPageVar;
 
   req.session._jsonConverter = json;
+  console.log(req.session.lang + " = REQ.SES.LANG BEFORE INSERT")
   if (req.session.lang == 'nl') {
     req.session.lang = 'nl'
+    console.log('currentURL = ', req.url);
+    console.log('Language set  =  NL / Dutch');
     var admin_db = cloudant.db.use('admin_db_nl');
   } else {
     req.session.lang = 'en'
+    console.log('currentURL = ', req.url);
+    console.log('Language set  =  Default - EN / English');
     var admin_db = cloudant.db.use('admin_db');
   }
 
+  console.log(currentPage)
   admin_db.get(currentPage, function(err, doc) {
     if (!err) {
       console.log("GET found 1 entry ! :"+ currentPage);
@@ -274,6 +288,7 @@ app.post('/admin_cm/post', function(req, res) {
     };
     console.log("POST used : "+ admin_db + "\nIn language : "+ req.session.lang);
     delete req.session._jsonConverter;
+    console.log("req.session._jsonConverter",req.session._jsonConverter);
     res.redirect('/'+currentPage);
   });
 
@@ -284,6 +299,8 @@ app.post('/post/blog_post', function(req, res) {
   var blogpost_body = req.body.blogpost_body;
   var blogpost_date = req.body.blogpost_date;
   var blogpost_date_format = req.body.blogpost_date_format;
+
+  console.log(req.body.blogpost_title);
 
   // Create a new "talkteam_clients" database.
   cloudant.db.create('blog', function(err, res) {
@@ -299,12 +316,22 @@ app.post('/post/blog_post', function(req, res) {
       if (err) {
         return console.log('[blog.insert] ', err.message);
       }
+
       console.log('You have inserted '+ blogpost_title + ' in DB : blog');
+      console.log(body);
     });
 
 
   });
   res.redirect('/blog');
+
+
+  // if (req.session.admin) {
+  //   console.log("THIS IS A ADMIN ACCOUNT");
+  // } else {
+  //   console.log("This is NOT a admin account");
+  //   res.redirect('/blog');
+  // }
 
 });
 app.post('/delete/blog_post', function(req, res) {
@@ -313,6 +340,7 @@ app.post('/delete/blog_post', function(req, res) {
   var blogpost_body = req.body.blogpost_body;
   var blogpost_date = req.body.blogpost_date;
 
+  console.log(req.body.blogpost_title);
 
   blog.get(req.body.blogpost_title, function(err, data) {
     if (!blogpost_title || !blogpost_date) {
@@ -333,6 +361,14 @@ app.post('/delete/blog_post', function(req, res) {
       });
     }
   });
+
+  // if (req.session.admin) {
+  //   console.log("THIS IS A ADMIN ACCOUNT");
+  // } else {
+  //   console.log("This is NOT a admin account");
+  //   res.redirect('/blog');
+  // }
+
 });
 
 http.createServer(app).listen(app.get('port'), '0.0.0.0', function() {
