@@ -3,16 +3,24 @@
   "version": "0.0.2",
   "private": true,
   "scripts": {
-    "start": "node app.js"
+    "build-blog": "cd app_blog && wintersmith build",
+    "start": "node app.js",
+    "goofball": "node app.js"
   },
   "dependencies": {
     "babel-polyfill": "^6.26.0",
+    "bloggy": "0.0.22",
     "body-parser": "1.17.x",
     "bootstrap": "^4.0.0",
     "browserify": "^15.2.0",
     "cloudant": "1.7.x",
     "connect-multiparty": "2.0.x",
+    "consolidate": "^0.15.0",
+    "contentful": "^5.1.3",
+    "cookie-parser": "^1.4.3",
     "create-element": "^0.2.3",
+    "dateformat": "^3.0.3",
+    "debug": "^3.1.0",
     "domjson": "^0.1.2",
     "dotenv": "^5.0.0",
     "ejs": "2.5.x",
@@ -26,11 +34,17 @@
     "jquery.mmenu": "^7.0.1",
     "memorystore": "^1.6.0",
     "method-override": "2.3.x",
-    "morgan": "1.8.x",
+    "morgan": "^1.8.2",
+    "multer": "^1.3.0",
     "nano": "^6.4.2",
+    "nodemon": "^1.17.2",
     "popper": "^1.0.1",
     "popper.js": "^1.12.9",
-    "superlogin": "^0.6.1"
+    "q": "^1.5.1",
+    "simple-blog": "^1.5.1",
+    "stylus": "^0.54.5",
+    "superlogin": "^0.6.1",
+    "util": "^0.10.3"
   },
   "repository": {},
   "engines": {

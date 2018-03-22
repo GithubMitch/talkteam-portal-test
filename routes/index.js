@@ -404,6 +404,7 @@ exports.blog = function(req, res){
   descPostDates();
 
     req.session.blog_posts = blog_posts;
+    console.log("ALL POSTS : \n", blog_posts);
     // console.log(printblogRows);
     // delete req.session.userlist;
     res.render('blog/blog.html', {

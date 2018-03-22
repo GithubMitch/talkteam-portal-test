@@ -22,13 +22,38 @@ var express = require('express'),
     errorHandler = require('errorhandler'),
     multipart = require('connect-multiparty'),
     multipartMiddleware = multipart(),
-    SuperLogin = require('superlogin');
+    SuperLogin = require('superlogin'),
+    fs = require('fs'),
+    multer = require('multer');
+
+
 
 var app = express(),
     db,
     cloudant,
     fileToUpload,
     currentURL;
+
+var storage = multer.diskStorage({
+    destination: function(req, file, cb){
+      cb(null, 'uploads');
+    },
+    filename: function(req, file, cb){
+      filename = Date.now();
+      switch (file.mimetype) {
+        case 'image/png':
+        filename = filename + ".png";
+        break;
+        case 'image/jpeg':
+        filename = filename + ".jpeg";
+        break;
+        default:
+        break;
+      }
+      cb(null, filename);
+    }
+  }),
+  upload = multer({ storage: storage});
 
 var dbCredentials = {
     dbName: 'my_sample_db'
@@ -59,6 +84,7 @@ app.use('/css', express.static(__dirname + '/node_modules/jquery.mmenu/dist')); 
 // BLOG INSTANCE + MAPPING
 // app.use('/blog',express.static(path.join(__dirname, 'app_blog/build'))); //blog INSTANCE
 // app.use('/css', express.static(__dirname + '/app_blog/build/css')); // redirect CSS blog css
+app.use('/uploads', express.static(path.join(__dirname, '/uploads'))); // Uploads folder
 
 app.use(session({
     store: new MemoryStore({
@@ -86,7 +112,6 @@ app.get('/blog', routes.blog);
 
 //MAILTEMPLATING
 mailer.extend(app, {
-  from: 'no-reply@gmail.com',
   host: 'smtp.gmail.com', // hostname
   secureConnection: true, // use SSL
   port: 465, // port for secure SMTP
@@ -205,11 +230,11 @@ app.post('/faqform/post', function(req, res) {
   console.log('MAIL IS SEND WITH :' + req.body.form_organisation , req.body.form_subject , req.body.form_email, req.body.form_question )
   app.mailer.send(
     {
-      template: 'faqmail.html', // REQUIRED
+      from: req.body.form_email,
+      template: 'faqmail.html' // REQUIRED
     },
     {
-      to: 'm.seedorf@live.nl',
-      from: req.body.form_email,
+      to: 'mitchell.seedorf@e-office.com',
       subject: "Question @ " + req.body.form_subject,
       department: req.body.form_subject,
       organisation: req.body.form_organisation,
@@ -225,6 +250,7 @@ app.post('/faqform/post', function(req, res) {
         return;
       };
         // mail sent!
+        console.log("Data send : ", req.body.form_email );
         res.redirect('/thankyou');
     }
   );
@@ -278,12 +304,16 @@ app.post('/admin_cm/post', function(req, res) {
   });
 
 });
-app.post('/post/blog_post', function(req, res) {
+
+app.post('/post/blog_post', upload.single('uploadFile'), function(req, res) {
   var blog = cloudant.db.use('blog');
   var blogpost_title = req.body.blogpost_title;
   var blogpost_body = req.body.blogpost_body;
   var blogpost_date = req.body.blogpost_date;
   var blogpost_date_format = req.body.blogpost_date_format;
+  var blogpost_file = req.file;
+  console.log("UploadFile : ", req.file.originalname  );
+  req.session.filename = req.file.originalname;
 
   // Create a new "talkteam_clients" database.
   cloudant.db.create('blog', function(err, res) {
@@ -294,15 +324,14 @@ app.post('/post/blog_post', function(req, res) {
       blogpost_title: req.body.blogpost_title,
       blogpost_body: req.body.blogpost_body,
       blogpost_date: req.body.blogpost_date,
-      blogpost_date_format: req.body.blogpost_date_format
+      blogpost_date_format: req.body.blogpost_date_format,
+      blogpost_file: req.file,
     }, blogpost_title, function(err, body, header) {
       if (err) {
         return console.log('[blog.insert] ', err.message);
       }
       console.log('You have inserted '+ blogpost_title + ' in DB : blog');
     });
-
-
   });
   res.redirect('/blog');
 

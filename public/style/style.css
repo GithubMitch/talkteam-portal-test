@@ -338,7 +338,7 @@ a.logo {
 	position: relative;
   background: rgba(255,255,255,.85);
 	background-color: #fff;
-  border: 3px double #35B297;
+  border: 0px double #35B297;
 }
 .intro div[class^="col-"] {
 	font-size: 20px;

@@ -124,6 +124,19 @@
 				</div>
 				<footer>
 					<pre><%= blog_posts[i].blogpost_date_format %></pre>
+					<% if (typeof blog_posts[i].blogpost_file == 'undefined') { %>
+
+					<% } else if (blog_posts[i].blogpost_file) { %>
+						<p>
+							<%= JSON.stringify(blog_posts[i].blogpost_file.originalname) %>
+						</p>
+						<p>
+							uploads/<%= Object(blog_posts[i].blogpost_file['filename']) %>
+
+						</p>
+
+						<img src="../uploads/<%= Object(blog_posts[i].blogpost_file['filename']) %>" alt="">
+					<% } %>
 				</footer>
 			</article>
 		<% } %>
@@ -132,7 +145,7 @@
 
 		<% } else if (admin) { %>
 			<article class="blog_post">
-				<form id="blog_post_form" class="shortForm" action="/post/blog_post" method="post">
+				<form id="blog_post_form" class="shortForm" action="/post/blog_post" method="post" enctype="multipart/form-data">
 					<header>
 						<label>Title:</label>
 						<input type="text" name="blogpost_title"/>
@@ -142,6 +155,8 @@
 						<textarea type="text" name="blogpost_body"/></textarea>
 					</div>
 					<footer>
+
+				    <input type="file" name="uploadFile">
 						<pre>Date: <%= timeStampFormat %></pre>
 						<input type="hidden" name="blogpost_date" value="<%= timeStamp %>"/>
 						<input type="hidden" name="blogpost_date_format" value="<%= timeStampFormat %>"/>
