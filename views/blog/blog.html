@@ -125,17 +125,16 @@
 				<footer>
 					<pre><%= blog_posts[i].blogpost_date_format %></pre>
 					<% if (typeof blog_posts[i].blogpost_file == 'undefined') { %>
+						<% } else if (blog_posts[i].blogpost_file) { %>
+							<% if ( blog_posts[i].blogpost_file['mimetype'].startsWith("image") ) { %>
+								<img src="../uploads/<%= Object(blog_posts[i].blogpost_file['filename']) %>" alt="">
+							<% } %>
+							<% if ( blog_posts[i].blogpost_file['mimetype'] == "application/vnd.openxmlformats-officedocument.presentationml.presentation" ) { %>
+								<a href="../uploads/<%= Object(blog_posts[i].blogpost_file['filename']) %>" alt="">
+									<%= Object(blog_posts[i].blogpost_file['originalname']) %>
+								</a>
+							<% } %>
 
-					<% } else if (blog_posts[i].blogpost_file) { %>
-						<p>
-							<%= JSON.stringify(blog_posts[i].blogpost_file.originalname) %>
-						</p>
-						<p>
-							uploads/<%= Object(blog_posts[i].blogpost_file['filename']) %>
-
-						</p>
-
-						<img src="../uploads/<%= Object(blog_posts[i].blogpost_file['filename']) %>" alt="">
 					<% } %>
 				</footer>
 			</article>

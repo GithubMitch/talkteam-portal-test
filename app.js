@@ -42,13 +42,40 @@ var storage = multer.diskStorage({
       filename = Date.now();
       switch (file.mimetype) {
         case 'image/png':
-        filename = filename + ".png";
-        break;
+          filename = filename + ".png";
+          break;
         case 'image/jpeg':
-        filename = filename + ".jpeg";
-        break;
-        default:
-        break;
+          filename = filename + ".jpeg";
+          break;
+        case 'image/gif':
+          filename = filename + ".gif";
+          break;
+        case 'application/zip':
+          filename = filename + ".zip";
+          break;
+        case 'image/svg+xml':
+          filename = filename + ".svg";
+          break;
+        case 'application/x-rar-compressed':
+          filename = filename + ".rar";
+          break;
+        case 'application/vnd.ms-powerpoint':
+          filename = filename + ".ppt";
+          break;
+        case 'application/msword':
+          filename = filename + ".doc";
+          break;
+        case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
+          filename = filename + ".docx";
+          break;
+        case 'application/vnd.ms-powerpoint':
+          filename = filename + ".ppt";
+          break;
+        case 'application/vnd.openxmlformats-officedocument.presentationml.presentation':
+          filename = filename + ".pptx";
+          break;
+        default:  type = "unknown"
+          break;
       }
       cb(null, filename);
     }

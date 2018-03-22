@@ -662,6 +662,10 @@ border-bottom:1px solid #ccc;
 	 	outline-color: #35B297;
 	 	width: 100%;
  }
+ .blog_post footer img {
+	 max-width:100%;
+
+ }
 
 #blog_delete_form {}
 #blog_delete_form input[type="submit"] {
@@ -670,6 +674,10 @@ border-bottom:1px solid #ccc;
 	right:0;
 	top:0;
 	margin:0;
+	width:30px;
+	height:30px;
+	padding:0;
+  line-height: 30px;
 }
 
 #blog_post_form {}
