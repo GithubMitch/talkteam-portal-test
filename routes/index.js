@@ -114,11 +114,11 @@ exports.register = function(req, res){
       lang: req.session.lang
     });
   } else {
-    admin_db.get('news', function(err, doc) {
+    admin_db.get('about', function(err, doc) {
       console.log("REQ SESSION IS NOT THERE");
       if (!err) {
         db_freshContent = doc.reqContent;
-        console.log("GET found 1 entry: 'news'");
+        console.log("GET found 1 entry: 'about'");
         console.log("retreived doc : \n" + doc);
         res.render('register.html', {
           title: 'Register',
@@ -221,7 +221,7 @@ exports.downloads = function(req, res){
     });
   }
 };
-exports.news = function(req, res){
+exports.about = function(req, res){
   console.log("before rendering : ", req.session.lang)
   if (req.url.includes("?clang=nl")) {
     delete req.session.lang;
@@ -248,22 +248,22 @@ exports.news = function(req, res){
 
   if (req.session._jsonConverter){
     console.log("REQ SESSION IS HERE");
-    res.render('news.html', {
-      title: 'news',
+    res.render('about.html', {
+      title: 'about',
       username: req.session.user,
       admin: req.session.admin,
       _jsonConverter: req.session._jsonConverter,
       lang: req.session.lang
     });
   } else {
-    admin_db.get('news', function(err, doc) {
+    admin_db.get('about', function(err, doc) {
       console.log("REQ SESSION IS NOT THERE");
       if (!err) {
         db_freshContent = doc.reqContent;
-        console.log("GET found 1 entry: 'news'");
+        console.log("GET found 1 entry: 'about'");
         console.log("retreived doc : \n" + doc);
-        res.render('news.html', {
-          title: 'news',
+        res.render('about.html', {
+          title: 'about',
           username: req.session.user,
           admin: req.session.admin,
           _jsonConverter: db_freshContent,
@@ -271,8 +271,71 @@ exports.news = function(req, res){
         });
       } else {
         console.log("ERROR finding : 'News'" + err.message);
-        res.render('news.html', {
-          title: 'news',
+        res.render('about.html', {
+          title: 'about',
+          username: req.session.user,
+          admin: req.session.admin,
+          _jsonConverter: db_freshContent,
+          lang: req.session.lang
+        });
+      };
+      res.end();
+      return;
+    });
+  }
+};
+exports.terms = function(req, res){
+  console.log("before rendering : ", req.session.lang)
+  if (req.url.includes("?clang=nl")) {
+    delete req.session.lang;
+    req.session.lang = 'nl';
+    console.log("1", req.session.lang)
+  } else if (req.url.includes("?clang=en")) {
+    delete req.session.lang;
+    req.session.lang = 'en';
+    console.log("1", req.session.lang)
+  } else {
+    console.log("no language var !")
+  };
+
+  console.log("before rendering oldLang: ", req.session.oldLang)
+  if (req.session.lang == 'nl') {
+    console.log("2", req.session.lang)
+    req.session.oldLang = 'en';
+    var admin_db = cloudant.db.use('admin_db_nl');
+  } else {
+    console.log("2", req.session.lang)
+    req.session.oldLang = 'nl';
+    var admin_db = cloudant.db.use('admin_db');
+  };
+
+  if (req.session._jsonConverter){
+    console.log("REQ SESSION IS HERE");
+    res.render('terms.html', {
+      title: 'terms',
+      username: req.session.user,
+      admin: req.session.admin,
+      _jsonConverter: req.session._jsonConverter,
+      lang: req.session.lang
+    });
+  } else {
+    admin_db.get('terms', function(err, doc) {
+      console.log("REQ SESSION IS NOT THERE");
+      if (!err) {
+        db_freshContent = doc.reqContent;
+        console.log("GET found 1 entry: 'about'");
+        console.log("retreived doc : \n" + doc);
+        res.render('terms.html', {
+          title: 'terms',
+          username: req.session.user,
+          admin: req.session.admin,
+          _jsonConverter: db_freshContent,
+          lang: req.session.lang
+        });
+      } else {
+        console.log("ERROR finding : 'Terms'" + err.message);
+        res.render('terms.html', {
+          title: 'terms',
           username: req.session.user,
           admin: req.session.admin,
           _jsonConverter: db_freshContent,

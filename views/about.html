@@ -61,25 +61,47 @@
 								<% if (typeof lang == 'undefined' || lang == 'en') { %>
 								  <li><a href="/home">Home</a></li>
 									<% if (!username) { %>
-										<li><a href="/register">Register</a></li>
+										<li>
+											<a href="/register">Register</a>
+											<ul>
+												<li><a href="/downloads">Downloads</a></li>
+											</ul>
+										</li>
+									<% } else if (username) { %>
+										<li><a href="/downloads">Downloads</a></li>
 									<% } %>
-								  <li><a href="/downloads">Downloads</a></li>
-								  <li><a href="/faq">F.A.Q</a></li>
-								  <li><a href="/news">News</a></li>
+								  <li>
+										<a href="/about">E-Office</a>
+										<ul>
+											<li><a href="/blog">Nieuws</a></li>
+											<li><a href="/faq">F.A.Q</a></li>
+											<li><a href="/terms">Algemene voorwaarde</a></li>
+										</ul>
+									</li>
 								<% } else if (lang == 'nl') { %>
 								  <li><a href="/home">Home</a></li>
 									<% if (!username) { %>
-										<li><a href="/register">Registreer</a></li>
+										<li>
+											<a href="/register">Register</a>
+											<ul>
+												<li><a href="/downloads">Downloads</a></li>
+											</ul>
+										</li>
 									<% } %>
-								  <li><a href="/downloads">Downloads</a></li>
-								  <li><a href="/faq">F.A.Q</a></li>
-								  <li><a href="/news">Nieuws</a></li>
+								  <li>
+										<a href="/about">E-Office</a>
+										<ul>
+											<li><a href="/blog">Nieuws</a></li>
+											<li><a href="/faq">F.A.Q</a></li>
+											<li><a href="/terms">Algemene voorwaarde</a></li>
+										</ul>
+									</li>
 								<% } %>
 
 								<% if (typeof lang == 'undefined' || lang == 'en') { %>
-									<li class="lang"><a href="?clang=nl"><img src="images/nl.png" alt="Dutch flag" height="34" width="34"></a></li>
+									<li class="lang"><a href="?clang=nl"><img src="images/nl.png" title="Translate to: Dutch" alt="Dutch flag" height="34" width="34"></a></li>
 								<% } else if (lang == 'nl') { %>
-									<li class="lang"><a href="?clang=en"><img src="images/en.png" alt="British flag" height="34" width="34"></a></li>
+									<li class="lang"><a href="?clang=en"><img src="images/en.png" title="Vertaal naar: Engels" alt="British flag" height="34" width="34"></a></li>
 								<% } %>
 							</ul>
 						</nav>
@@ -96,10 +118,14 @@
 			</div>
 		</header>
 
-<div class="fluid-container">
+<div class="fluid-container gMap">
 	<div class="row">
 		<div class="col">
-			<img class="bannerimg" src="images/silhoutte2.jpg">
+			<div id="gMap"></div>
+				<!-- Replace the value of the key parameter with your own API key. -->
+				<script async defer
+	         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCoi_dl3oeOgbSjWN0KSWy0X2t5vJWKB_g&callback=initialize">
+	    	</script>
 		</div>
 	</div>
 </div>
@@ -107,34 +133,30 @@
 <section class="container main">
 	<div class="row intro">
 		<div class="col-12 admin_cm">
-			<h2>
-				News & Updates
-			</h2>
+			<% if (typeof lang == 'undefined' || lang == 'en') { %>
+				<h2>About E-Office</h2>
+				<p>Register your username and password here.</p>
+			<% } else if (lang == 'nl') { %>
+				<h2>Over E-Office</h2>
+				<p>Registreer uw gebruikersnaam en wachtwoord hier.</p>
+			<% } %>
 			<p>
-				Meetings are a waste of time? Losing overview of all submitted documents? Not clear which agreements have been made after the meeting? Meetings will be better, smarter and easier using TalkTeam. An app which uses the power of IBM Connections.
+				Sit facer aliquip referrentur in, nibh aliquando ei sea. In inani graeci prodesset pro, quo te congue causae urbanitas. Duis nostro invidunt mei id, duo ex pertinax evertitur, at eos elitr legere elaboraret. Numquam denique ne qui, te sea hinc labores propriae. Vix veri utinam ei, vis cu ancillae definitiones, enim timeam veritus per ne.
 			</p>
 		</div>
 		<div class="col-12 admin_cm purplebox">
 			<h3>
-				paperless and transparent
+				Mel hinc atqui comprehensam
 			</h3>
 			<p>
-				TalkTeam is a smart addition to IBM Connections. It integrates into the company-wide social platform and enriches IBM Connections with a number of useful tools. TalkTeam offers a clear meeting structure with information from a community and presents it in a simple way. You have a clear perception of each meeting.
+				Te est latine noluisse, suscipit convenire hendrerit ei est. Ex postulant sapientem pro, labores similique te has, eam at natum solet discere.
 			</p>
 			<p>
-				A meeting consists of a number of participants. TalkTeam offers the possibility to organize a single meeting or a recurring meeting with a team. TalkTeam also shows your meeting directly on your calendar.
-			</p>
-			<p>
-				Participants can add agenda items and documents, and have the opportunity to take notes. During the meeting the agenda items are being discussed and action points and decisions can be specified.
-			</p>
-			<p>
-				All information is part of the collaboration platform IBM Connections, which makes it easy for those concerned to find the information.
+				Ne usu movet sensibus argumentum. In eum solum nonumes menandri. Qui et quod autem detraxit, nec elit nostro invidunt ut.
 			</p>
 		</div>
 
-		<% if (typeof admin == 'undefined') { %>
-
-		<% } else if (admin) { %>
+		<% if (username && admin ) { %>
 			<div class="adminPanel">
 				<form id="adminPost" action="/admin_cm/post" method="post">
 					<input id="jsonParser" type="text" name="_jsonParser" hidden="true" value="">
@@ -142,7 +164,13 @@
 					<input id="admin_ApplyButton" name="button" value="Apply">
 					<input id="admin_SafeButton" name="button" value="Save" type="submit">
 				</form>
+				<a href="/toc">Configuration</a>
+
 				<div id="setAdmin" hidden="true">toggle setAdmin</div>
+			</div>
+
+		<% } else if (username) { %>
+			<div class="adminPanel">
 			</div>
 		<% } %>
 
@@ -156,6 +184,21 @@
 		</div>
 	</footer>
 </div>
+<script type="text/javascript">
+	var gMap;
+	function initialize() {
+	gMap = new google.maps.StreetViewPanorama(
+			document.getElementById('gMap'),
+			{
+				disableDefaultUI: true,
+				position: {lat: 52.024177, lng: 5.143680},
+				pov: {heading: -145, pitch: 12},
+				// position: {lat: 52.023654, lng: 5.143211},
+				// pov: {heading: -105, pitch: 50},
+				zoom: 1
+			});
+	}
+</script>
 <script src="./lib/domJSON.js"></script>
 <script type="text/javascript" src="/scripts/admin_cm.js"></script>
 <script type="text/javascript" src="/scripts/custom_menu.js"></script>

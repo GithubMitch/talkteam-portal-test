@@ -61,25 +61,49 @@
 								<% if (typeof lang == 'undefined' || lang == 'en') { %>
 								  <li><a href="/home">Home</a></li>
 									<% if (!username) { %>
-										<li><a href="/register">Register</a></li>
+										<li>
+											<a href="/register">Register</a>
+											<ul>
+												<li><a href="/downloads">Downloads</a></li>
+											</ul>
+										</li>
+									<% } else if (username) { %>
+										<li><a href="/downloads">Downloads</a></li>
 									<% } %>
-								  <li><a href="/downloads">Downloads</a></li>
-								  <li><a href="/faq">F.A.Q</a></li>
-								  <li><a href="/news">News</a></li>
+								  <li>
+										<a href="/about">E-Office</a>
+										<ul>
+											<li><a href="/blog">Nieuws</a></li>
+											<li><a href="/faq">F.A.Q</a></li>
+											<li><a href="/terms">Algemene voorwaarde</a></li>
+										</ul>
+									</li>
 								<% } else if (lang == 'nl') { %>
 								  <li><a href="/home">Home</a></li>
 									<% if (!username) { %>
-										<li><a href="/register">Registreer</a></li>
+										<li>
+											<a href="/register">Register</a>
+											<ul>
+												<li><a href="/downloads">Downloads</a></li>
+											</ul>
+										</li>
+									<% } else if (username) { %>
+										<li><a href="/downloads">Downloads</a></li>
 									<% } %>
-								  <li><a href="/downloads">Downloads</a></li>
-								  <li><a href="/faq">F.A.Q</a></li>
-								  <li><a href="/news">Nieuws</a></li>
+								  <li>
+										<a href="/about">E-Office</a>
+										<ul>
+											<li><a href="/blog">Nieuws</a></li>
+											<li><a href="/faq">F.A.Q</a></li>
+											<li><a href="/terms">Algemene voorwaarde</a></li>
+										</ul>
+									</li>
 								<% } %>
 
 								<% if (typeof lang == 'undefined' || lang == 'en') { %>
-									<li class="lang"><a href="?clang=nl"><img src="images/nl.png" alt="Dutch flag" height="34" width="34"></a></li>
+									<li class="lang"><a href="?clang=nl"><img src="images/nl.png" title="Translate to: Dutch" alt="Dutch flag" height="34" width="34"></a></li>
 								<% } else if (lang == 'nl') { %>
-									<li class="lang"><a href="?clang=en"><img src="images/en.png" alt="British flag" height="34" width="34"></a></li>
+									<li class="lang"><a href="?clang=en"><img src="images/en.png" title="Vertaal naar: Engels" alt="British flag" height="34" width="34"></a></li>
 								<% } %>
 							</ul>
 						</nav>
@@ -106,7 +130,10 @@
 
 <section class="container main">
 	<div class="row intro">
-		<% if (typeof admin == 'undefined') { %>
+<% if (username) { %>
+  <div class="adminPanel">
+    <a href="/toc">Configuration</a>
+  </div>
 		<div class="col-12 admin_cm">
 		<% } else if (admin) { %>
    	<div class="col-12 admin_cm" contenteditable="true">
@@ -127,6 +154,7 @@
 					TalkTeam offers a meeting solution for all kinds of teams. A team can consist of people from the internal organization, but it is also possible to add external participants. By capturing information centrally, it is clear to everyone what they are expected to do.
 			</p>
 		</div>
+
 		<% if (typeof admin == 'undefined') { %>
 		<div class="col-12 admin_cm purplebox">
 		<% } else if (admin) { %>
@@ -149,8 +177,7 @@
 			</p>
 		</div>
 
-		<% if (typeof admin == 'undefined') { %>
-		<% } else if (admin) { %>
+		<% if (username && admin ) { %>
 			<div class="adminPanel">
 				<form id="adminPost" action="/admin_cm/post" method="post">
 					<input id="jsonParser" type="text" name="_jsonParser" hidden="true" value="">
@@ -158,7 +185,13 @@
 					<input id="admin_ApplyButton" name="button" value="Apply">
 					<input id="admin_SafeButton" name="button" value="Save" type="submit">
 				</form>
+				<a href="/toc">Configuration</a>
+
 				<div id="setAdmin" hidden="true">toggle setAdmin</div>
+			</div>
+
+		<% } else if (username) { %>
+			<div class="adminPanel">
 			</div>
 		<% } %>
 
