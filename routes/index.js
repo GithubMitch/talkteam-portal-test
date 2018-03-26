@@ -329,6 +329,7 @@ exports.terms = function(req, res){
           title: 'terms',
           username: req.session.user,
           admin: req.session.admin,
+          username: req.session.user,
           _jsonConverter: db_freshContent,
           lang: req.session.lang
         });

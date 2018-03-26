@@ -189,7 +189,6 @@ app.post('/post/registerform', function(req, res) {
           return console.log('[talkteam_clients.insert] ', err.message);
         }
 
-        console.log('You have registered user '+ regUser + ' in DB : talkteam_clients');
       });
 
     });

@@ -33,7 +33,8 @@ body {
 	box-shadow: inset 0 0px 12px black;
 }
 #wrap > header + .fluid-container {
-	margin-bottom:-6rem;
+	max-height:600px;
+	min-height:200px;
 }
 .fluid-container {
 	overflow:hidden;
@@ -104,7 +105,7 @@ body {
 	display:none;
 	position: absolute;
 	top:100%;
-	right: 0;
+	left: 0;
 	margin:0;
 	padding:0;
 	padding-top:10px;
@@ -136,9 +137,11 @@ body {
 #mainmenu ul li ul  li a {
 	display:block;
 	text-align:left;
-
 }
 
+.container.main {
+	margin-top:-6rem;
+}
 
 .main {
 	position: relative;
@@ -254,7 +257,7 @@ table {
   background-position: -5px -568px;
   width: 18px;
   height: 18px;
-    display:inline-block;
+	display:inline-block;
 }
 
 tr:hover .deleteBtn {
@@ -810,6 +813,31 @@ border-bottom:1px solid #ccc;
 	.dl-horizontal dd {text-align:center;width:100%;margin:0;}
 }
 
+
+
+
+
+
+
+
+
+// Extra large devices (large desktops, 1200px and up)
+@media (max-width: 1200px) {
+}
+
+@media (max-width: 992px) {
+	#mainmenu ul {
+		padding-left:0;
+	}
+	.login span {
+		display:block;
+	}
+	.user .userInfo{
+		text-align:left;
+		width:auto;
+	}
+}
+
 /* // Medium devices (tablets, 768px and up) */
 @media (max-width: 768px) {
 	.intro h2,
@@ -850,21 +878,46 @@ border-bottom:1px solid #ccc;
 	}
 }
 
-
-/* // Large devices (desktops, 992px and up) */
-@media (max-width: 992px) {
-	#mainmenu ul {
-		padding-left:0;
-	}
-	.login span {
+@media (max-width: 500px) {
+	.adminPanel {right:10px;}
+	.adminPanel input,
+	.adminPanel a[href="/toc"] {
 		display:block;
+		margin:0 0 1em 0;
+		width:100%;
+		max-width:240px;
+		opacity:.4;
 	}
-	.user .userInfo{
-		text-align:left;
-		width:auto;
+	.adminPanel input:hover,
+	.adminPanel a[href="/toc"]:hover {
+		opacity:1;
+	}
+	.blog_post {
+		padding:0;
+	}
+	.blog_post pre {
+		margin:0;
+	}
+	.blog_post header, .blog_post .body, .blog_post footer {
+		padding:.25em;
 	}
 }
 
-// Extra large devices (large desktops, 1200px and up)
-@media (max-width: 1200px) {
+
+/* // Large devices (desktops, 992px and up) */
+@media (max-width: 400px) {
+	#wrap > header + .fluid-container.gMap {
+	    margin-top: 0rem;
+			margin-bottom:0;
+	}
+	#gMap {
+		height:200px;
+	}
+	#adminPost {
+		width:100%;
+	}
+	.adminPanel input,
+	.adminPanel a[href="/toc"] {
+		width:100%;
+	}
 }
