@@ -135,7 +135,10 @@ body {
 	display:block;
 	margin:0;
 }
-
+#mainmenu ul li ul li.active a {
+	background:#35B297;
+	color:#fff;
+}
 #mainmenu ul li ul  li a {
 	display:block;
 	text-align:left;
@@ -379,10 +382,13 @@ a.logo {
 	z-index: 999;
 }
 .bannerimg {
-	width:100%;
-	position: relative;
-	z-index: -1;
-	visibility:hidden;
+  position: relative;
+  max-height: 80%;
+  max-width: 100%;
+  margin: auto;
+  display: block;
+  opacity: .9;
+  margin-top: 1%;
 }
 .intro {
 	/* margin-top:-6rem; */
@@ -824,7 +830,10 @@ border-bottom:1px solid #ccc;
 
 
 
-// Extra large devices (large desktops, 1200px and up)
+/* // Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1000px) {
+	.container.main {margin-top:-9rem;}
+}
 @media (max-width: 1200px) {
 	#wrap > header + .fluid-container {
 			min-height: 500px;

@@ -1,6 +1,7 @@
 $(document).ready(function() {
    $("#mainmenu").mmenu({
       // options
+      slidingSubmenus: false,
    }, {
        // configuration
        clone:	'true',
