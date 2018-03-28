@@ -31,6 +31,7 @@
 	<script src="/js/jquery.min.js"></script>
 	<script src="/js/bootstrap.min.js"></script>
 	<script src="/js/jquery.mmenu.all.js"></script>
+	<script defer src="https://use.fontawesome.com/releases/v5.0.9/js/all.js" integrity="sha384-8iPTk2s/jMVj81dnzb/iFR2sdA7u06vHJyyLlAd4snFpCl/SnyUjRrbdJsw1pGIl" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -165,23 +166,23 @@
 			</article>
 		<% } %>
 
-		<% if (username) { %>
-
-		<% } else if (admin) { %>
+		<% if (username && admin) { %>
 			<article class="blog_post">
 				<form id="blog_post_form" class="shortForm" action="/post/blog_post" method="post" enctype="multipart/form-data">
 					<header>
-						<label>Title:</label>
-						<input type="text" name="blogpost_title"/>
+						<label for="blogpost_title">Title:</label>
+						<input type="text" id="blogpost_title" name="blogpost_title"/>
 					</header>
 					<div class="body">
-						<label>Content:</label>
-						<textarea type="text" name="blogpost_body"/></textarea>
+						<label for="blogpost_body">Content:</label>
+						<textarea type="text" id="blogpost_body" name="blogpost_body"/></textarea>
+						<input id="uploadFile" type="file" name="uploadFile">
+						<label for="uploadFile"><i class="fas fa-upload"></i>Choose a file</label>
 					</div>
 					<footer>
 
-				    <input type="file" name="uploadFile">
-						<pre>Date: <%= timeStampFormat %></pre>
+
+						<!-- <pre>Date: <%= timeStampFormat %></pre> -->
 						<input type="hidden" name="blogpost_date" value="<%= timeStamp %>"/>
 						<input type="hidden" name="blogpost_date_format" value="<%= timeStampFormat %>"/>
 					</footer>
@@ -190,22 +191,23 @@
 			</article>
 		<% } %>
 
-		<% if (username && admin ) { %>
+
+
+		<%	if ( username && !admin) { %>
 			<div class="adminPanel">
-				<form id="adminPost" action="/admin_cm/post" method="post">
+				<a href="/toc">Configuration000</a>
+			</div>
+		<% } else if (username && admin ) { %>
+			<div class="adminPanel">
+				<!-- <form id="adminPost" action="/admin_cm/post" method="post">
 					<input id="jsonParser" type="text" name="_jsonParser" hidden="true" value="">
 					<input id="currentPageVar" type="text" name="currentPageVar" hidden="true" value='<%= title %>'>
 					<input id="admin_ApplyButton" name="button" value="Apply">
 					<input id="admin_SafeButton" name="button" value="Save" type="submit">
-				</form>
+				</form> -->
 				<a href="/toc">Configuration</a>
 
 				<div id="setAdmin" hidden="true">toggle setAdmin</div>
-			</div>
-
-		<% } else if ( username && !admin) { %>
-			<div class="adminPanel">
-				<a href="/toc">Configuration000</a>
 			</div>
 		<% } %>
 

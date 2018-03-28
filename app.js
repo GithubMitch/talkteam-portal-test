@@ -216,7 +216,7 @@ app.post('/login', function (req, res) {
       res.redirect('/login');
     } else if(user === data._id || password === data.password) {
       if (data.adminName) {
-        console.log("THIS IS A ADMIN ACCOUNT");
+        // console.log("THIS IS A ADMIN ACCOUNT");
         req.session.admin = true;
       }
       req.session.user = user;
@@ -227,8 +227,8 @@ app.post('/login', function (req, res) {
       req.session.endDate = JSON.stringify(data.endDate);
       req.session.startDate = JSON.stringify(data.startDate);
       req.session.active = JSON.stringify(data.active);
-      console.log('Username:' + data._id + '\n' + 'Password:'+ data.password);
-      console.log('is now logged in');
+      // console.log('Username:' + data._id + '\n' + 'Password:'+ data.password);
+      // console.log('is now logged in');
 
       talkteam_clients.fetch({include_docs:true}, function (err, data) {
         var printUserlist = [];

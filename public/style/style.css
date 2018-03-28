@@ -483,6 +483,8 @@ dl.dl-horizontal {
 	text-align: center;
 	width: 124px;
 }
+.adminPanel a[href="/toc"]:hover {background:#3f125e;}
+
 .shortForm {
 	max-width:300px;
 	margin:auto;
@@ -637,7 +639,7 @@ border-bottom:1px solid #ccc;
 
 #faqform {
 	margin-top:3rem;
-	border:3px double #ccc;
+	border:3px double #35B297;
 	padding:2em;
 }
 #faqform textarea {
@@ -729,6 +731,47 @@ border-bottom:1px solid #ccc;
 	padding:1em 2em;
 	position: relative;
 }
+.blog_post input[type="file"] + label {
+		-webkit-appearance: none;
+		height: 42px;
+		background-color: #633689;
+		color: #fff;
+		border-radius: 6px;
+		display: inline-block;
+		line-height: 42px;
+		border: 0;
+		cursor: pointer;
+		text-decoration: none;
+		font-size: 14px;
+		font-weight: 600;
+		padding: 0 20px;
+		transition: .3s ease all;
+		margin: 1em auto;
+		text-align: center;
+		position: relative;
+		transition: .3s ease all;
+}
+
+.blog_post input[type="file"]:focus + label,
+.blog_post input[type="file"] + label:hover {
+    background: #3f125e;
+		cursor:pointer;
+}
+.blog_post input[type="file"] {
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+.blog_post label .fa-upload {
+	position: absolute;
+	left: 13px;
+	top: 7px;
+	font-size:25px;
+}
+
 .blog_post	header,
 .blog_post	.body,
 .blog_post footer {
@@ -749,7 +792,7 @@ border-bottom:1px solid #ccc;
  }
  .blog_post footer {
 	 	display: block;
-		width: 60%;
+		width: 70%;
 		margin: auto;
 		border-top: 1px solid lightgray;
  }
@@ -762,7 +805,10 @@ border-bottom:1px solid #ccc;
  }
  .blog_post footer img {
 	 max-width:100%;
+ }
 
+ #blog_post_form {
+	 max-width:400px;
  }
 
 #blog_delete_form {}
@@ -890,10 +936,15 @@ border-bottom:1px solid #ccc;
 	}
 }
 
-@media (max-width: 500px) {
+@media (max-width: 567px) {
 	#wrap > header + .fluid-container {
-			min-height: 200px;
+			min-height: auto;
 	}
+	.container.main {
+	    margin-top: 0;
+	}
+	.intro {margin-top:0;}
+	.bannerimg {margin:0;padding:10px;max-height:100%;}
 	.adminPanel {right:10px;}
 	.adminPanel input,
 	.adminPanel a[href="/toc"] {
