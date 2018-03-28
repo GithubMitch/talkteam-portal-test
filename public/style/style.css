@@ -724,6 +724,7 @@ border-bottom:1px solid #ccc;
 	text-align:center;
 	display:block;
 	margin:2em auto;
+	margin:0 auto;
 	max-width:760px;
 	padding:1em 2em;
 	position: relative;
@@ -821,13 +822,6 @@ border-bottom:1px solid #ccc;
 	.dl-horizontal dt ,
 	.dl-horizontal dd {text-align:center;width:100%;margin:0;}
 }
-
-
-
-
-
-
-
 
 
 /* // Extra large devices (large desktops, 1200px and up) */

@@ -423,6 +423,7 @@ exports.faq = function(req, res){
     }
   res.render('faq.html', {
     title: 'F.A.Q.',
+    admin: req.session.admin,
     username: req.session.user,
     organisationName:req.session.organisationName,
     organisationEmail: req.session.organisationEmail,
