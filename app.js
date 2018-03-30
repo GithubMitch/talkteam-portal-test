@@ -23,7 +23,6 @@ var express = require('express'),
     multipart = require('connect-multiparty'),
     multipartMiddleware = multipart(),
     SuperLogin = require('superlogin'),
-    fs = require('fs'),
     multer = require('multer');
 
 
