@@ -336,13 +336,13 @@ exports.login = function(req, res){
   }
 };
 exports.logout = function(req, res){
+  req.session.destroy();
   res.render('logout.html', {
     title: 'Logout',
     username: req.session.user,
     admin: req.session.admin,
     lang: req.session.lang
   });
-  req.session.destroy();
   // res.send("logout success!");
 };
 exports.content = function(req, res){
@@ -375,9 +375,28 @@ exports.toc = function(req, res){
   }
 };
 exports.faq = function(req, res){
-    if (!req.session._jsonConverter || req.session._jsonConverter){
-      req.session._jsonConverter = ''
-    }
+  if (!req.session._jsonConverter || req.session._jsonConverter){
+    req.session._jsonConverter = ''
+  }
+
+  console.log("before rendering : ", req.session.lang)
+  if (req.url.includes("?clang=nl")) {
+    delete req.session.lang;
+    req.session.lang = 'nl';
+  } else if (req.url.includes("?clang=en")) {
+    delete req.session.lang;
+    req.session.lang = 'en';
+  } else {
+    console.log("no language var !")
+  };
+
+  console.log("before rendering oldLang: ", req.session.oldLang)
+  if (req.session.lang == 'nl') {
+    req.session.oldLang = 'en';
+  } else {
+    req.session.oldLang = 'nl';
+  };
+
   res.render('faq.html', {
     title: 'F.A.Q.',
     admin: req.session.admin,
@@ -409,6 +428,7 @@ exports.blog = function(req, res){
   if(mm<10) {
       mm = '0'+mm
   }
+  uniqueTimeStamp = Date.now();
   timeStamp = yyyy + mm + dd;
   timeStampFormat = dd + '-' + mm + '-' + yyyy;
   var blog = cloudant.db.use('blog');
@@ -444,7 +464,8 @@ exports.blog = function(req, res){
       admin: req.session.admin,
       blog_posts: blog_posts,
       timeStamp: timeStamp,
-      timeStampFormat: timeStampFormat
+      timeStampFormat: timeStampFormat,
+      uniqueTimeStamp: uniqueTimeStamp,
     });
   });
 };

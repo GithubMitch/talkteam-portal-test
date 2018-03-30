@@ -82,7 +82,7 @@
 								  <li><a href="/home">Home</a></li>
 									<% if (!username) { %>
 										<li>
-											<a href="/register">Register</a>
+											<a href="/register">Registreer</a>
 											<ul>
 												<li><a href="/downloads">Downloads</a></li>
 											</ul>
@@ -123,7 +123,9 @@
 <div class="fluid-container">
 	<div class="row">
 		<div class="col">
-			<img class="bannerimg"  style="visibility: hidden" src="images/silhoutte2.jpg">
+			<!-- <img class="bannerimg"   src="images/silhoutte2.jpg"> -->
+			<img class="bannerimg" style="visibility: hidden" src="images/apples-talkteam.png">
+
 		</div>
 	</div>
 </div>
@@ -157,6 +159,19 @@
 	</footer>
 </div>
 <script type="text/javascript" src="/scripts/custom_menu.js"></script>
-
+<script type="text/javascript">
+$("#loginForm").submit(function(){
+	var isValid = true;
+	$( "#loginForm label + input" ).each(function() {
+		if($(this).val().trim().length == 0) {
+			isValid = false;
+		}
+	});
+	if (isValid == false) {
+		alert("Username or password is empty!");
+	}
+	return isValid;
+});
+</script>
 </body>
 </html>

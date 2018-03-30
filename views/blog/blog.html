@@ -83,7 +83,7 @@
 						  <li><a href="/home">Home</a></li>
 							<% if (!username) { %>
 								<li>
-									<a href="/register">Register</a>
+									<a href="/register">Registreer</a>
 									<ul>
 										<li><a href="/downloads">Downloads</a></li>
 									</ul>
@@ -138,6 +138,7 @@
 					<form id="blog_delete_form" method="post" action="/delete/blog_post" class="shortForm">
 						<input type="hidden" name="blogpost_title" value="<%= blog_posts[i].blogpost_title %>">
 						<input type="hidden" name="blogpost_date" value="<%= blog_posts[i].blogpost_date %>">
+						<input type="hidden" name="blogpost_unique_date" value="<%= blog_posts[i].blogpost_unique_date %>">
 						<input type="submit" value="X">
 					</form>
 				<% } %>
@@ -176,13 +177,15 @@
 					<div class="body">
 						<label for="blogpost_body">Content:</label>
 						<textarea type="text" id="blogpost_body" name="blogpost_body"/></textarea>
-						<input id="uploadFile" type="file" name="uploadFile">
-						<label for="uploadFile"><i class="fas fa-upload"></i>Choose a file</label>
+						<input id="uploadFile" type="file" name="uploadFile" value="" data-multiple-caption="{count} files selected" multiple />
+						<label for="uploadFile"><i class="fas fa-upload"></i>Choose a file </label>
+						<span id="fileNameSpan">Hier je bestandsnaam</span>
 					</div>
 					<footer>
 
 
 						<!-- <pre>Date: <%= timeStampFormat %></pre> -->
+						<input type="hidden" name="blogpost_unique_date" value="<%= uniqueTimeStamp %>"/>
 						<input type="hidden" name="blogpost_date" value="<%= timeStamp %>"/>
 						<input type="hidden" name="blogpost_date_format" value="<%= timeStampFormat %>"/>
 					</footer>
@@ -223,5 +226,32 @@
 <script src=".././lib/domJSON.js"></script>
 <script type="text/javascript" src="../scripts/admin_cm.js"></script>
 <script type="text/javascript" src="../scripts/custom_menu.js"></script>
+<script type="text/javascript">
+// var inputs = document.querySelectorAll( '#uploadFile' );
+var fileInput = $('#uploadFile');
+var fileNameSpan = $('#fileNameSpan');
+$(fileInput).on( 'change', function( e ) {
+	var fileName = '';
+	var fu1 = document.getElementById("uploadFile").value;
+	if( this.files && this.files.length > 0 )
+		fileName = ( this.getAttribute( 'data-multiple-caption' ) || '' ).replace( '{count}', this.files.length );
+	else
+		fileName = fu1.split( '\\' ).pop();
+
+
+	// function getFileData(){
+	//    var file = fileInput.files[0];
+	//    var filename = file.name;
+	// 	 console.log(filename);
+	// }
+	if( fileName ) {
+		var thisFilesName = fu1.split( '\\' ).pop()
+		console.log(fu1.split( '\\' ).pop());
+		$(fileNameSpan).html(thisFilesName);
+	}	else {
+		console.log('else')
+	}
+});
+</script>
 </body>
 </html>

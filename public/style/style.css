@@ -1,6 +1,13 @@
 /* style.css
  * This file provides css styles.
  */
+
+ /* ANIMATION  */
+	 @keyframes glow {
+	     from {background-color: #35B297;}
+	     to {background-color: #633689;}
+	 }
+
 .intro > .admin_cm:focus {
 	outline-color:#35B297;
 	margin-bottom: 1px;
@@ -172,6 +179,32 @@ a:hover {color:#8d6daa;}
   background-color: #633689;
 	color: #fff;
 	padding: 10px;
+}
+
+.banner_sticker{
+	transition: .3s ease all;
+	top: 0;
+	right: 30px;
+	padding-top: 40px;
+	font-size: 14px;
+	font-weight: bold;
+	position: absolute;
+	width: 100%;
+	right: 0;
+	padding: 10px;
+	height: auto;
+	text-align: right;
+	padding-right: 40px;
+	background:#35B297;
+	color:#fff;
+	z-index:0;
+	animation-name: glow;
+	animation-duration: 6s;
+ animation-iteration-count: infinite;
+ animation-direction: alternate-reverse;
+}
+.banner_sticker:hover {
+	color:#fff;
 }
 
 /* positions */
@@ -376,7 +409,7 @@ a.logo {
 	overflow: visible;
 	display: flex;
 	flex-direction: column;
-	border-bottom: 1px solid purple;
+	border-bottom: 1px solid #633689;
 	/* box-shadow: 1px -4px 20px black; */
 	position: relative;
 	z-index: 999;
@@ -389,6 +422,8 @@ a.logo {
   display: block;
   opacity: .9;
   margin-top: 1%;
+	z-index:0;
+	pointer-events:none;
 }
 .intro {
 	/* margin-top:-6rem; */
@@ -423,12 +458,9 @@ dl.dl-horizontal legend{
 	margin-top: .5em;
 	padding-bottom: .5em;
 	border-bottom: 1px solid #ccc;
-	cursor:pointer;
 	transition:.3s ease color;
 }
-dl.dl-horizontal:hover{
-	color:#35B297;
-}
+dl.dl-horizontal legend:hover,
 dl.dl-horizontal.active legend {
 	color:#35B297;
 }
@@ -455,6 +487,14 @@ dl.dl-horizontal {
 	margin-left: calc(45% + 20px) ;
 	text-align: left;
 	padding: 0 0 0.5em 0;
+}
+.list_all_users .dl-horizontal dd ,
+.list_all_users .dl-horizontal dt {
+	display:none;
+}
+.list_all_users dl.dl-horizontal legend{
+	cursor:pointer;
+
 }
 .adminPanel {
 	position:fixed;
@@ -521,11 +561,28 @@ button[type=submit] ,
 	margin-top:1em;
 }
 
-.loginForm input {
+.shortForm label {
+	font-weight: 700;
+	margin-bottom:0;
+}
+.shortForm input[type=submit] {
+	width:100%;
+}
+.shortForm div {
+	text-align:left;
+}
+.shortForm div:first-child {
+	margin-bottom:.5em;
+}
+.shortForm input {
 	padding-left:10px;
 	display: inline-block;
 	vertical-align: middle;
+	color:gray;
+	width:100%;
 }
+.shortForm .error {display:none;color:red;}
+
 .loginForm button {
 	-webkit-appearance: button;
 	height: 42px;
@@ -563,6 +620,8 @@ button[type=submit] ,
 .admin_icon  {
 	width:30px;
 	height:30px;
+	margin-top: -6px;
+	margin-right: 20px;
 }
 .user h3 {
 	display: block;
@@ -601,6 +660,14 @@ border-bottom:1px solid #ccc;
 .question {
 	cursor: pointer;
 	transition: .6s ease color;
+}
+.question a:hover {
+	color:#8d6daa;
+	transition: .3s ease color;
+}
+.question a {
+	color:white;
+	text-decoration: underline;
 }
 .question:hover {
 	color:#35B297;
@@ -829,10 +896,6 @@ border-bottom:1px solid #ccc;
 	display:block;
 }
 
-
-#wrap > header + .fluid-container.gMap {
-	margin-top:-4rem;
-}
 #gMap {
 	display:block;
 	width:100%;
@@ -871,8 +934,9 @@ border-bottom:1px solid #ccc;
 
 
 /* // Extra large devices (large desktops, 1200px and up) */
-@media (min-width: 1000px) {
+@media (min-width: px) {
 	.container.main {margin-top:-9rem;}
+	.gMap + .container.main {margin-top:-6rem;}
 }
 @media (max-width: 1200px) {
 	#wrap > header + .fluid-container {
@@ -897,6 +961,12 @@ border-bottom:1px solid #ccc;
 @media (max-width: 768px) {
 	#wrap > header + .fluid-container {
 			min-height: 300px;
+	}
+	.banner_sticker {
+    padding-left: calc(100% - 140px);
+	}
+	.gMap {
+		pointer-events: none;
 	}
 	.intro h2,
 	.intro h3 {
@@ -940,11 +1010,14 @@ border-bottom:1px solid #ccc;
 	#wrap > header + .fluid-container {
 			min-height: auto;
 	}
+	.banner_sticker {
+		height:100%;
+	}
 	.container.main {
 	    margin-top: 0;
 	}
 	.intro {margin-top:0;}
-	.bannerimg {margin:0;padding:10px;max-height:100%;}
+	.bannerimg {margin:0;padding:10px;max-height:100%;max-width:calc(100% - 140px);}
 	.adminPanel {right:10px;}
 	.adminPanel input,
 	.adminPanel a[href="/toc"] {

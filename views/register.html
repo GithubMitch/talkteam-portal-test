@@ -81,7 +81,7 @@
 								  <li><a href="/home">Home</a></li>
 									<% if (!username) { %>
 										<li>
-											<a href="/register">Register</a>
+											<a href="/register">Registreer</a>
 											<ul>
 												<li><a href="/downloads">Downloads</a></li>
 											</ul>
@@ -144,13 +144,16 @@
 			    <div>
 			        <label>Username:</label>
 			        <input type="text" name="username"/><br/>
+							<span class="error">Fill in a username</span>
 			    </div>
 			    <div>
 			        <label>Password:</label>
 			        <input type="password" name="password"/>
+							<span class="error">Fill in a password</span>
+
 			    </div>
 					<div>
-						<input type="submit">
+						<input type="submit" >
 			    </div>
 			</form>
 		</div>
@@ -167,5 +170,38 @@
 
 </div>
 	<script type="text/javascript" src="/scripts/custom_menu.js"></script>
+	<script type="text/javascript">
+	$("#regForm").submit(function(){
+	  var isValid = true;
+		$( "#regForm label + input" ).each(function() {
+			if($(this).val().trim().length == 0) {
+				var error = $(this).siblings('.error');
+				error.show( "fast", function() {
+    			// Animation complete.
+			  });
+			  isValid = false;
+		  }
+		});
+
+		function debounce(fn, duration) {
+		  var timer;
+		  return function(){
+		    clearTimeout(timer);
+		    timer = setTimeout(fn, duration);
+		  }
+		}
+
+		$("#regForm label + input").on('click', function(){
+			var $this = $(this);
+			$("#regForm label + input").on('keyup', debounce(function(){
+				var error = $this.siblings('.error');
+				error.hide( "fast", function() {
+    			// Animation complete.
+			  });
+			}, 500));
+		});
+	  return isValid;
+  });
+	</script>
 </body>
 </html>
