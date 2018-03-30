@@ -287,14 +287,6 @@ exports.thankyou = function(req, res){
     lang: req.session.lang
   });
 };
-exports.admin = function(req, res){
-  res.render('admin.html', {
-    title: 'Admin',
-    username: req.session.user,
-    admin: req.session.admin,
-    lang: req.session.lang
-  });
-};
 exports.login = function(req, res){
   if (req.session.user){
     res.redirect('/');
@@ -316,14 +308,6 @@ exports.logout = function(req, res){
     lang: req.session.lang
   });
   // res.send("logout success!");
-};
-exports.content = function(req, res){
-  res.render('content.html', {
-    title: 'Content',
-    username: req.session.user,
-    admin: req.session.admin,
-    lang: req.session.lang
-  });
 };
 exports.toc = function(req, res){
   if (!req.session.user) {
