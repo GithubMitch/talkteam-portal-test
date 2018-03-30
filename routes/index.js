@@ -300,13 +300,13 @@ exports.login = function(req, res){
   }
 };
 exports.logout = function(req, res){
-  req.session.destroy();
   res.render('logout.html', {
     title: 'Logout',
     username: req.session.user,
     admin: req.session.admin,
     lang: req.session.lang
   });
+  req.session.destroy();
   // res.send("logout success!");
 };
 exports.toc = function(req, res){
