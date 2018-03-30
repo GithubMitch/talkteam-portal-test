@@ -15,7 +15,7 @@ exports.index = function(req, res){
   if (req.url.includes("?clang=nl")) {
     delete req.session.lang;
     req.session.lang = 'nl';
-  } else if (req.url.includes("?clang=en")) {
+  } else if (req.url.includes("?clang=en") || !req.session.lang ) {
     delete req.session.lang;
     req.session.lang = 'en';
   } else {
@@ -90,41 +90,13 @@ exports.register = function(req, res){
     var admin_db = cloudant.db.use('admin_db');
   };
 
-  if (req.session._jsonConverter){
-    res.render('register.html', {
-      title: 'Register',
-      username: req.session.user,
-      admin: req.session.admin,
-      _jsonConverter: req.session._jsonConverter,
-      lang: req.session.lang
-    });
-  } else {
-    admin_db.get('about', function(err, doc) {
-      if (!err) {
-        db_freshContent = doc.reqContent;
-        console.log("retreived doc : \n" + doc);
-        res.render('register.html', {
-          title: 'Register',
-          username: req.session.user,
-          admin: req.session.admin,
-          _jsonConverter: db_freshContent,
-          lang: req.session.lang
-        });
-      } else {
-        console.log("ERROR finding : 'News'" + err.message);
-        res.render('register.html', {
-          title: 'Register',
-          username: req.session.user,
-          admin: req.session.admin,
-          _jsonConverter: db_freshContent,
-          lang: req.session.lang
-        });
-      };
-      res.end();
-      return;
-    });
-
-  }
+  res.render('register.html', {
+    title: 'Register',
+    username: req.session.user,
+    admin: req.session.admin,
+    _jsonConverter: req.session._jsonConverter,
+    lang: req.session.lang
+  });
 
 };
 exports.downloads = function(req, res){
