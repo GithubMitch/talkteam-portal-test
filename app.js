@@ -337,9 +337,11 @@ app.post('/post/blog_post', upload.single('uploadFile'), function(req, res) {
   var blogpost_title = req.body.blogpost_title;
   var blogpost_body = req.body.blogpost_body;
   var blogpost_date = req.body.blogpost_date;
+  var blogpost_unique_date = req.body.blogpost_unique_date;
   var blogpost_date_format = req.body.blogpost_date_format;
   var blogpost_file = req.file;
   console.log("UploadFile : ", req.file.originalname  );
+  console.log(req.body.blogpost_unique_date);
   req.session.filename = req.file.originalname;
 
   // Create a new "talkteam_clients" database.
@@ -352,6 +354,7 @@ app.post('/post/blog_post', upload.single('uploadFile'), function(req, res) {
       blogpost_body: req.body.blogpost_body,
       blogpost_date: req.body.blogpost_date,
       blogpost_date_format: req.body.blogpost_date_format,
+      blogpost_unique_date: req.body.blogpost_unique_date,
       blogpost_file: req.file,
     }, blogpost_title, function(err, body, header) {
       if (err) {
@@ -368,18 +371,19 @@ app.post('/delete/blog_post', function(req, res) {
   var blogpost_title = req.body.blogpost_title;
   var blogpost_body = req.body.blogpost_body;
   var blogpost_date = req.body.blogpost_date;
+  var blogpost_unique_date = req.body.blogpost_unique_date;
 
 
   blog.get(req.body.blogpost_title, function(err, data) {
     if (!blogpost_title || !blogpost_date) {
-      console.log("Failed finding: " + blogpost_title + "with the following date" + blogpost_date )
+      console.log("Failed finding: " + blogpost_title + "with the following date " + blogpost_unique_date )
       res.redirect('/blog');
-    } else if(blogpost_title === data.blogpost_date || blogpost_date === data.blogpost_date) {
-      console.log("FOUND DATA",data.blogpost_date)
+    } else if(blogpost_title === data.blogpost_title && blogpost_unique_date === data.blogpost_unique_date || blogpost_title === data.blogpost_title && blogpost_date === data.blogpost_date) {
+      console.log("Found unique_date or normal date", data.blogpost_unique_date || data.blogpost_date);
       console.log(data._rev);
       blog.destroy(blogpost_title, data._rev,  function(err) {
         if (!err) {
-          console.log("Successfully deleted doc with title: "+ blogpost_title);
+          console.log("Successfully deleted doc with title: "+ blogpost_title + "with following date : ", blogpost_unique_date);
           res.redirect('/blog');
 
         } else {

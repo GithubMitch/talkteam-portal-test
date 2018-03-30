@@ -3,17 +3,17 @@ $(document).ready(function() {
   var admin = '';
   if ($("#setAdmin").length) {
     admin = true;
-    console.log("admin = true");
+    // console.log("admin = true");
   } else {
     admin = false;
-    console.log("admin = false");
+    // console.log("admin = false");
   }
   var currentPage = $("title").text();
   cmsNodes = [];
   var jsonParser = $("#jsonParser");
   i= -1;
 
-  console.log("Admin Account = ",admin)
+  // console.log("Admin Account = ",admin)
 
   giveCMSClass();
 
@@ -90,10 +90,10 @@ $(document).ready(function() {
     var parsedNodes = JSON.stringify(getcmsNodesString);
 
     var json = (jsonOutput.cmsNodes);
-    console.log(getcmsNodes);
-    console.log(json);
+    // console.log(getcmsNodes);
+    // console.log(json);
 
-    console.log((jsonOutput.cmsNodes));
+    // console.log((jsonOutput.cmsNodes));
 
     var buildObj = domJSON.toDOM(getcmsNodes, {
       noMeta: true
@@ -103,15 +103,15 @@ $(document).ready(function() {
       var parsedElement = domJSON.toDOM(this);
       node[i].replaceWith(parsedElement);
       // node[i].remove();
-      console.log(node[i])
-      console.log(parsedElement)
-      console.log("Applied snapshot values to node" + [i]);
+      // console.log(node[i])
+      // console.log(parsedElement)
+      // console.log("Applied snapshot values to node" + [i]);
     }),adminEditable();
     // $('#jsonConverter').remove();
 
     $( "#admin_ResetButton" ).on( "click", function() {
       // $(jsonConverter).remove();
-      console.log("Flushed DOM snapshot values");
+      // console.log("Flushed DOM snapshot values");
     });
 
   };
