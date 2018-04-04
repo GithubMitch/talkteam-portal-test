@@ -134,7 +134,7 @@ exports.downloads = function(req, res){
   } else {
     admin_db.get('downloads', function(err, doc) {
       if (!err) {
-        db_freshContent = doc.reqContent;
+        db_freshContent = JSON.parse(doc.reqContent);
         console.log("retreived doc : \n" + doc);
         if (req.session.user){
           res.render('downloads.html', {
@@ -188,6 +188,7 @@ exports.about = function(req, res){
   };
 
   if (req.session._jsonConverter){
+    console.log("_jsonConverter is there")
     res.render('about.html', {
       title: 'about',
       username: req.session.user,
@@ -198,8 +199,8 @@ exports.about = function(req, res){
   } else {
     admin_db.get('about', function(err, doc) {
       if (!err) {
-        db_freshContent = doc.reqContent;
-        console.log("retreived doc : \n" + doc);
+        db_freshContent = JSON.parse(doc.reqContent);
+        console.log("retreived doc 123: \n" + doc);
         res.render('about.html', {
           title: 'about',
           username: req.session.user,
@@ -254,7 +255,7 @@ exports.terms = function(req, res){
   } else {
     admin_db.get('terms', function(err, doc) {
       if (!err) {
-        db_freshContent = doc.reqContent;
+        db_freshContent = JSON.parse(doc.reqContent);
         console.log("retreived doc : \n" + doc);
         res.render('terms.html', {
           title: 'terms',
@@ -353,21 +354,34 @@ exports.faq = function(req, res){
     req.session.oldLang = 'nl';
   };
 
-  res.render('faq.html', {
-    title: 'F.A.Q.',
-    admin: req.session.admin,
-    username: req.session.user,
-    organisationName:req.session.organisationName,
-    organisationEmail: req.session.organisationEmail,
-    _id: req.session._id,
-    licensekey: req.session.licensekey,
-    endDate: req.session.endDate,
-    startDate: req.session.endDate,
-    active: req.session.active,
-    userlist: req.session.userlist,
-    lang: req.session.lang,
-    _jsonConverter: req.session._jsonConverter
+  var faq = cloudant.db.use('faq');
+
+  faq.fetch({include_docs:true}, function (err, data) {
+    var questions = [];
+    data.rows.forEach(function(rows) {
+      questions.push(rows.doc);
+    });
+
+    req.session.questions = questions;
+
+    res.render('faq.html', {
+      title: 'F.A.Q.',
+      admin: req.session.admin,
+      username: req.session.user,
+      organisationName:req.session.organisationName,
+      organisationEmail: req.session.organisationEmail,
+      _id: req.session._id,
+      licensekey: req.session.licensekey,
+      endDate: req.session.endDate,
+      startDate: req.session.endDate,
+      active: req.session.active,
+      userlist: req.session.userlist,
+      lang: req.session.lang,
+      _jsonConverter: req.session._jsonConverter,
+      questions: questions
+    });
   });
+
 };
 exports.blog = function(req, res){
   if (!req.session._jsonConverter || req.session._jsonConverter){
@@ -394,11 +408,11 @@ exports.blog = function(req, res){
     data.rows.forEach(function(rows) {
       blog_posts.push(rows.doc);
     });
-  function descPostDates() {
-    blog_posts.sort(function(a, b){return b.blogpost_date-a.blogpost_date});
+    function descPostDates() {
+      blog_posts.sort(function(a, b){return b.blogpost_date-a.blogpost_date});
 
-  }
-  descPostDates();
+    }
+    descPostDates();
 
     req.session.blog_posts = blog_posts;
     // console.log("ALL POSTS : \n", blog_posts);

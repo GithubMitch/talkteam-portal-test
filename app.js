@@ -291,6 +291,62 @@ app.post('/faqform/post', function(req, res) {
     //   res.send(message);
     // });
 });
+
+app.post('/new/question', function(req, res) {
+
+  // Create a new "talkteam_clients" database.
+  var faq = cloudant.db.use('faq');
+  var question_section = req.body.question_section;
+  var question_title = req.body.question_title;
+  var question_answer = req.body.question_answer;
+  var question_title_nl = req.body.question_title_nl;
+  var question_answer_nl = req.body.question_answer_nl;
+  cloudant.db.create('faq', function(err, res) {
+    if (err) {
+        console.log('Could not create new db: ' + 'faq' + ', it might already exist.');
+    }
+    faq.insert({
+      question_title: req.body.question_title,
+      question_answer: req.body.question_answer,
+      question_title_nl: req.body.question_title_nl,
+      question_answer_nl: req.body.question_answer_nl,
+      question_section: req.body.question_section
+    }, question_title, function(err, body, header) {
+      if (err) {
+        return console.log('[faq.insert] ', err.message);
+      }
+      console.log('You have inserted '+ question_title + ' in DB : faq');
+    });
+  });
+  res.redirect('/faq');
+});
+app.post('/delete/question', function(req, res) {
+  var faq = cloudant.db.use('faq');
+  var question_section = req.body.question_section;
+  var question_title = req.body.question_title;
+  var question_answer = req.body.question_answer;
+
+  faq.get(req.body.question_title, function(err, data) {
+    if (!question_title || !question_answer) {
+      console.log("Failed finding question: " + question_title + "with the following answer " + question_answer )
+      res.redirect('/faq');
+    } else if(question_title === data.question_title && question_answer === data.question_answer || question_section === data.question_section && question_title === data.question_title) {
+      console.log("Found unique_field for ", data.question_title || data.question_answer);
+      console.log(data._rev);
+      faq.destroy(question_title, data._rev,  function(err) {
+        if (!err) {
+          console.log("Successfully deleted doc with title: "+ question_title + "with following answer : ", question_answer);
+          res.redirect('/faq');
+
+        } else {
+          console.log("No succes deleting title: "+ question_title);
+          res.redirect('/faq');
+        }
+      });
+    }
+  });
+});
+
 app.post('/admin_cm/post', function(req, res) {
 
   var json = req.body._jsonParser;
@@ -328,7 +384,6 @@ app.post('/admin_cm/post', function(req, res) {
   });
 
 });
-
 app.post('/post/blog_post', upload.single('uploadFile'), function(req, res) {
   var blog = cloudant.db.use('blog');
   var blogpost_title = req.body.blogpost_title;
@@ -391,6 +446,7 @@ app.post('/delete/blog_post', function(req, res) {
     }
   });
 });
+
 
 http.createServer(app).listen(app.get('port'), '0.0.0.0', function() {
     console.log('Express server listening on port ' + app.get('port'));

@@ -31,6 +31,11 @@
 	<script src="/js/jquery.min.js"></script>
 	<script src="/js/bootstrap.min.js"></script>
 	<script src="/js/jquery.mmenu.all.js"></script>
+	<link href="//cdn.quilljs.com/1.0.0/quill.snow.css" rel="stylesheet">
+
+	<link href="//cdn.quilljs.com/1.0.0/quill.bubble.css" rel="stylesheet">
+
+	<script src="//cdn.quilljs.com/1.0.0/quill.min.js"></script>
 </head>
 
 <body>
@@ -130,52 +135,16 @@
 
 <section class="container main">
 	<div class="row intro">
-<% if (username) { %>
-  <div class="adminPanel">
-    <a href="/toc">Configuration</a>
-  </div>
-		<div class="col-12 admin_cm">
-		<% } else if (admin) { %>
-   	<div class="col-12 admin_cm" contenteditable="true">
-	  <% } %>
-			<h2>
-				Downloads
-			</h2>
-			<p>
-				Meetings are a waste of time? Losing overview of all submitted documents? Not clear which agreements have been made after the meeting? Meetings will be better, smarter and easier using TalkTeam. An app which uses the power of IBM Connections.
-			</p>
-			<h3>
-				meetings will be nice and smart
-			</h3>
-			<p>
-				Talk Team supports meeting preparations, the meetings themselves and the follow-up of action points. With TalkTeam, participants are directly involved in the agenda and meeting documents. By preparing your meetings online, there is much more time for content during the actual meeting! Meetings will no longer be endless, but concrete and to the point instead.
-			</p>
-			<p>
-					TalkTeam offers a meeting solution for all kinds of teams. A team can consist of people from the internal organization, but it is also possible to add external participants. By capturing information centrally, it is clear to everyone what they are expected to do.
-			</p>
-		</div>
 
-		<% if (typeof admin == 'undefined') { %>
-		<div class="col-12 admin_cm purplebox">
-		<% } else if (admin) { %>
-   	<div class="col-12 admin_cm purplebox" contenteditable="true">
-	  <% } %>
-			<h3>
-				paperless and transparent
-			</h3>
-			<p>
-				TalkTeam is a smart addition to IBM Connections. It integrates into the company-wide social platform and enriches IBM Connections with a number of useful tools. TalkTeam offers a clear meeting structure with information from a community and presents it in a simple way. You have a clear perception of each meeting.
-			</p>
-			<p>
-				A meeting consists of a number of participants. TalkTeam offers the possibility to organize a single meeting or a recurring meeting with a team. TalkTeam also shows your meeting directly on your calendar.
-			</p>
-			<p>
-				Participants can add agenda items and documents, and have the opportunity to take notes. During the meeting the agenda items are being discussed and action points and decisions can be specified.
-			</p>
-			<p>
-				All information is part of the collaboration platform IBM Connections, which makes it easy for those concerned to find the information.
-			</p>
-		</div>
+		<% for(var i=0; i < _jsonConverter.cmsNodes.length; i++) { %>
+			<div class="col-12 <% if ( admin ) { %> cm <% } %> ">
+				<div class="cm_box">
+					<%- _jsonConverter.cmsNodes[i] %>
+				</div>
+			</div>
+		<% } %>
+
+
 
 		<% if (username && admin ) { %>
 			<div class="adminPanel">
@@ -207,7 +176,8 @@
 	</footer>
 </div>
 <script src="./lib/domJSON.js"></script>
-<script type="text/javascript" src="/scripts/admin_cm.js"></script>
+<!-- <script type="text/javascript" src="/scripts/admin_cm.js"></script> -->
+<script type="text/javascript" src="/scripts/admin_cm_copy.js"></script>
 	<script type="text/javascript" src="/scripts/custom_menu.js"></script>
 </body>
 </html>

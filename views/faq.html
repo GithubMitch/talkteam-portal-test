@@ -142,82 +142,208 @@
       <div class="general">
         <h3>General</h3>
         <div class="qlist">
-          <div class="question">
-            Where can i send in questions ?
-            <span class="closed">&#9650;</span>
-            <span class="opened">&#9660;</span>
-            <div class="answer">
-              If the F.A.Q. page left your question un-answered you might want to try our <a href="#faqform">form</a> down below.
-            </div>
-          </div>
-					<div class="question">
-						Cliche live-edge squid, lyft shoreditch ?
-						<span class="closed">&#9650;</span>
-						<span class="opened">&#9660;</span>
-						<div class="answer">
-							This is the best answer to your question.
-						</div>
-					</div>
-					<div class="question">
-						+1 jianbing fanny pack mixtape copper mug ?
-						<span class="closed">&#9650;</span>
-						<span class="opened">&#9660;</span>
-						<div class="answer">
-							Meditation cardigan fixie before they sold out 90's listicle distillery.
-						</div>
-					</div>
+					<% if (typeof lang == 'undefined' || lang == 'en') { %>
+						<% for(var i=0; i < questions.length; i++) { %>
+							<% if (questions[i].question_section == 'general') { %>
+								<div class="question">
+									<% if (typeof admin == 'undefined') { %>
+									<% } else if (admin) { %>
+										<form id="question_delete_form" method="post" action="/delete/question" class="shortForm">
+											<input type="hidden" name="question_title" value="<%= questions[i].question_title %>">
+											<input type="hidden" name="question_answer" value="<%= questions[i].question_answer %>">
+											<input type="hidden" name="question_section" value="<%= questions[i].question_section %>">
+											<input type="submit" value="X">
+										</form>
+									<% } %>
+									<%= questions[i].question_title %>
+									<span class="closed">▲</span>
+									<span class="opened">▼</span>
+									<div class="answer">
+										<%= questions[i].question_answer %>
+									</div>
+								</div>
+							<% } %>
+						<% } %>
+					<% } else if (lang == 'nl') { %>
+						<% for(var i=0; i < questions.length; i++) { %>
+							<% if (questions[i].question_section == 'general') { %>
+								<div class="question">
+									<% if (typeof admin == 'undefined') { %>
+									<% } else if (admin) { %>
+										<form id="question_delete_form" method="post" action="/delete/question" class="shortForm">
+											<input type="hidden" name="question_title" value="<%= questions[i].question_title %>">
+											<input type="hidden" name="question_answer" value="<%= questions[i].question_answer %>">
+											<input type="hidden" name="question_section" value="<%= questions[i].question_section %>">
+											<input type="submit" value="X">
+										</form>
+									<% } %>
+									<%= questions[i].question_title_nl %>
+									<span class="closed">▲</span>
+									<span class="opened">▼</span>
+									<div class="answer">
+										<%= questions[i].question_answer_nl %>
+									</div>
+								</div>
+							<% } %>
+						<% } %>
+					<% } %>
         </div>
       </div>
       <div class="personal">
         <h3>Personal</h3>
         <div class="qlist">
-          <div class="question">
-            Sartorial synth brooklyn distillery wolf. Hexagon schlitz ?
-            <span class="closed">&#9650;</span>
-            <span class="opened">&#9660;</span>
-            <div class="answer">
-              lumbersexual jianbing heirloom authentic.
-							fixie before they sold out 90's listicle distillery you might want to try
-            </div>
-          </div>
-          <div class="question">
-            Man braid typewriter drinking vinegar ?
-            <span class="closed">&#9650;</span>
-            <span class="opened">&#9660;</span>
-            <div class="answer">
-              franzen craft beer viral adaptogen tote bag kickstarter cliche.
-            </div>
-          </div>
-          <div class="question">
-						Four loko palo santo skateboard bespoke?
-            <span class="closed">&#9650;</span>
-            <span class="opened">&#9660;</span>
-            <div class="answer">
-							Post-ironic tofu sartorial bespoke venmo before they sold out church-key.
-            </div>
-          </div>
+					<% if (typeof lang == 'undefined' || lang == 'en') { %>
+						<% for(var i=0; i < questions.length; i++) { %>
+							<% if (questions[i].question_section == 'personal') { %>
+								<div class="question">
+									<% if (typeof admin == 'undefined') { %>
+									<% } else if (admin) { %>
+										<form id="question_delete_form" method="post" action="/delete/question" class="shortForm">
+											<input type="hidden" name="question_title" value="<%= questions[i].question_title %>">
+											<input type="hidden" name="question_answer" value="<%= questions[i].question_answer %>">
+											<input type="hidden" name="question_section" value="<%= questions[i].question_section %>">
+											<input type="submit" value="X">
+										</form>
+									<% } %>
+									<%= questions[i].question_title %>
+									<span class="closed">▲</span>
+									<span class="opened">▼</span>
+									<div class="answer">
+										<%= questions[i].question_answer %>
+									</div>
+								</div>
+							<% } %>
+						<% } %>
+					<% } else if (lang == 'nl') { %>
+						<% for(var i=0; i < questions.length; i++) { %>
+							<% if (questions[i].question_section == 'personal') { %>
+								<div class="question">
+									<% if (typeof admin == 'undefined') { %>
+									<% } else if (admin) { %>
+										<form id="question_delete_form" method="post" action="/delete/question" class="shortForm">
+											<input type="hidden" name="question_title" value="<%= questions[i].question_title %>">
+											<input type="hidden" name="question_answer" value="<%= questions[i].question_answer %>">
+											<input type="hidden" name="question_section" value="<%= questions[i].question_section %>">
+											<input type="submit" value="X">
+										</form>
+									<% } %>
+									<%= questions[i].question_title_nl %>
+									<span class="closed">▲</span>
+									<span class="opened">▼</span>
+									<div class="answer">
+										<%= questions[i].question_answer_nl %>
+									</div>
+								</div>
+							<% } %>
+						<% } %>
+					<% } %>
         </div>
       </div>
       <div class="banking">
         <h3>Banking</h3>
         <div class="qlist">
-          <div class="question">
-						polaroid blog sriracha?
-            <span class="closed">&#9650;</span>
-            <span class="opened">&#9660;</span>
-            <div class="answer">
-							3 wolf moon pop-up banjo cronut
-            </div>
-          </div>
+					<% if (typeof lang == 'undefined' || lang == 'en') { %>
+						<% for(var i=0; i < questions.length; i++) { %>
+							<% if (questions[i].question_section == 'banking') { %>
+								<div class="question">
+									<% if (typeof admin == 'undefined') { %>
+									<% } else if (admin) { %>
+										<form id="question_delete_form" method="post" action="/delete/question" class="shortForm">
+											<input type="hidden" name="question_title" value="<%= questions[i].question_title %>">
+											<input type="hidden" name="question_answer" value="<%= questions[i].question_answer %>">
+											<input type="hidden" name="question_section" value="<%= questions[i].question_section %>">
+											<input type="submit" value="X">
+										</form>
+									<% } %>
+									<%= questions[i].question_title %>
+									<span class="closed">▲</span>
+									<span class="opened">▼</span>
+									<div class="answer">
+										<%= questions[i].question_answer %>
+									</div>
+								</div>
+							<% } %>
+						<% } %>
+					<% } else if (lang == 'nl') { %>
+						<% for(var i=0; i < questions.length; i++) { %>
+							<% if (questions[i].question_section == 'banking') { %>
+								<div class="question">
+									<% if (typeof admin == 'undefined') { %>
+									<% } else if (admin) { %>
+										<form id="question_delete_form" method="post" action="/delete/question" class="shortForm">
+											<input type="hidden" name="question_title" value="<%= questions[i].question_title %>">
+											<input type="hidden" name="question_answer" value="<%= questions[i].question_answer %>">
+											<input type="hidden" name="question_section" value="<%= questions[i].question_section %>">
+											<input type="submit" value="X">
+										</form>
+									<% } %>
+									<%= questions[i].question_title_nl %>
+									<span class="closed">▲</span>
+									<span class="opened">▼</span>
+									<div class="answer">
+										<%= questions[i].question_answer_nl %>
+									</div>
+								</div>
+							<% } %>
+						<% } %>
+					<% } %>
         </div>
-      </div>
+			</div>
+
+
+
+				<!-- //Post a Question form  -->
+				<% if (username && admin ) { %>
+					<form class="questionForm" action="/new/question" method="post">
+						<% if (typeof lang == 'undefined' || lang == 'en') { %>
+							<h4>Post a new question</h4>
+							<label for="question_section">Subject:</label>
+							<select id="question_section" name="question_section" value="">
+								<option value="general">General</option>
+								<option value="personal">Personal</option>
+								<option value="banking">Banking</option>
+								<option value="technical">Technical</option>
+							</select>
+							<label for="question_title">Question:</label>
+							<input type="text" id="question_title" name="question_title"/>
+							<label for="question_answer">Answer:</label>
+							<textarea type="text" id="question_answer" name="question_answer"/></textarea>
+							<hr>
+							<label for="question_title_nl">Question: (NL)</label>
+							<input type="text" id="question_title_nl" name="question_title_nl"/>
+							<label for="question_answer_nl">Answer: (NL)</label>
+							<textarea type="text" id="question_answer_nl" name="question_answer_nl"/></textarea>
+							<input type="submit">
+						<% } else if (lang == 'nl') { %>
+							<h4>Nieuwe vraag aanmaken</h4>
+							<label for="question_section">Subject:</label>
+							<select id="question_section" name="question_section" value="">
+								<option value="general">Algemeen</option>
+								<option value="personal">Persoonlijk</option>
+								<option value="banking">Bankieren</option>
+								<option value="technical">Technisch</option>
+							</select>
+							<label for="question_title">Vraag: (EN)</label>
+							<input type="text" id="question_title" name="question_title"/>
+							<label for="question_answer">Antwoord: (EN)</label>
+							<textarea type="text" id="question_answer" name="question_answer"/></textarea>
+							<hr>
+							<label for="question_title_nl">Vraag: </label>
+							<input type="text" id="question_title_nl" name="question_title_nl"/>
+							<label for="question_answer_nl">Antwoord:</label>
+							<textarea type="text" id="question_answer_nl" name="question_answer_nl"/></textarea>
+							<input type="submit">
+						<% } %>
+
+					</form>
+				<% } %>
 
 			<% if (_id) { %>
 				<form id="faqform" action="/faqform/post" method="post">
 					<label for="form_subject">Subject:</label>
 					<select id="form_subject" name="form_subject" value="">
 						<option value="general">General</option>
-						<option value="personal"><p></p>Personal</option>
+						<option value="personal">Personal</option>
 						<option value="banking">Banking</option>
 						<option value="technical">Technical</option>
 					</select>
@@ -236,12 +362,12 @@
 
 		<% if (username && admin ) { %>
 			<div class="adminPanel">
-				<form id="adminPost" action="/admin_cm/post" method="post">
+				<!-- <form id="adminPost" action="/admin_cm/post" method="post">
 					<input id="jsonParser" type="text" name="_jsonParser" hidden="true" value="">
 					<input id="currentPageVar" type="text" name="currentPageVar" hidden="true" value='<%= title %>'>
 					<input id="admin_ApplyButton" name="button" value="Apply">
 					<input id="admin_SafeButton" name="button" value="Save" type="submit">
-				</form>
+				</form> -->
 				<a href="/toc">Configuration</a>
 
 				<div id="setAdmin" hidden="true">toggle setAdmin</div>
@@ -271,13 +397,22 @@
          $(this).parent('.question').toggleClass('active');
       });
     })
-		// function run() {
-		// 		document.getElementById("srt").value = document.getElementById("form_subject").value;
-		// }
+		$(".questionForm").submit(function(){
+			var isValid = true;
+			$( ".questionForm label + input" ).each(function() {
+				if($(this).val().trim().length == 0) {
+					isValid = false;
+				}
+			});
+			if (isValid == false) {
+				alert("You forgot to fill in some fields");
+			}
+			return isValid;
+		});
   });
 </script>
 <script src="./lib/domJSON.js"></script>
-<script type="text/javascript" src="/scripts/admin_cm.js"></script>
+<!-- <script type="text/javascript" src="/scripts/admin_cm.js"></script> -->
 <script type="text/javascript" src="/scripts/custom_menu.js"></script>
 </body>
 </html>

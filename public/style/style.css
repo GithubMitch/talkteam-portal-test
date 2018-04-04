@@ -449,6 +449,17 @@ a.logo {
 	background-color: #35B297;
 	color: #fff;
 }
+.intro .col-12:nth-child(even) {
+	background-color: #8d6daa;
+	background-color: #35B297;
+	color: #fff;
+}
+
+.intro .ql-container + .cm_box {
+	padding-top:2em;
+}
+
+
 .intro ul {
 	padding-left:20%;
 	list-style:inside;
@@ -660,6 +671,7 @@ border-bottom:1px solid #ccc;
 .question {
 	cursor: pointer;
 	transition: .6s ease color;
+	position: relative;
 }
 .question a:hover {
 	color:#8d6daa;
@@ -702,6 +714,61 @@ border-bottom:1px solid #ccc;
 	margin-bottom:.5em;
 	padding-bottom:.5em;
 	font-family: monospace;
+}
+
+.questionForm {
+	max-width:80%;
+	margin: 0 auto 20px;
+  border: 1px solid lightgray;
+	padding:1em;
+	margin-top:1em;
+}
+.questionForm label {
+    margin-top: .5rem;
+    margin-bottom: 0;
+}
+.questionForm input , textarea {
+	width:100%;
+	display:block;
+}
+.questionForm select {
+	width:100%;
+}
+.questionForm textarea {
+}
+.questionForm input[type="submit"] {
+	-webkit-appearance: button;
+	height: 42px;
+	background-color: #633689;
+	color: #fff;
+	border-radius: 6px;
+	display: inline-block;
+	line-height: 42px;
+	border: 0;
+	cursor: pointer;
+	text-decoration: none;
+	font-size: 14px;
+	font-weight: 600;
+	padding: 0 20px;
+	transition: .3s ease all;
+  margin-top: 1em;
+	text-align: center;
+}
+
+#question_delete_form input[type="submit"]:hover {
+	background:#3f125e;
+}
+#question_delete_form input[type="submit"] {
+	margin-top: 0;
+	width: 30px;
+	height: 30px;
+	display: block;
+	position: absolute;
+	text-align: center;
+	padding: 0;
+	line-height: 30px;
+	top: 0;
+	right: 0;
 }
 
 #faqform {
@@ -747,6 +814,8 @@ border-bottom:1px solid #ccc;
 	color:#fff;
 	height:42px;
 	margin:auto;
+	border-radius:5px;
+	cursor:pointer;
 }
 #form_organisation[type="text" i]:disabled {
 	background:url("../images/organisation_icon.png")no-repeat 10px center;
@@ -878,7 +947,6 @@ border-bottom:1px solid #ccc;
 	 max-width:400px;
  }
 
-#blog_delete_form {}
 #blog_delete_form input[type="submit"] {
 	position:absolute;
 	border-radius:0;
@@ -903,6 +971,17 @@ border-bottom:1px solid #ccc;
 	position: relative;
 	z-index:0;
 }
+
+/* RICH TEXT EDITOR  */
+.ql-toolbar,
+.ql-container {
+		width:100%;
+}
+.row.intro .ql-container {
+	height:300px;
+}
+
+
 
 /* //// RESPONSIVE STYLE */
 /* // Extra small devices (portrait phones, less than 576px)

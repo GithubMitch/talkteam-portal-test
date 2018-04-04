@@ -28,9 +28,14 @@
 	<link rel="stylesheet" href="/css/bootstrap.min.css">
 	<link rel="stylesheet" href="/style/style.css" />
 	<link rel="stylesheet" href="/css/jquery.mmenu.all.css"/>
+	<!-- Theme included stylesheets -->
+	<link href="//cdn.quilljs.com/1.0.0/quill.snow.css" rel="stylesheet">
+	<link href="//cdn.quilljs.com/1.0.0/quill.bubble.css" rel="stylesheet">
 	<script src="/js/jquery.min.js"></script>
 	<script src="/js/bootstrap.min.js"></script>
 	<script src="/js/jquery.mmenu.all.js"></script>
+	<script src="//cdn.quilljs.com/1.0.0/quill.min.js"></script>
+
 </head>
 
 <body>
@@ -134,29 +139,42 @@
 
 <section class="container main">
 	<div class="row intro">
-		<div class="col-12 admin_cm">
+
+		<% for(var i=0; i < _jsonConverter.cmsNodes.length; i++) { %>
+			<div class="col-12 <% if ( admin ) { %> cm <% } %> ">
+				<div class="cm_box">
+					<%- _jsonConverter.cmsNodes[i] %>
+				</div>
+			</div>
+		<% } %>
+
+
+
+		<!-- <div class="col-12 ">
 			<% if (typeof lang == 'undefined' || lang == 'en') { %>
 				<h2>About E-Office</h2>
-				<p>Register your username and password here.</p>
 			<% } else if (lang == 'nl') { %>
 				<h2>Over E-Office</h2>
-				<p>Registreer uw gebruikersnaam en wachtwoord hier.</p>
 			<% } %>
-			<p>
-				Sit facer aliquip referrentur in, nibh aliquando ei sea. In inani graeci prodesset pro, quo te congue causae urbanitas. Duis nostro invidunt mei id, duo ex pertinax evertitur, at eos elitr legere elaboraret. Numquam denique ne qui, te sea hinc labores propriae. Vix veri utinam ei, vis cu ancillae definitiones, enim timeam veritus per ne.
-			</p>
+			<div class="cm_box">
+				<p>
+					Sit facer aliquip referrentur in, nibh aliquando ei sea. In inani graeci prodesset pro, quo te congue causae urbanitas. Duis nostro invidunt mei id, duo ex pertinax evertitur, at eos elitr legere elaboraret. Numquam denique ne qui, te sea hinc labores propriae. Vix veri utinam ei, vis cu ancillae definitiones, enim timeam veritus per ne.
+				</p>
+			</div>
 		</div>
-		<div class="col-12 admin_cm purplebox">
-			<h3>
-				Mel hinc atqui comprehensam
-			</h3>
-			<p>
-				Te est latine noluisse, suscipit convenire hendrerit ei est. Ex postulant sapientem pro, labores similique te has, eam at natum solet discere.
-			</p>
-			<p>
-				Ne usu movet sensibus argumentum. In eum solum nonumes menandri. Qui et quod autem detraxit, nec elit nostro invidunt ut.
-			</p>
-		</div>
+		<div class="col-12 purplebox">
+			<div class="cm_box">
+				<h3>
+					Mel hinc atqui comprehensam
+				</h3>
+				<p>
+					Te est latine noluisse, suscipit convenire hendrerit ei est. Ex postulant sapientem pro, labores similique te has, eam at natum solet discere.
+				</p>
+				<p>
+					Ne usu movet sensibus argumentum. In eum solum nonumes menandri. Qui et quod autem detraxit, nec elit nostro invidunt ut.
+				</p>
+			</div>
+		</div> -->
 
 		<% if (username && admin ) { %>
 			<div class="adminPanel">
@@ -186,6 +204,8 @@
 		</div>
 	</footer>
 </div>
+<!-- Include the Quill library -->
+<script src="https://cdn.quilljs.com/1.0.0/quill.js"></script>
 <script type="text/javascript">
 	var gMap;
 	function initialize() {
@@ -202,7 +222,8 @@
 	}
 </script>
 <script src="./lib/domJSON.js"></script>
-<script type="text/javascript" src="/scripts/admin_cm.js"></script>
+<!-- <script type="text/javascript" src="/scripts/admin_cm.js"></script> -->
+<script type="text/javascript" src="/scripts/admin_cm_copy.js"></script>
 <script type="text/javascript" src="/scripts/custom_menu.js"></script>
 </body>
 </html>
