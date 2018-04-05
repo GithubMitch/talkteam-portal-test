@@ -120,7 +120,7 @@
 				</div>
 			</div>
 		</header>
-		
+
 <div class="fluid-container">
 	<div class="row">
 		<div class="col">
@@ -143,10 +143,19 @@
 					</form>
 				<% } %>
 				<header>
-					<h2><%= blog_posts[i].blogpost_title %></h2>
+					<% if (typeof lang == 'undefined' || lang == 'en') { %>
+						<h2><%= blog_posts[i].blogpost_title %></h2>
+					<% } else if (lang == 'nl') { %>
+						<h2><%= blog_posts[i].blogpost_title_nl %></h2>
+					<% } %>
 				</header>
 				<div class="body">
-					<pre><%= blog_posts[i].blogpost_body %></pre>
+					<% if (typeof lang == 'undefined' || lang == 'en') { %>
+						<pre><%= blog_posts[i].blogpost_body %></pre>
+					<% } else if (lang == 'nl') { %>
+						<pre><%= blog_posts[i].blogpost_body_nl %></pre>
+					<% } %>
+
 				</div>
 				<footer>
 					<% if (typeof blog_posts[i].blogpost_file == 'undefined') { %>
@@ -170,18 +179,48 @@
 		<% if (username && admin) { %>
 			<article class="blog_post">
 				<form id="blog_post_form" class="shortForm" action="/post/blog_post" method="post" enctype="multipart/form-data">
-					<header>
-						<label for="blogpost_title">Title:</label>
-						<input type="text" id="blogpost_title" name="blogpost_title"/>
-					</header>
-					<div class="body">
-						<label for="blogpost_body">Content:</label>
-						<textarea type="text" id="blogpost_body" name="blogpost_body"/></textarea>
-						<input id="uploadFile" type="file" name="uploadFile" value="" data-multiple-caption="{count} files selected" multiple />
-						<label for="uploadFile"><i class="fas fa-upload"></i>Choose a file </label>
-						<span id="fileNameSpan">Hier je bestandsnaam</span>
-					</div>
-					<footer>
+					<% if (typeof lang == 'undefined' || lang == 'en') { %>
+						<header>
+							<label for="blogpost_title">Title:</label>
+							<input type="text" id="blogpost_title" name="blogpost_title"/>
+							<label for="blogpost_title_nl">Title (NL):</label>
+							<input type="text" id="blogpost_title_nl" name="blogpost_title_nl"/>
+						</header>
+						<div class="body">
+							<label for="blogpost_body">Content:</label>
+							<textarea type="text" id="blogpost_body" name="blogpost_body"/></textarea>
+							<label for="blogpost_body_nl">Content (NL):</label>
+							<textarea type="text" id="blogpost_body_nl" name="blogpost_body_nl"/></textarea>
+							<input id="uploadFile" type="file" name="uploadFile" value="" data-multiple-caption="{count} files selected" multiple />
+							<label for="uploadFile"><i class="fas fa-upload"></i>Choose a file </label>
+							<span id="fileNameSpan">Filename..</span>
+						</div>
+						<footer>
+					<% } else if (lang == 'nl') { %>
+						<header>
+							<label for="blogpost_title_nl">Titel:</label>
+							<input type="text" id="blogpost_title_nl" name="blogpost_title_nl"/>
+							<label for="blogpost_title">Titel (EN):</label>
+							<input type="text" id="blogpost_title" name="blogpost_title"/>
+						</header>
+						<div class="body">
+							<label for="blogpost_body_nl">Inhoud:</label>
+							<textarea type="text" id="blogpost_body_nl" name="blogpost_body_nl"/></textarea>
+							<label for="blogpost_body">Inhoud (EN):</label>
+							<textarea type="text" id="blogpost_body" name="blogpost_body"/></textarea>
+							<input id="uploadFile" type="file" name="uploadFile" value="" data-multiple-caption="{count} files selected" multiple />
+							<label for="uploadFile"><i class="fas fa-upload"></i>Choose a file </label>
+							<span id="fileNameSpan">
+								<% if (typeof lang == 'undefined' || lang == 'en') { %>
+									Filename..
+								<% } else if (lang == 'nl') { %>
+									Bestandsnaam
+								<% } %>
+							</span>
+						</div>
+						<footer>
+					<% } %>
+
 
 
 						<!-- <pre>Date: <%= timeStampFormat %></pre> -->
@@ -189,7 +228,7 @@
 						<input type="hidden" name="blogpost_date" value="<%= timeStamp %>"/>
 						<input type="hidden" name="blogpost_date_format" value="<%= timeStampFormat %>"/>
 					</footer>
-					<input type="submit">
+					<input type="submit" value="Send">
 				</form>
 			</article>
 		<% } %>

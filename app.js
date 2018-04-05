@@ -291,7 +291,6 @@ app.post('/faqform/post', function(req, res) {
     //   res.send(message);
     // });
 });
-
 app.post('/new/question', function(req, res) {
 
   // Create a new "talkteam_clients" database.
@@ -346,7 +345,6 @@ app.post('/delete/question', function(req, res) {
     }
   });
 });
-
 app.post('/admin_cm/post', function(req, res) {
 
   var json = req.body._jsonParser;
@@ -388,6 +386,8 @@ app.post('/post/blog_post', upload.single('uploadFile'), function(req, res) {
   var blog = cloudant.db.use('blog');
   var blogpost_title = req.body.blogpost_title;
   var blogpost_body = req.body.blogpost_body;
+  var blogpost_title_nl = req.body.blogpost_title_nl;
+  var blogpost_body_nl = req.body.blogpost_body_nl;
   var blogpost_date = req.body.blogpost_date;
   var blogpost_unique_date = req.body.blogpost_unique_date;
   var blogpost_date_format = req.body.blogpost_date_format;
@@ -404,6 +404,8 @@ app.post('/post/blog_post', upload.single('uploadFile'), function(req, res) {
     blog.insert({
       blogpost_title: req.body.blogpost_title,
       blogpost_body: req.body.blogpost_body,
+      blogpost_title_nl: req.body.blogpost_title_nl,
+      blogpost_body_nl: req.body.blogpost_body_nl,
       blogpost_date: req.body.blogpost_date,
       blogpost_date_format: req.body.blogpost_date_format,
       blogpost_unique_date: req.body.blogpost_unique_date,

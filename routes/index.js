@@ -31,8 +31,6 @@ exports.index = function(req, res){
   };
 
   if (req.session._jsonConverter){
-    // req.session.reload( function (err) {
-      // console.log("session reload")
       res.render('index.html', {
         title: 'home',
         username: req.session.user,
@@ -40,14 +38,11 @@ exports.index = function(req, res){
         _jsonConverter: req.session._jsonConverter,
         lang: req.session.lang
       });
-      // console.log("session rendered new lang :", req.session.lang);
-    // });
   } else {
     admin_db.get('home', function(err, doc) {
       if (!err) {
-        db_freshContent = doc.reqContent;
         console.log("session rendered this lang :",  req.session.lang);
-
+        db_freshContent = JSON.parse(doc.reqContent);
           res.render('index.html', {
             title: 'home',
             username: req.session.user,
@@ -387,6 +382,23 @@ exports.blog = function(req, res){
   if (!req.session._jsonConverter || req.session._jsonConverter){
     req.session._jsonConverter = ''
   }
+  if (req.url.includes("?clang=nl")) {
+    delete req.session.lang;
+    req.session.lang = 'nl';
+  } else if (req.url.includes("?clang=en")) {
+    delete req.session.lang;
+    req.session.lang = 'en';
+  } else {
+    console.log("no language var !")
+  };
+
+  console.log("before rendering oldLang: ", req.session.oldLang)
+  if (req.session.lang == 'nl') {
+    req.session.oldLang = 'en';
+  } else {
+    req.session.oldLang = 'nl';
+  };
+
   //Timestamp
   var today = new Date();
   var dd = today.getDate();

@@ -28,9 +28,13 @@
 	<link rel="stylesheet" href="/css/bootstrap.min.css">
 	<link rel="stylesheet" href="/style/style.css" />
 	<link rel="stylesheet" href="/css/jquery.mmenu.all.css"/>
+	<link href="//cdn.quilljs.com/1.0.0/quill.snow.css" rel="stylesheet">
+	<link href="//cdn.quilljs.com/1.0.0/quill.bubble.css" rel="stylesheet">
 	<script src="/js/jquery.min.js"></script>
 	<script src="/js/bootstrap.min.js"></script>
 	<script src="/js/jquery.mmenu.all.js"></script>
+	<script src="//cdn.quilljs.com/1.0.0/quill.min.js"></script>
+
 </head>
 
 <body>
@@ -135,7 +139,16 @@
 
 <section class="container main">
 	<div class="row intro">
-		<% if (typeof admin == 'undefined') { %>
+
+		<% for(var i=0; i < _jsonConverter.cmsNodes.length; i++) { %>
+			<div class="col-12 <% if ( admin ) { %> cm <% } %> ">
+				<div class="cm_box">
+					<%- _jsonConverter.cmsNodes[i] %>
+				</div>
+			</div>
+		<% } %>
+
+		<!-- <% if (typeof admin == 'undefined') { %>
 		<div class="col-12 admin_cm">
 		<% } else if (admin) { %>
    	<div class="col-12 admin_cm" contenteditable="true">
@@ -206,7 +219,7 @@
 					Available on multiple devices, also as a mobile app
 				</li>
 			</ul>
-		</div>
+		</div> -->
 
 		<% if (username && admin ) { %>
 			<div class="adminPanel">
@@ -238,7 +251,8 @@
 	</footer>
 </div>
 <script src="./lib/domJSON.js"></script>
-<script type="text/javascript" src="/scripts/admin_cm.js"></script>
+<!-- <script type="text/javascript" src="/scripts/admin_cm.js"></script> -->
+<script type="text/javascript" src="/scripts/admin_cm_copy.js"></script>
 <script type="text/javascript" src="/scripts/custom_menu.js"></script>
 </body>
 </html>
