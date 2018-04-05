@@ -325,7 +325,7 @@
 							<input type="text" id="question_title_nl" name="question_title_nl"/>
 							<label for="question_answer_nl">Answer: (NL)</label>
 							<textarea type="text" id="question_answer_nl" name="question_answer_nl"/></textarea>
-							<input type="submit">
+							<input type="submit" value="<% if (typeof lang == 'undefined' || lang == 'en') { %>Send<% } else if (lang == 'nl') { %>Verzenden<% } %>">
 						<% } else if (lang == 'nl') { %>
 							<h4>Nieuwe vraag aanmaken</h4>
 							<label for="question_section">Subject:</label>
@@ -344,7 +344,7 @@
 							<input type="text" id="question_title_nl" name="question_title_nl"/>
 							<label for="question_answer_nl">Antwoord:</label>
 							<textarea type="text" id="question_answer_nl" name="question_answer_nl"/></textarea>
-							<input type="submit">
+							<input type="submit" value="<% if (typeof lang == 'undefined' || lang == 'en') { %>Send<% } else if (lang == 'nl') { %>Verzenden<% } %>">
 						<% } %>
 
 					</form>
@@ -354,18 +354,38 @@
 				<form id="faqform" action="/faqform/post" method="post">
 					<label for="form_subject">Subject:</label>
 					<select id="form_subject" name="form_subject" value="">
-						<option value="general">General</option>
-						<option value="personal">Personal</option>
-						<option value="banking">Banking</option>
-						<option value="technical">Technical</option>
+						<% if (typeof lang == 'undefined' || lang == 'en') { %>
+							<option value="general">General</option>
+							<option value="personal">Personal</option>
+							<option value="banking">Banking</option>
+							<option value="technical">Technical</option>
+						<% } else if (lang == 'nl') { %>
+							<option value="general">Algemeen</option>
+							<option value="personal">Gebruiker</option>
+							<option value="banking">Bankieren</option>
+							<option value="technical">Technisch</option>
+						<% } %>
 					</select>
-					<label for="form_organisation">Organisation:</label>
+					<label for="form_organisation">
+						<% if (typeof lang == 'undefined' || lang == 'en') { %>
+							Organisation:
+						<% } else if (lang == 'nl') { %>
+							Organisatie:
+						<% } %>
+
+					</label>
 					<input id="form_organisation" type="text" name="form_organisation" title="<%= organisationName || orgName %>" value="<%= organisationName || orgName %>">
 					<label for="form_email">Email:</label>
 					<input id="form_email" type="text" name="form_email" title="<%= JSON.parse(organisationEmail || adminEmail) %>" value="<%= JSON.parse(organisationEmail || adminEmail) %>">
-					<label for="form_question">Question:</label>
+					<label for="form_question">
+						<% if (typeof lang == 'undefined' || lang == 'en') { %>
+								Question:
+						<% } else if (lang == 'nl') { %>
+								Vraag:
+						<% } %>
+						</label>
 					<textarea id="form_question" name="form_question" rows="8"></textarea>
-					<input type="submit" name="button" value="Send">
+					<input type="submit" name="button" value="<% if (typeof lang == 'undefined' || lang == 'en') { %>Send<% } else if (lang == 'nl') { %>Verzenden<% } %>">
 				</form>
 			<% } %>
 

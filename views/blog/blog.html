@@ -209,7 +209,7 @@
 							<label for="blogpost_body">Inhoud (EN):</label>
 							<textarea type="text" id="blogpost_body" name="blogpost_body"/></textarea>
 							<input id="uploadFile" type="file" name="uploadFile" value="" data-multiple-caption="{count} files selected" multiple />
-							<label for="uploadFile"><i class="fas fa-upload"></i>Choose a file </label>
+							<label for="uploadFile"><i class="fas fa-upload"></i><% if (typeof lang == 'undefined' || lang == 'en') { %>Choose a file..<% } else if (lang == 'nl') { %>Bestand kiezen..<% } %> </label>
 							<span id="fileNameSpan">
 								<% if (typeof lang == 'undefined' || lang == 'en') { %>
 									Filename..
@@ -228,7 +228,7 @@
 						<input type="hidden" name="blogpost_date" value="<%= timeStamp %>"/>
 						<input type="hidden" name="blogpost_date_format" value="<%= timeStampFormat %>"/>
 					</footer>
-					<input type="submit" value="Send">
+					<input type="submit" value="<% if (typeof lang == 'undefined' || lang == 'en') { %>Send<% } else if (lang == 'nl') { %>Verzenden<% } %>">
 				</form>
 			</article>
 		<% } %>
@@ -237,7 +237,7 @@
 
 		<%	if ( username && !admin) { %>
 			<div class="adminPanel">
-				<a href="/toc">Configuration000</a>
+				<a href="/toc">Configuration</a>
 			</div>
 		<% } else if (username && admin ) { %>
 			<div class="adminPanel">
