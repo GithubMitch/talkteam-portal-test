@@ -140,7 +140,11 @@
 
 			</h2>
       <div class="general">
-        <h3>General</h3>
+				<% if (typeof lang == 'undefined' || lang == 'en') { %>
+					<h3>General</h3>
+				<% } else if (lang == 'nl') { %>
+					<h3>Algemeen</h3>
+				<% } %>
         <div class="qlist">
 					<% if (typeof lang == 'undefined' || lang == 'en') { %>
 						<% for(var i=0; i < questions.length; i++) { %>
@@ -190,7 +194,11 @@
         </div>
       </div>
       <div class="personal">
-        <h3>Personal</h3>
+				<% if (typeof lang == 'undefined' || lang == 'en') { %>
+					<h3>Personal</h3>
+				<% } else if (lang == 'nl') { %>
+					<h3>Gebruiker</h3>
+				<% } %>
         <div class="qlist">
 					<% if (typeof lang == 'undefined' || lang == 'en') { %>
 						<% for(var i=0; i < questions.length; i++) { %>
@@ -240,7 +248,11 @@
         </div>
       </div>
       <div class="banking">
-        <h3>Banking</h3>
+				<% if (typeof lang == 'undefined' || lang == 'en') { %>
+					<h3>Banking</h3>
+				<% } else if (lang == 'nl') { %>
+					<h3>Bankieren</h3>
+				<% } %>
         <div class="qlist">
 					<% if (typeof lang == 'undefined' || lang == 'en') { %>
 						<% for(var i=0; i < questions.length; i++) { %>

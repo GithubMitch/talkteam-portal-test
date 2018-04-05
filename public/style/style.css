@@ -473,7 +473,7 @@ dl.dl-horizontal legend{
 }
 dl.dl-horizontal legend:hover,
 dl.dl-horizontal.active legend {
-	color:#35B297;
+	color:#000;
 }
 dl.dl-horizontal.active {
   outline: #35B297 1px solid;
