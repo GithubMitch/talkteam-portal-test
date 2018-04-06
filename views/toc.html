@@ -132,8 +132,14 @@
 	<div class="row intro">
 		<div class="col-12">
 			<h2>
-				Welcome, this is a authorized environment !	<br>
-			<span style="font-size: 10px;">u can only see this when you are logged in .</span>
+				<% if (typeof lang == 'undefined' || lang == 'en') { %>
+					Welcome, to the user configuration page !	<br>
+					<span style="font-size: 10px;">u can only see this when you are logged in .</span>
+					<% } else if (lang == 'nl') { %>
+					Welkom op de gebruikers configuratie pagina !	<br>
+					<span style="font-size: 10px;">dit kunt u alleen zien wanneer u bent aangemeld .</span>
+				<% } %>
+
 			</h2>
 			<dl class="dl-horizontal">
 				<% if (admin) { %>
@@ -147,12 +153,15 @@
 					<dd><%= _id %></dd>
 				<% } %>
 				<% if (username) { %>
-					<dt>username</dt>
+					<dt>
+						<% if (typeof lang == 'undefined' || lang == 'en') { %>Username<% } else if (lang == 'nl') { %>Gebruikersnaam<% } %>
+					</dt>
 					<dd><%= username %></dd>
 				<% } %>
 
 				<% if (organisationName) { %>
-					<dt>Organisation</dt>
+					<dt><% if (typeof lang == 'undefined' || lang == 'en') { %>Organisation<% } else if (lang == 'nl') { %>Organisatie<% } %>
+					</dt>
 					<dd><%= organisationName %></dd>
 				<% } %>
 
@@ -167,17 +176,23 @@
 				<% } %>
 
 				<% if (active) { %>
-					<dt>Active</dt>
+					<dt>
+						<% if (typeof lang == 'undefined' || lang == 'en') { %>Active<% } else if (lang == 'nl') { %>Actief<% } %>
+					</dt>
 				  <dd><%= active %></dd>
 				<% } %>
 
 				<% if (startDate) { %>
-					<dt>Start subscription</dt>
+					<dt>
+						<% if (typeof lang == 'undefined' || lang == 'en') { %>Start subscription<% } else if (lang == 'nl') { %>Start abbonement<% } %>
+					</dt>
 				  <dd><%= startDate %></dd>
 				<% } %>
 
 				<% if (endDate) { %>
-					<dt>Expiration date license</dt>
+					<dt>
+						<% if (typeof lang == 'undefined' || lang == 'en') { %>Expration date license <% } else if (lang == 'nl') { %>Vervaldatum licentie<% } %>
+					</dt>
 				  <dd><%= endDate %></dd>
 				<% } %>
 			</dl>

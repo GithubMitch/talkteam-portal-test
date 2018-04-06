@@ -135,14 +135,34 @@
 		<div class="col-12">
 			<h2>Login</h2>
 			<br>
-			<span>Login here with your username and password</span>
+			<% if (typeof lang == 'undefined' || lang == 'en') { %>
+					<span>Login here with your username and password</span>
+				<% } else if (lang == 'nl') { %>
+					<span>U kunt hier inloggen met uw gebruikersnaam en wachtwoord</span>
+			<% } %>
+
 			<form id="loginForm" class="loginForm shortForm" method="post">
 				<div>
-						<label>Username:</label>
+
+						<label>
+							<% if (typeof lang == 'undefined' || lang == 'en') { %>
+									Username:
+								<% } else if (lang == 'nl') { %>
+									Gebruikersnaam:
+							<% } %>
+
+
+						</label>
 						<input type="text" name="username" value="200077318">
 				</div>
 				<div>
-						<label>Password:</label>
+						<label>
+							<% if (typeof lang == 'undefined' || lang == 'en') { %>
+									Password:
+								<% } else if (lang == 'nl') { %>
+									Wachtwoord:
+							<% } %>
+						</label>
 						<input type="text" name="password" value="nonechecked">
 				</div>
 				<input type="submit" name="button" value="login">

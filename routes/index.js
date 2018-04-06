@@ -306,6 +306,24 @@ exports.logout = function(req, res){
   // res.send("logout success!");
 };
 exports.toc = function(req, res){
+  console.log("before rendering : ", req.session.lang)
+  if (req.url.includes("?clang=nl")) {
+    delete req.session.lang;
+    req.session.lang = 'nl';
+  } else if (req.url.includes("?clang=en")) {
+    delete req.session.lang;
+    req.session.lang = 'en';
+  } else {
+    console.log("no language var !")
+  };
+
+  console.log("before rendering oldLang: ", req.session.oldLang)
+  if (req.session.lang == 'nl') {
+    req.session.oldLang = 'en';
+  } else {
+    req.session.oldLang = 'nl';
+  };
+
   if (!req.session.user) {
     res.redirect('login')
   } else {
@@ -320,6 +338,7 @@ exports.toc = function(req, res){
       startDate: req.session.endDate,
       active: req.session.active,
       admin: req.session.admin,
+      lang: req.session.lang,
       userRows: req.session.userRows,
       userlist: req.session.userlist,
       userdocs: req.session.userDocs

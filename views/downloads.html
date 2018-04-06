@@ -149,17 +149,17 @@
 				<form id="adminPost" action="/admin_cm/post" method="post">
 					<input id="jsonParser" type="text" name="_jsonParser" hidden="true" value="">
 					<input id="currentPageVar" type="text" name="currentPageVar" hidden="true" value='<%= title %>'>
-					<input id="admin_ApplyButton" name="button" value="Apply">
-					<input id="admin_SafeButton" name="button" value="Save" type="submit">
+					<input id="admin_ApplyButton" name="button" value="<% if (typeof lang == 'undefined' || lang == 'en') { %>Apply<% } else if (lang == 'nl') { %>Toepassen<% } %>">
+					<input id="admin_SafeButton" name="button" value="<% if (typeof lang == 'undefined' || lang == 'en') { %>Save<% } else if (lang == 'nl') { %>Bewaren<% } %>" type="submit">
 				</form>
-				<a href="/toc">Configuration</a>
+				<a href="/toc"><% if (typeof lang == 'undefined' || lang == 'en') { %>Configuration<% } else if (lang == 'nl') { %>Configuratie<% } %></a>
 
 				<div id="setAdmin" hidden="true">toggle setAdmin</div>
 			</div>
 
 		<% } else if (username) { %>
 			<div class="adminPanel">
-				<a href="/toc">Configuration</a>
+				<a href="/toc"><% if (typeof lang == 'undefined' || lang == 'en') { %>Configuration<% } else if (lang == 'nl') { %>Configuratie<% } %></a>
 			</div>
 		<% } %>
 

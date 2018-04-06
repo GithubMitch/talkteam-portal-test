@@ -309,7 +309,7 @@
 					<form class="questionForm" action="/new/question" method="post">
 						<% if (typeof lang == 'undefined' || lang == 'en') { %>
 							<h4>Post a new question</h4>
-							<label for="question_section">Subject:</label>
+							<label for="question_section"><% if (typeof lang == 'undefined' || lang == 'en') { %>Subject:<% } else if (lang == 'nl') { %>Onderwerp:<% } %></label>
 							<select id="question_section" name="question_section" value="">
 								<option value="general">General</option>
 								<option value="personal">Personal</option>
@@ -328,7 +328,7 @@
 							<input type="submit" value="<% if (typeof lang == 'undefined' || lang == 'en') { %>Send<% } else if (lang == 'nl') { %>Verzenden<% } %>">
 						<% } else if (lang == 'nl') { %>
 							<h4>Nieuwe vraag aanmaken</h4>
-							<label for="question_section">Subject:</label>
+							<label for="question_section"><% if (typeof lang == 'undefined' || lang == 'en') { %>Subject:<% } else if (lang == 'nl') { %>Onderwerp:<% } %></label>
 							<select id="question_section" name="question_section" value="">
 								<option value="general">Algemeen</option>
 								<option value="personal">Persoonlijk</option>
