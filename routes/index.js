@@ -1,16 +1,20 @@
+var getAcces = require('../getAcces.js');
+var initDBConnection = getAcces.initDBConnection;
+var getDBCredentialsUrl = getAcces.getDBCredentialsUrl;
+var dbCredentials = getAcces.dbCredentials;
 
-/*
- * GET home page.
- */
+getAcces.initDBConnection();
+
  var Cloudant = require('cloudant');
- var username = "df3909e9-2680-472f-9deb-9638cf73c572-bluemix";
- var password = "6b0a6bfddb9da34d09680a00a78eecb14a4724bf99e2e426f0730ab5ebdf9cd7";
+ var username = dbCredentials.username;
+ var password = dbCredentials.password;
  var cloudant = Cloudant({account:username, password:password});
  var admin_db;
  var db_freshContent = '';
  var defaultLang = 'en';
 
 exports.index = function(req, res){
+  console.log(dbCredentials.username);
   console.log("before rendering : ", req.session.lang);
   if (req.url.includes("?clang=nl")) {
     delete req.session.lang;

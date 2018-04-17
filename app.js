@@ -1,6 +1,3 @@
-/**
- * Module dependencies.
- */
 var express = require('express'),
     routes = require('./routes'),
     user = require('./routes/user'),
@@ -75,12 +72,11 @@ var storage = multer.diskStorage({
     }
   }),
   upload = multer({ storage: storage});
+// GET connection + DB Credentials
 var getAcces = require('./getAcces.js');
 var initDBConnection = getAcces.initDBConnection;
 var dbCredentials = getAcces.dbCredentials;
-
 getAcces.initDBConnection();
-
 // all environments
 app.set('port', process.env.PORT || 3000);
 app.set('views', __dirname + '/views');
@@ -139,30 +135,12 @@ mailer.extend(app, {
 // development only
 if ('development' == app.get('env')) {
     app.use(errorHandler());
-    // console.log('development');
 }
-
-
-//TEST DB
-// var Cloudant = require('cloudant');
-// var username = "186bc4a1-0187-48b2-bc2d-b54267a7fce2-bluemix";
-// var password = "5e39c2c9728fc768ab2dc93f26c9eb9a62038517b813ac4ee1454136f3833182";
-// var cloudant = Cloudant({account:username, password:password});
-
-//REAL TALKTEAM DATABASE
-// module.exports = {
-//   username: dbCredentials.username,
-//   password: dbCredentials.password
-// }
 
 var Cloudant = require('cloudant');
 var username = dbCredentials.username;
 var password = dbCredentials.password;
 var cloudant = Cloudant({account:username, password:password});
-// var Cloudant = require('cloudant');
-// var username = "df3909e9-2680-472f-9deb-9638cf73c572-bluemix";
-// var password = "6b0a6bfddb9da34d09680a00a78eecb14a4724bf99e2e426f0730ab5ebdf9cd7";
-// var cloudant = Cloudant({account:username, password:password});
 
 app.post('/post/registerform', function(req, res) {
     var regUser = req.body.username;
@@ -448,18 +426,6 @@ app.post('/delete/blog_post', function(req, res) {
     }
   });
 });
-
-if (dbCredentials) {
-  // console.log(dbCredentials.username);
-//     // Running on Bluemix. Parse the port and host that we've been assigned.
-//     // console.log(getDBCredentialsUrl(fs.readFileSync("vcap-local.json", "utf-8")));
-//     // console.log(dbCredentials)
-//     console.log(dbCredentials);
-//     // console.log(dbCredentials.password);
-//     // console.log(dbCredentials.host);
-//     // console.log(dbCredentials.port);
-}
-
 
 http.createServer(app).listen(app.get('port'), '0.0.0.0', function() {
     console.log('Express server listening on port ' + app.get('port'));
