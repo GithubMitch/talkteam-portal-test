@@ -454,6 +454,12 @@ a.logo {
 	background-color: #35B297;
 	color: #fff;
 }
+.intro .col-12:nth-child(even) a {
+	color:#633689;
+}
+.intro .col-12:nth-child(even) a:hover {
+	color:#000;
+}
 
 .intro .ql-container + .cm_box {
 	padding-top:2em;

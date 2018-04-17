@@ -68,9 +68,10 @@ $(document).ready(function() {
   };
   addNodes();
 
-  $( "#admin_ApplyButton" ).on( "click", function() {
+  $("#admin_ApplyButton").on( "click", function() {
     var toolBar = $('.ql-toolbar');
     var qlContainer = $('.ql-container');
+    $(this).attr('applied',true)
     applyNodes();
     $(qlContainer).each(function(){
       $(this).remove();
@@ -80,21 +81,18 @@ $(document).ready(function() {
     });
   });
 
-  $( "#admin_SafeButton" ).on( "click", function() {
-
+  $("#adminPost").submit(function(){
+    var isValid = true;
+    if ( !$("#admin_ApplyButton").attr("applied") == true ) {
+      isValid = false;
+    }
+    if (isValid == false) {
+      alert("Please make sure you pressed apply first. \nDruk aub eerst op toepassen.");
+    }
+    return isValid;
   });
 
   if($('#jsonConverter').attr("value") != '') {
-    // var jsonRequestedData = document.getElementById("jsonConverter").getAttribute("value");
-    // var jsonParsedData = JSON.parse(jsonRequestedData);
-    // var jsonOutput = jsonParsedData.cmsNodes;
-    // console.log(jsonOutput)
-
-    // $.each(getcmsNodes.cmsNodes, function(i, object) {
-    //   node[i].replaceWith();
-    // });
-    // $('#jsonConverter').remove();
-
 
   };
 
