@@ -41,6 +41,7 @@
     "popper": "^1.0.1",
     "popper.js": "^1.12.9",
     "q": "^1.5.1",
+    "quill": "^1.3.6",
     "simple-blog": "^1.5.1",
     "stylus": "^0.54.5",
     "superlogin": "^0.6.1",
