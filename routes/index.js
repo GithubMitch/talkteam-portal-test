@@ -14,7 +14,6 @@ getAcces.initDBConnection();
  var defaultLang = 'en';
 
 exports.index = function(req, res){
-  console.log(dbCredentials.username);
   console.log("before rendering : ", req.session.lang);
   if (req.url.includes("?clang=nl")) {
     delete req.session.lang;
