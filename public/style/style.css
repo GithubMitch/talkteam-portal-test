@@ -545,6 +545,7 @@ dl.dl-horizontal {
 .shortForm {
 	max-width:300px;
 	margin:auto;
+	position: relative;
 }
 
 button[type=submit] ,
@@ -599,6 +600,17 @@ button[type=submit] ,
 	width:100%;
 }
 .shortForm .error {display:none;color:red;}
+
+.shortForm #password-field {
+	position: relative;
+}
+.shortForm .toggle-password {
+	width: auto;
+	display: inline-block;
+	position: absolute;
+	margin-top: -2em;
+	right: 10px;
+}
 
 .loginForm button {
 	-webkit-appearance: button;
@@ -1019,7 +1031,7 @@ border-bottom:1px solid #ccc;
 
 
 /* // Extra large devices (large desktops, 1200px and up) */
-@media (min-width: px) {
+@media (min-width: 1200px) {
 	.container.main {margin-top:-9rem;}
 	.gMap + .container.main {margin-top:-6rem;}
 }
@@ -1042,6 +1054,27 @@ border-bottom:1px solid #ccc;
 	}
 }
 
+/* // Medium devices (tablets, 980px and up) */
+@media screen and (max-width: 991px) and (min-width: 769px) {
+	#mainmenu ul li.lang {
+		position: absolute;
+		display: block;
+		right: -1px;
+		top: 9px;
+	}
+	div.login {
+		position: absolute;
+    right: 0;
+    top: 48px;
+	}
+	#logoutButton {
+    margin-right: 0;
+	}
+	#mainmenu ul {
+		padding-right:2.5em;
+		margin-top:0;
+	}
+}
 /* // Medium devices (tablets, 768px and up) */
 @media (max-width: 768px) {
 	#wrap > header + .fluid-container {

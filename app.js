@@ -41,11 +41,20 @@ var storage = multer.diskStorage({
         case 'image/gif':
           filename = filename + ".gif";
           break;
-        case 'application/zip':
-          filename = filename + ".zip";
+        case 'image/gif':
+          filename = filename + ".gif";
           break;
         case 'image/svg+xml':
           filename = filename + ".svg";
+          break;
+        case 'video/mp4':
+          filename = filename + ".mp4";
+          break;
+        case 'video/x-flv':
+          filename = filename + ".flv";
+          break;
+        case 'application/zip':
+          filename = filename + ".zip";
           break;
         case 'application/x-rar-compressed':
           filename = filename + ".rar";
