@@ -610,6 +610,8 @@ button[type=submit] ,
 	position: absolute;
 	margin-top: -2em;
 	right: 10px;
+	color: gray;
+	cursor:pointer;
 }
 
 .loginForm button {
