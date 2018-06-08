@@ -28,6 +28,7 @@
 	<link rel="stylesheet" href="/css/bootstrap.min.css">
 	<link rel="stylesheet" href="/style/style.css" />
 	<link rel="stylesheet" href="/css/jquery.mmenu.all.css"/>
+	<script defer src="https://use.fontawesome.com/releases/v5.0.9/js/all.js" integrity="sha384-8iPTk2s/jMVj81dnzb/iFR2sdA7u06vHJyyLlAd4snFpCl/SnyUjRrbdJsw1pGIl" crossorigin="anonymous"></script>
 	<script src="/js/jquery.min.js"></script>
 	<script src="/js/bootstrap.min.js"></script>
 	<script src="/js/jquery.mmenu.all.js"></script>
@@ -163,7 +164,11 @@
 									Wachtwoord:
 							<% } %>
 						</label>
-						<input type="text" name="password" value="">
+						<input id="password-field" type="password" name="password" value="secret">
+						<div class="toggle-password">
+							<i class="fas fa-eye field-icon"></i>
+						</div>
+						<!-- <span toggle="#password-field" class="fas fa-fw fa-eye field-icon toggle-password"></span> -->
 				</div>
 				<input type="submit" name="button" value="login">
 			</form>
@@ -180,17 +185,29 @@
 </div>
 <script type="text/javascript" src="/scripts/custom_menu.js"></script>
 <script type="text/javascript">
-$("#loginForm").submit(function(){
-	var isValid = true;
-	$( "#loginForm label + input" ).each(function() {
-		if($(this).val().trim().length == 0) {
-			isValid = false;
+$( document ).ready(function() {
+  // Handler for .ready() called.
+	$("#loginForm").submit(function(){
+		var isValid = true;
+		$( "#loginForm label + input" ).each(function() {
+			if($(this).val().trim().length == 0) {
+				isValid = false;
+			}
+		});
+		if (isValid == false) {
+			alert("Username or password is empty!");
+		}
+		return isValid;
+	});
+	$(".toggle-password").click(function() {
+		$(this).children('svg').toggleClass("fa-eye fa-eye-slash");
+		var input = $("#password-field");
+		if (input.attr("type") == "password") {
+			input.attr("type", "text");
+		} else {
+			input.attr("type", "password");
 		}
 	});
-	if (isValid == false) {
-		alert("Username or password is empty!");
-	}
-	return isValid;
 });
 </script>
 </body>
