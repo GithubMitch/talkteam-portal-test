@@ -61,46 +61,27 @@
 							<ul>
 								<% if (typeof lang == 'undefined' || lang == 'en') { %>
 								  <li><a href="/home">Home</a></li>
+									<li><a href="/blog">News</a></li>
+									<li><a href="/faq">F.A.Q</a></li>
 									<% if (!username) { %>
-										<li>
-											<a href="/register">Register</a>
-											<ul>
-												<li><a href="/downloads">Downloads</a></li>
-											</ul>
-										</li>
+										<li><a href="/login">Login</a></li>
 									<% } else if (username) { %>
 										<li><a href="/downloads">Downloads</a></li>
 									<% } %>
-								  <li>
-										<a href="/about">E-Office</a>
-										<ul>
-											<li><a href="/blog">News</a></li>
-											<li><a href="/faq">F.A.Q</a></li>
-											<li><a href="/terms">Terms & Conditions</a></li>
-										</ul>
-									</li>
+								  <li><a href="/about">E-Office</a></li>
+									<li><a href="/terms">Terms & Conditions</a></li>
 								<% } else if (lang == 'nl') { %>
 								  <li><a href="/home">Home</a></li>
-										<% if (!username) { %>
-											<li>
-												<a href="/register">Registreer</a>
-												<ul>
-													<li><a href="/downloads">Downloads</a></li>
-												</ul>
-											</li>
-										<% } else if (username) { %>
-											<li><a href="/downloads">Downloads</a></li>
-										<% } %>
-								  <li>
-										<a href="/about">E-Office</a>
-										<ul>
-											<li><a href="/blog">Nieuws</a></li>
-											<li><a href="/faq">F.A.Q</a></li>
-											<li><a href="/terms">Algemene voorwaarde</a></li>
-										</ul>
-									</li>
+									<li><a href="/blog">Nieuws</a></li>
+									<li><a href="/faq">F.A.Q</a></li>
+									<% if (!username) { %>
+										<li><a href="/login">Login</a></li>
+									<% } else if (username) { %>
+										<li><a href="/downloads">Downloads</a></li>
+									<% } %>
+								  <li><a href="/about">E-Office</a></li>
+									<li><a href="/terms">Algemene voorwaarde</a></li>
 								<% } %>
-
 								<% if (typeof lang == 'undefined' || lang == 'en') { %>
 									<li class="lang"><a href="?clang=nl"><img src="images/nl.png" title="Translate to: Dutch" alt="Dutch flag" height="34" width="34"></a></li>
 								<% } else if (lang == 'nl') { %>
@@ -134,45 +115,134 @@
 		<% for(var i=0; i < blog_posts.length; i++) { %>
 			<article class="blog_post">
 				<% if (typeof admin == 'undefined') { %>
+					<!-- /no admin buttons -->
 				<% } else if (admin) { %>
-					<form id="blog_delete_form" method="post" action="/delete/blog_post" class="shortForm">
+					<!-- // admin buttons -->
+					<% if (username && admin) { %>
+						<!-- enctype="multipart/form-data"  in form tag-->
+							<form class="blog_post blog_post_form closed shortForm" action="/post/blog_edit" method="post">
+								<% if (typeof lang == 'undefined' || lang == 'en') { %>
+									<header>
+										<label for="blogpost_title">Title:</label>
+										<input type="hidden" id="blog_post_old_title" name="blogpost_old_title" value="<%= blog_posts[i].blogpost_title %>"/>
+										<input type="hidden" id="blogpost_date" name="blogpost_date" value="<%= blog_posts[i].blogpost_date %>"/>
+										<input type="hidden" id="blogpost_unique_date" name="blogpost_unique_date" value="<%= blog_posts[i].blogpost_unique_date %>"/>
+										<input type="text" id="blogpost_title" placeholder="<%= blog_posts[i].blogpost_title %>" name="blogpost_title"/>
+										<label for="blogpost_title_nl">Title (NL):</label>
+										<input type="text" id="blogpost_title_nl" placeholder="<%= blog_posts[i].blogpost_title_nl %>" name="blogpost_title_nl"/>
+									</header>
+									<div class="body">
+										<label for="blogpost_body">Content:</label>
+										<textarea type="text" id="blogpost_body" placeholder="<%= blog_posts[i].blogpost_body %>" name="blogpost_body"/></textarea>
+										<label for="blogpost_body_nl">Content (NL):</label>
+										<textarea type="text" id="blogpost_body_nl" placeholder="<%= blog_posts[i].blogpost_body_nl %>" name="blogpost_body_nl"/></textarea>
+										<label for="replaceFile"><% if (typeof lang == 'undefined' || lang == 'en') { %>Replace file <% } else if (lang == 'nl') { %>Bestand vervangen <% } %></label>
+										<input type="checkbox" name="replaceFile" value="">
+										<div class="extra">
+											<label for="fileuploadEdit" id="buttonlabel">
+												<span role="button" aria-controls="filenameEdit" tabindex="0">
+													<i class="fas fa-upload"></i><% if (typeof lang == 'undefined' || lang == 'en') { %>Choose a file..<% } else if (lang == 'nl') { %>Bestand kiezen..<% } %>
+												</span>
+											</label>
+											<input type="file" id="fileuploadEdit">
+
+											<label for="filenameEdit" class="hide">
+												uploaded file
+											</label>
+											<input type="text" id="filenameEdit" autocomplete="off" readonly placeholder="<% if (typeof lang == 'undefined' || lang == 'en') { %>No file selected, with this action you will overwrite the old upload(file)<% } else if (lang == 'nl') { %>Geen bestand geselecteerd , u overschrijft de vorige upload(bestand) hiermee.<% } %>">
+										</div>
+									</div>
+									<footer>
+								<% } else if (lang == 'nl') { %>
+									<header>
+										<label for="blogpost_title_nl">Titel:</label>
+										<input type="text" id="blogpost_title_nl" placeholder="<%= blog_posts[i].blogpost_title_nl %>"name="blogpost_title_nl"/>
+										<label for="blogpost_title">Titel (EN):</label>
+										<input type="text" id="blogpost_title" placeholder="<%= blog_posts[i].blogpost_title %>" name="blogpost_title"/>
+									</header>
+									<div class="body">
+										<label for="blogpost_body_nl">Inhoud:</label>
+										<textarea type="text" id="blogpost_body_nl" placeholder="<%= blog_posts[i].blogpost_body_nl %>" name="blogpost_body_nl"/></textarea>
+										<label for="blogpost_body">Inhoud (EN):</label>
+										<textarea type="text" id="blogpost_body" placeholder="<%= blog_posts[i].blogpost_body %>" name="blogpost_body"/></textarea>
+										<input type="checkbox" name="replaceFile" value="">
+										<label for="replaceFile"><% if (typeof lang == 'undefined' || lang == 'en') { %>Replace file <% } else if (lang == 'nl') { %>Bestand vervangen <% } %></label>
+										<div class="extra">
+											<label for="fileupload" id="buttonlabel">
+												<span role="button" aria-controls="filename" tabindex="0">
+													<i class="fas fa-upload"></i><% if (typeof lang == 'undefined' || lang == 'en') { %>Choose a file..<% } else if (lang == 'nl') { %>Bestand kiezen..<% } %>
+												</span>
+											</label>
+											<input type="file" id="fileupload">
+											<label for="filename" class="hide">
+												uploaded file
+											</label>
+											<input type="text" id="filename" autocomplete="off" readonly placeholder="<% if (typeof lang == 'undefined' || lang == 'en') { %>No file selected, with this action you will overwrite the old upload(file)<% } else if (lang == 'nl') { %>Geen bestand geselecteerd , u overschrijft de vorige upload(bestand) hiermee.<% } %>">
+										</div>
+									</div>
+									<footer>
+								<% } %>
+
+
+
+									<!-- <pre>Date: <%= timeStampFormat %></pre> -->
+									<input type="hidden" name="blogpost_unique_date" value="<%= uniqueTimeStamp %>"/>
+									<input type="hidden" name="blogpost_date" value="<%= timeStamp %>"/>
+									<input type="hidden" name="blogpost_date_format" value="<%= timeStampFormat %>"/>
+								</footer>
+								<input type="submit" value="<% if (typeof lang == 'undefined' || lang == 'en') { %>Send<% } else if (lang == 'nl') { %>Verzenden<% } %>">
+							</form>
+					<% } %>
+
+
+					<div class="blog_edit_button">
+						<i class="fas fa-edit"></i>
+					</div>
+					<form method="post" action="/delete/blog_post" class="shortForm blog_delete_form">
 						<input type="hidden" name="blogpost_title" value="<%= blog_posts[i].blogpost_title %>">
 						<input type="hidden" name="blogpost_date" value="<%= blog_posts[i].blogpost_date %>">
 						<input type="hidden" name="blogpost_unique_date" value="<%= blog_posts[i].blogpost_unique_date %>">
 						<input type="submit" value="X">
 					</form>
 				<% } %>
-				<header>
-					<% if (typeof lang == 'undefined' || lang == 'en') { %>
-						<h2><%= blog_posts[i].blogpost_title %></h2>
-					<% } else if (lang == 'nl') { %>
-						<h2><%= blog_posts[i].blogpost_title_nl %></h2>
-					<% } %>
-				</header>
-				<div class="body">
-					<% if (typeof lang == 'undefined' || lang == 'en') { %>
-						<pre><%= blog_posts[i].blogpost_body %></pre>
-					<% } else if (lang == 'nl') { %>
-						<pre><%= blog_posts[i].blogpost_body_nl %></pre>
-					<% } %>
 
-				</div>
-				<footer>
-					<% if (typeof blog_posts[i].blogpost_file == 'undefined') { %>
-						<% } else if (blog_posts[i].blogpost_file) { %>
-							<% if ( blog_posts[i].blogpost_file['mimetype'].startsWith("image") ) { %>
-								<img src="../uploads/<%= Object(blog_posts[i].blogpost_file['filename']) %>" alt="">
-							<% } %>
-							<% if ( blog_posts[i].blogpost_file['mimetype'] == "application/vnd.openxmlformats-officedocument.presentationml.presentation" ) { %>
-								<a href="../uploads/<%= Object(blog_posts[i].blogpost_file['filename']) %>" alt="">
-									<%= Object(blog_posts[i].blogpost_file['originalname']) %>
-								</a>
-							<% } %>
+				<!-- //blog post itself -->
+				<div class="currentForm">
 
-					<% } %>
-					<pre><%= blog_posts[i].blogpost_date_format %></pre>
+					<header>
+						<% if (typeof lang == 'undefined' || lang == 'en') { %>
+							<h2><%= blog_posts[i].blogpost_title %></h2>
+						<% } else if (lang == 'nl') { %>
+							<h2><%= blog_posts[i].blogpost_title_nl %></h2>
+						<% } %>
+					</header>
+					<div class="body">
+						<% if (typeof lang == 'undefined' || lang == 'en') { %>
+							<pre><%= blog_posts[i].blogpost_body %></pre>
+						<% } else if (lang == 'nl') { %>
+							<pre><%= blog_posts[i].blogpost_body_nl %></pre>
+						<% } %>
 
-				</footer>
+					</div>
+					<footer>
+						<% if (typeof blog_posts[i].blogpost_file == 'undefined') { %>
+							<% } else if (blog_posts[i].blogpost_file) { %>
+								<% if ( blog_posts[i].blogpost_file['mimetype'].startsWith("image") ) { %>
+									<img src="../uploads/<%= Object(blog_posts[i].blogpost_file['filename']) %>" alt="">
+								<% } %>
+								<% if ( blog_posts[i].blogpost_file['mimetype'] == "application/vnd.openxmlformats-officedocument.presentationml.presentation" ) { %>
+									<a href="../uploads/<%= Object(blog_posts[i].blogpost_file['filename']) %>" alt="">
+										<%= Object(blog_posts[i].blogpost_file['originalname']) %>
+									</a>
+								<% } %>
+
+						<% } %>
+						<pre><%= blog_posts[i].blogpost_date_format %></pre>
+
+					</footer>
+
+			</div>
+
 			</article>
 		<% } %>
 
@@ -191,11 +261,19 @@
 							<textarea type="text" id="blogpost_body" name="blogpost_body"/></textarea>
 							<label for="blogpost_body_nl">Content (NL):</label>
 							<textarea type="text" id="blogpost_body_nl" name="blogpost_body_nl"/></textarea>
-							<input id="uploadFile" type="file" name="uploadFile" value="" data-multiple-caption="{count} files selected" multiple />
-							<label for="uploadFile"><i class="fas fa-upload"></i>Choose a file </label>
-							<span id="fileNameSpan">Filename..</span>
+
+							<label for="fileupload" id="buttonlabel">
+								<span role="button" aria-controls="filename" tabindex="0">
+									<i class="fas fa-upload"></i><% if (typeof lang == 'undefined' || lang == 'en') { %>Choose a file..<% } else if (lang == 'nl') { %>Bestand kiezen..<% } %>
+								</span>
+							</label>
+							<input type="file" id="fileupload">
+							<label for="filename" class="hide">
+								uploaded file
+							</label>
+							<input type="text" id="filename" autocomplete="off" readonly placeholder="<% if (typeof lang == 'undefined' || lang == 'en') { %>No file selected, with this action you will overwrite the old upload(file)<% } else if (lang == 'nl') { %>Geen bestand geselecteerd , u overschrijft de vorige upload(bestand) hiermee.<% } %>">
+
 						</div>
-						<footer>
 					<% } else if (lang == 'nl') { %>
 						<header>
 							<label for="blogpost_title_nl">Titel:</label>
@@ -208,19 +286,23 @@
 							<textarea type="text" id="blogpost_body_nl" name="blogpost_body_nl"/></textarea>
 							<label for="blogpost_body">Inhoud (EN):</label>
 							<textarea type="text" id="blogpost_body" name="blogpost_body"/></textarea>
-							<input id="uploadFile" type="file" name="uploadFile" value="" data-multiple-caption="{count} files selected" multiple />
-							<label for="uploadFile"><i class="fas fa-upload"></i><% if (typeof lang == 'undefined' || lang == 'en') { %>Choose a file..<% } else if (lang == 'nl') { %>Bestand kiezen..<% } %> </label>
-							<span id="fileNameSpan">
-								<% if (typeof lang == 'undefined' || lang == 'en') { %>
-									Filename..
-								<% } else if (lang == 'nl') { %>
-									Bestandsnaam
-								<% } %>
-							</span>
-						</div>
-						<footer>
-					<% } %>
 
+							<label for="fileupload" id="buttonlabel">
+								<span role="button" aria-controls="filename" tabindex="0">
+									<i class="fas fa-upload"></i><% if (typeof lang == 'undefined' || lang == 'en') { %>Choose a file..<% } else if (lang == 'nl') { %>Bestand kiezen..<% } %>
+								</span>
+							</label>
+							<input type="file" id="fileupload">
+							<label for="filename" class="hide">
+								uploaded file
+							</label>
+							<input type="text" id="filename" autocomplete="off" readonly placeholder="<% if (typeof lang == 'undefined' || lang == 'en') { %>No file selected, with this action you will overwrite the old upload(file)<% } else if (lang == 'nl') { %>Geen bestand geselecteerd , u overschrijft de vorige upload(bestand) hiermee.<% } %>">
+
+
+						</div>
+
+					<% } %>
+					<footer>
 
 
 						<!-- <pre>Date: <%= timeStampFormat %></pre> -->
@@ -233,6 +315,16 @@
 			</article>
 		<% } %>
 
+		<label for="fileupload" id="buttonlabel">
+			<span role="button" aria-controls="filename" tabindex="0">
+				upload file
+			</span>
+		</label>
+		<input type="file" id="fileupload">
+		<label for="filename" class="hide">
+			uploaded file
+		</label>
+		<input type="text" id="filename" autocomplete="off" readonly placeholder="no file uploaded">
 
 
 		<%	if ( username && !admin) { %>
@@ -262,35 +354,59 @@
 			Copyright 2018 <a href="http://www.e-office.com">E-Office</a>
 		</div>
 	</footer>
+	<script type="text/javascript">
+
+	// Edit button - toggles form for that specific article(blog post)
+	var editButton = $('.blog_edit_button');
+	editButton.click(function() {
+		postForm = $(this).siblings('.blog_post_form');
+		currentForm = $(this).siblings('.currentForm');
+		postForm.toggleClass('closed');
+		currentForm.toggleClass('closed');
+	});
+	// trigger upload on space & enter
+	// = standard button functionality
+	$('.extra #buttonlabel span[role=button]').bind('click', function(e) {
+		if(e.which === 32 || e.which === 13){
+			e.preventDefault();
+			$('#fileuploadEdit').click();
+		}
+	});
+
+	// return chosen filename to additional input
+	$('.extra #fileuploadEdit').change(function(e) {
+		var filenameEdit = $('#fileuploadEdit').val().split('\\').pop();
+		$('#filenameEdit').val(filename);
+		console.log(filename)
+		$('#filenameEdit').attr('placeholder', filename);
+		$('#filenameEdit').focus();
+	});
+
+
+	//Original UploadForm (blogpost post)
+	$('#buttonlabel span[role=button]').bind('keypress keyup', function(e) {
+		console.log('click')
+	  if(e.which === 32 || e.which === 13){
+	    e.preventDefault();
+	    $('#fileupload').click();
+	  }
+	});
+	// return chosen filename to additional input
+	$('#fileupload').change(function(e) {
+	  var filename = $('#fileupload').val().split('\\').pop();
+	  $('#filename').val(filename);
+	  $('#filename').attr('placeholder', filename);
+	  $('#filename').focus();
+	});
+
+	// if checkbox checked then show div > and post values for uploadfile
+	$('input[type="checkbox"]').change(function() {
+		console.log($(this))
+		$(this).siblings('.extra').toggle();
+	});
+</script>
 <script src=".././lib/domJSON.js"></script>
 <script type="text/javascript" src="../scripts/admin_cm.js"></script>
 <script type="text/javascript" src="../scripts/custom_menu.js"></script>
-<script type="text/javascript">
-// var inputs = document.querySelectorAll( '#uploadFile' );
-var fileInput = $('#uploadFile');
-var fileNameSpan = $('#fileNameSpan');
-$(fileInput).on( 'change', function( e ) {
-	var fileName = '';
-	var fu1 = document.getElementById("uploadFile").value;
-	if( this.files && this.files.length > 0 )
-		fileName = ( this.getAttribute( 'data-multiple-caption' ) || '' ).replace( '{count}', this.files.length );
-	else
-		fileName = fu1.split( '\\' ).pop();
-
-
-	// function getFileData(){
-	//    var file = fileInput.files[0];
-	//    var filename = file.name;
-	// 	 console.log(filename);
-	// }
-	if( fileName ) {
-		var thisFilesName = fu1.split( '\\' ).pop()
-		console.log(fu1.split( '\\' ).pop());
-		$(fileNameSpan).html(thisFilesName);
-	}	else {
-		console.log('else')
-	}
-});
-</script>
 </body>
 </html>

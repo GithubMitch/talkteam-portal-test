@@ -41,9 +41,6 @@ var storage = multer.diskStorage({
         case 'image/gif':
           filename = filename + ".gif";
           break;
-        case 'image/gif':
-          filename = filename + ".gif";
-          break;
         case 'image/svg+xml':
           filename = filename + ".svg";
           break;
@@ -379,9 +376,10 @@ app.post('/post/blog_post', upload.single('uploadFile'), function(req, res) {
   var blogpost_unique_date = req.body.blogpost_unique_date;
   var blogpost_date_format = req.body.blogpost_date_format;
   var blogpost_file = req.file;
-  console.log("UploadFile : ", req.file.originalname  );
+  console.log("UploadFile : ", blogpost_file  );
+  // console.log("UploadFile : ", req.file.originalname  );
   console.log(req.body.blogpost_unique_date);
-  req.session.filename = req.file.originalname;
+  // req.session.filename = req.file.originalname;
 
   // Create a new "talkteam_clients" database.
   cloudant.db.create('blog', function(err, res) {
@@ -407,6 +405,81 @@ app.post('/post/blog_post', upload.single('uploadFile'), function(req, res) {
   res.redirect('/blog');
 
 });
+app.post('/post/blog_edit', function(req, res) {
+  var blog = cloudant.db.use('blog');
+  var blogpost_old_title = req.body.blogpost_old_title;
+  var blogpost_title = req.body.blogpost_title;
+  var blogpost_body = req.body.blogpost_body;
+  var blogpost_title_nl = req.body.blogpost_title;
+  var blogpost_body_nl = req.body.blogpost_body;
+  var blogpost_date = req.body.blogpost_date;
+  var blogpost_unique_date = req.body.blogpost_unique_date;
+  var blogpost_file = req.file;
+  console.log('req.body vars : ', req.body)
+  console.log('blogpost_date : ', req.blogpost_date)
+  console.log('blogpost_unique_date : ', req.blogpost_unique_date)
+
+  blog.find(blogpost_old_title, function(err, data) {
+    if (!err) {
+      console.log("GET found 1 entry ! :"+ blogpost_old_title);
+      console.log("Data :"+ data);
+      var rev = data._rev;
+
+      // ...and insert a document in it.
+      blog.insert({
+        _id: blogpost_old_title,
+        _rev: rev,
+        blogpost_title: req.body.blogpost_title,
+        blogpost_body: req.body.blogpost_body,
+        blogpost_title_nl: req.body.blogpost_title_nl,
+        blogpost_body_nl: req.body.blogpost_body_nl,
+        // blogpost_file: req.file
+      }, blogpost_old_title, function(err, body, header) {
+        if (err) {
+          console.log("Blog err findinh entry" + blogpost_old_title);
+        } else {
+          console.log("GET succes editing entry:"+ blogpost_old_title);
+        }
+      });
+    };
+    console.log("POST used : "+ blog + "\n In language : "+ req.session.lang);
+    // delete req.session._jsonConverter;
+    res.redirect('/blog');
+  });
+
+
+  // blog.find(req.body.blogpost_old_title, function(err, data) {
+  //   if (!blogpost_old_title || !blogpost_date) {
+  //     console.log("Failed finding: " + blogpost_old_title + "with the following date " + blogpost_unique_date )
+  //     res.redirect('/blog');
+  //   } else {
+  //     // console.log("Found unique_date or normal date", data.blogpost_unique_date || data.blogpost_date);
+  //     // console.log(data._rev);
+  //     blog.insert({
+  //       blogpost_title: req.body.blogpost_title,
+  //       blogpost_body: req.body.blogpost_body,
+  //       blogpost_title_nl: req.body.blogpost_title_nl,
+  //       blogpost_body_nl: req.body.blogpost_body_nl,
+  //       blogpost_date: req.body.blogpost_date,
+  //       blogpost_date_format: req.body.blogpost_date_format,
+  //       blogpost_unique_date: req.body.blogpost_unique_date,
+  //       // blogpost_file: req.file,
+  //     });
+  //     // blog.insert(blogpost_title, data._rev,  function(err) {
+  //     //   if (!err) {
+  //     //     console.log("Successfully deleted doc with title: "+ blogpost_title + "with following date : ", blogpost_unique_date);
+  //     //     res.redirect('/blog');
+  //     //
+  //     //   } else {
+  //     //     console.log("No succes deleting title: "+ blogpost_title);
+  //     //     res.redirect('/blog');
+  //     //   }
+  //     // });
+  //     res.redirect('/blog');
+  //
+  //   }
+  // });
+});
 app.post('/delete/blog_post', function(req, res) {
   var blog = cloudant.db.use('blog');
   var blogpost_title = req.body.blogpost_title;
@@ -416,10 +489,11 @@ app.post('/delete/blog_post', function(req, res) {
 
 
   blog.get(req.body.blogpost_title, function(err, data) {
-    if (!blogpost_title || !blogpost_date) {
-      console.log("Failed finding: " + blogpost_title + "with the following date " + blogpost_unique_date )
-      res.redirect('/blog');
-    } else if(blogpost_title === data.blogpost_title && blogpost_unique_date === data.blogpost_unique_date || blogpost_title === data.blogpost_title && blogpost_date === data.blogpost_date) {
+    // if (!blogpost_title || !blogpost_date) {
+    //   console.log("Failed finding: " + blogpost_title + "with the following date " + blogpost_unique_date )
+    //   res.redirect('/blog');
+    // } else
+    if(blogpost_title === data.blogpost_title && blogpost_unique_date === data.blogpost_unique_date || blogpost_title === data.blogpost_title && blogpost_date === data.blogpost_date) {
       console.log("Found unique_date or normal date", data.blogpost_unique_date || data.blogpost_date);
       console.log(data._rev);
       blog.destroy(blogpost_title, data._rev,  function(err) {
