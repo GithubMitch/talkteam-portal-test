@@ -120,7 +120,7 @@
 					<!-- // admin buttons -->
 					<% if (username && admin) { %>
 						<!-- enctype="multipart/form-data"  in form tag-->
-							<form class="blog_post blog_post_form closed shortForm" action="/post/blog_edit" method="post">
+							<form class="blog_post blog_post_form closed shortForm" action="/post/blog_edit" method="post" enctype="multipart/form-data">
 								<% if (typeof lang == 'undefined' || lang == 'en') { %>
 									<header>
 										<label for="blogpost_title">Title:</label>
@@ -139,17 +139,17 @@
 										<label for="replaceFile"><% if (typeof lang == 'undefined' || lang == 'en') { %>Replace file <% } else if (lang == 'nl') { %>Bestand vervangen <% } %></label>
 										<input type="checkbox" name="replaceFile" value="">
 										<div class="extra">
-											<label for="fileuploadEdit" id="buttonlabel">
-												<span role="button" aria-controls="filenameEdit" tabindex="0">
+											<label for="blogpost_file_edit" id="buttonlabel" class="edit_blog">
+												<span role="button" aria-controls="filename_edit" tabindex="0">
 													<i class="fas fa-upload"></i><% if (typeof lang == 'undefined' || lang == 'en') { %>Choose a file..<% } else if (lang == 'nl') { %>Bestand kiezen..<% } %>
 												</span>
 											</label>
-											<input type="file" id="fileuploadEdit">
+											<input type="file" name="blogpost_file_edit" id="blogpost_file_edit">
 
-											<label for="filenameEdit" class="hide">
+											<label for="filename_edit" class="hide">
 												uploaded file
 											</label>
-											<input type="text" id="filenameEdit" autocomplete="off" readonly placeholder="<% if (typeof lang == 'undefined' || lang == 'en') { %>No file selected, with this action you will overwrite the old upload(file)<% } else if (lang == 'nl') { %>Geen bestand geselecteerd , u overschrijft de vorige upload(bestand) hiermee.<% } %>">
+											<input type="text" id="filename_edit" autocomplete="off" readonly placeholder="<% if (typeof lang == 'undefined' || lang == 'en') { %>No file selected, with this action you will overwrite the old upload(file)<% } else if (lang == 'nl') { %>Geen bestand geselecteerd , u overschrijft de vorige upload(bestand) hiermee.<% } %>">
 										</div>
 									</div>
 									<footer>
@@ -168,16 +168,16 @@
 										<input type="checkbox" name="replaceFile" value="">
 										<label for="replaceFile"><% if (typeof lang == 'undefined' || lang == 'en') { %>Replace file <% } else if (lang == 'nl') { %>Bestand vervangen <% } %></label>
 										<div class="extra">
-											<label for="fileupload" id="buttonlabel">
-												<span role="button" aria-controls="filename" tabindex="0">
+											<label for="blogpost_file_edit" id="buttonlabel" class="edit_blog">
+												<span role="button" aria-controls="filename_edit" tabindex="0">
 													<i class="fas fa-upload"></i><% if (typeof lang == 'undefined' || lang == 'en') { %>Choose a file..<% } else if (lang == 'nl') { %>Bestand kiezen..<% } %>
 												</span>
 											</label>
-											<input type="file" id="fileupload">
-											<label for="filename" class="hide">
+											<input type="file" name="blogpost_file_edit" id="blogpost_file_edit">
+											<label for="filename_edit" class="hide">
 												uploaded file
 											</label>
-											<input type="text" id="filename" autocomplete="off" readonly placeholder="<% if (typeof lang == 'undefined' || lang == 'en') { %>No file selected, with this action you will overwrite the old upload(file)<% } else if (lang == 'nl') { %>Geen bestand geselecteerd , u overschrijft de vorige upload(bestand) hiermee.<% } %>">
+											<input type="text" id="filename_edit" autocomplete="off" readonly placeholder="<% if (typeof lang == 'undefined' || lang == 'en') { %>No file selected, with this action you will overwrite the old upload(file)<% } else if (lang == 'nl') { %>Geen bestand geselecteerd , u overschrijft de vorige upload(bestand) hiermee.<% } %>">
 										</div>
 									</div>
 									<footer>
@@ -262,12 +262,12 @@
 							<label for="blogpost_body_nl">Content (NL):</label>
 							<textarea type="text" id="blogpost_body_nl" name="blogpost_body_nl"/></textarea>
 
-							<label for="fileupload" id="buttonlabel">
+							<label for="blogpost_file" id="buttonlabel">
 								<span role="button" aria-controls="filename" tabindex="0">
 									<i class="fas fa-upload"></i><% if (typeof lang == 'undefined' || lang == 'en') { %>Choose a file..<% } else if (lang == 'nl') { %>Bestand kiezen..<% } %>
 								</span>
 							</label>
-							<input type="file" id="fileupload">
+							<input type="file" name="blogpost_file" id="blogpost_file" value="">
 							<label for="filename" class="hide">
 								uploaded file
 							</label>
@@ -287,12 +287,12 @@
 							<label for="blogpost_body">Inhoud (EN):</label>
 							<textarea type="text" id="blogpost_body" name="blogpost_body"/></textarea>
 
-							<label for="fileupload" id="buttonlabel">
+							<label for="blogpost_file" id="buttonlabel">
 								<span role="button" aria-controls="filename" tabindex="0">
 									<i class="fas fa-upload"></i><% if (typeof lang == 'undefined' || lang == 'en') { %>Choose a file..<% } else if (lang == 'nl') { %>Bestand kiezen..<% } %>
 								</span>
 							</label>
-							<input type="file" id="fileupload">
+							<input type="file" name="blogpost_file" id="blogpost_file" value="">
 							<label for="filename" class="hide">
 								uploaded file
 							</label>
@@ -314,18 +314,6 @@
 				</form>
 			</article>
 		<% } %>
-
-		<label for="fileupload" id="buttonlabel">
-			<span role="button" aria-controls="filename" tabindex="0">
-				upload file
-			</span>
-		</label>
-		<input type="file" id="fileupload">
-		<label for="filename" class="hide">
-			uploaded file
-		</label>
-		<input type="text" id="filename" autocomplete="off" readonly placeholder="no file uploaded">
-
 
 		<%	if ( username && !admin) { %>
 			<div class="adminPanel">
@@ -364,23 +352,25 @@
 		postForm.toggleClass('closed');
 		currentForm.toggleClass('closed');
 	});
-	// trigger upload on space & enter
-	// = standard button functionality
-	$('.extra #buttonlabel span[role=button]').bind('click', function(e) {
-		if(e.which === 32 || e.which === 13){
-			e.preventDefault();
-			$('#fileuploadEdit').click();
-		}
+
+	//Edit form UploadForm (blogpost edit post)
+	$('.extra #buttonlabel span[role=button]').bind('keypress keyup', function(e) {
+		console.log('click')
+	  if(e.which === 32 || e.which === 13){
+	    e.preventDefault();
+	    $('#blogpost_file_edit').click();
+	  }
+	});
+	// return chosen filename to additional input
+	$('#blogpost_file_edit').change(function(e) {
+	  var filename_edit = $('#blogpost_file_edit').val().split('\\').pop();
+		console.log(filename_edit)
+	  $('#filename_edit').val(filename_edit);
+	  $('#filename_edit').attr('placeholder', filename_edit);
+	  $('#filename_edit').focus();
 	});
 
-	// return chosen filename to additional input
-	$('.extra #fileuploadEdit').change(function(e) {
-		var filenameEdit = $('#fileuploadEdit').val().split('\\').pop();
-		$('#filenameEdit').val(filename);
-		console.log(filename)
-		$('#filenameEdit').attr('placeholder', filename);
-		$('#filenameEdit').focus();
-	});
+
 
 
 	//Original UploadForm (blogpost post)
@@ -388,12 +378,13 @@
 		console.log('click')
 	  if(e.which === 32 || e.which === 13){
 	    e.preventDefault();
-	    $('#fileupload').click();
+	    $('#blogpost_file').click();
 	  }
 	});
 	// return chosen filename to additional input
-	$('#fileupload').change(function(e) {
-	  var filename = $('#fileupload').val().split('\\').pop();
+	$('#blogpost_file').change(function(e) {
+	  var filename = $('#blogpost_file').val().split('\\').pop();
+		console.log(filename)
 	  $('#filename').val(filename);
 	  $('#filename').attr('placeholder', filename);
 	  $('#filename').focus();

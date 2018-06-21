@@ -861,6 +861,9 @@ border-bottom:1px solid #ccc;
 .blog_post form input[type="submit"]{
 	margin-bottom:1.5em;
 }
+.container .blog_post .blog_post {
+	color:#444;
+}
 .container .blog_post:nth-child(even) {
 	background:#35B297;
 	color:#fff;
@@ -880,12 +883,11 @@ border-bottom:1px solid #ccc;
 	border-bottom:1px solid lightgray;
 }
 
-.blog_post.blog_post_form label[for=filename],
 .currentForm.closed ,
 .blog_post_form.closed {
 	display:none;
 }
-.blog_post_form label[for=fileupload] {
+.blog_post_form label[for=blogpost_file] {
 	max-width:100%;
 	width:100%;
 	position: relative;
@@ -938,7 +940,11 @@ border-bottom:1px solid #ccc;
 		position: relative;
 		transition: .3s ease all;
 } */
-.blog_post label[for="fileupload"] > span[role="button"] {
+.blog_post label[for="blogpost_file_edit"] {
+	display:block;
+}
+.blog_post label[for="blogpost_file_edit"] > span[role="button"],
+.blog_post label[for="blogpost_file"] > span[role="button"] {
 		-webkit-appearance: none;
 		height: 42px;
 		background-color: #633689;
@@ -964,14 +970,6 @@ border-bottom:1px solid #ccc;
     background: #3f125e;
 		cursor:pointer;
 }
-/* .blog_post input[type="file"] {
-	width: 0.1px;
-	height: 0.1px;
-	opacity: 0;
-	overflow: hidden;
-	position: absolute;
-	z-index: -1;
-} */
 .blog_post label .fa-upload {
 	position: absolute;
 	left: 13px;
@@ -1253,7 +1251,8 @@ input[type="checkbox"] label[for="replaceFile"] {
 }
 
 
-#fileupload {
+#blogpost_file_edit ,
+#blogpost_file {
 	display: none;
 }
 input[type=text]:focus {
