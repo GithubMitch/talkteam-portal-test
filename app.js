@@ -366,7 +366,7 @@ app.post('/admin_cm/post', function(req, res) {
   });
 
 });
-app.post('/post/blog_post', upload.single('uploadFile'), function(req, res) {
+app.post('/post/blog_post', upload.single('blogpost_file'), function(req, res) {
   var blog = cloudant.db.use('blog');
   var blogpost_title = req.body.blogpost_title;
   var blogpost_body = req.body.blogpost_body;
@@ -377,7 +377,7 @@ app.post('/post/blog_post', upload.single('uploadFile'), function(req, res) {
   var blogpost_date_format = req.body.blogpost_date_format;
   var blogpost_file = req.file;
   console.log("UploadFile : ", blogpost_file  );
-  // console.log("UploadFile : ", req.file.originalname  );
+  console.log("UploadFile : ", req.file.originalname  );
   console.log(req.body.blogpost_unique_date);
   // req.session.filename = req.file.originalname;
 
@@ -405,7 +405,7 @@ app.post('/post/blog_post', upload.single('uploadFile'), function(req, res) {
   res.redirect('/blog');
 
 });
-app.post('/post/blog_edit', function(req, res) {
+app.post('/post/blog_edit', upload.single('fileuploadEdit'), function(req, res) {
   var blog = cloudant.db.use('blog');
   var blogpost_old_title = req.body.blogpost_old_title;
   var blogpost_title = req.body.blogpost_title;
@@ -414,10 +414,13 @@ app.post('/post/blog_edit', function(req, res) {
   var blogpost_body_nl = req.body.blogpost_body;
   var blogpost_date = req.body.blogpost_date;
   var blogpost_unique_date = req.body.blogpost_unique_date;
-  var blogpost_file = req.file;
+  if (req.file) {
+    console.log(req.file)
+    var blogpost_file = req.file;
+  }
   console.log('req.body vars : ', req.body)
-  console.log('blogpost_date : ', req.blogpost_date)
-  console.log('blogpost_unique_date : ', req.blogpost_unique_date)
+  console.log('blogpost_date : ', req.body.blogpost_date)
+  console.log('blogpost_unique_date : ', req.body.blogpost_unique_date)
 
   blog.find(blogpost_old_title, function(err, data) {
     if (!err) {
@@ -436,12 +439,14 @@ app.post('/post/blog_edit', function(req, res) {
         // blogpost_file: req.file
       }, blogpost_old_title, function(err, body, header) {
         if (err) {
-          console.log("Blog err findinh entry" + blogpost_old_title);
+          console.log("Blog err finding entry" + blogpost_old_title);
         } else {
           console.log("GET succes editing entry:"+ blogpost_old_title);
         }
       });
-    };
+    } else {
+      console.log("Nothing found, post not inserted")
+    }
     console.log("POST used : "+ blog + "\n In language : "+ req.session.lang);
     // delete req.session._jsonConverter;
     res.redirect('/blog');
