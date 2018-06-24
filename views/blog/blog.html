@@ -235,6 +235,14 @@
 										<%= Object(blog_posts[i].blogpost_file['originalname']) %>
 									</a>
 								<% } %>
+								<% if ( blog_posts[i].blogpost_file['mimetype'] == "video/mp4" ) { %>
+									<video controls>
+										<source src="../uploads/<%= Object(blog_posts[i].blogpost_file['filename']) %>" type="video/mp4">
+									</video>
+									<span>
+										<%= Object(blog_posts[i].blogpost_file['originalname']) %>
+									</span>
+								<% } %>
 
 						<% } %>
 						<pre><%= blog_posts[i].blogpost_date_format %></pre>

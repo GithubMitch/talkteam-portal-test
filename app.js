@@ -176,6 +176,45 @@ app.post('/post/registerform', function(req, res) {
     res.redirect('/thankyou');
 });
 
+// CONTENT EDIT - ADMIN
+app.post('/admin_cm/post', function(req, res) {
+
+  var json = req.body._jsonParser;
+  var currentPage = req.body.currentPageVar;
+
+  req.session._jsonConverter = json;
+  if (req.session.lang == 'nl') {
+    req.session.lang = 'nl'
+    var admin_db = cloudant.db.use('admin_db_nl');
+  } else {
+    req.session.lang = 'en'
+    var admin_db = cloudant.db.use('admin_db');
+  }
+
+  admin_db.get(currentPage, function(err, doc) {
+    if (!err) {
+      console.log("GET found 1 entry ! :"+ currentPage);
+      var rev = doc._rev;
+      // ...and insert a document in it.
+      admin_db.insert({
+        _id: currentPage,
+        _rev: rev,
+        reqContent: json
+      }, currentPage, function(err, body, header) {
+        if (err) {
+          console.log("Admin_db err");
+        } else {
+          console.log("GET succes finding entry:"+ currentPage);
+        }
+      });
+    };
+    console.log("POST used : "+ admin_db + "\nIn language : "+ req.session.lang);
+    delete req.session._jsonConverter;
+    res.redirect('/'+currentPage);
+  });
+
+});
+
 // Login endpoint
 app.post('/login', function (req, res) {
   var user = req.body.username;
@@ -234,6 +273,8 @@ app.post('/login', function (req, res) {
   });
 
 });
+
+//FAQS
 app.post('/faqform/post', function(req, res) {
   console.log('MAIL IS SEND WITH :' + req.body.form_organisation , req.body.form_subject , req.body.form_email, req.body.form_question )
   app.mailer.send(
@@ -303,6 +344,7 @@ app.post('/new/question', function(req, res) {
   });
   res.redirect('/faq');
 });
+
 app.post('/delete/question', function(req, res) {
   var faq = cloudant.db.use('faq');
   var question_section = req.body.question_section;
@@ -329,43 +371,9 @@ app.post('/delete/question', function(req, res) {
     }
   });
 });
-app.post('/admin_cm/post', function(req, res) {
 
-  var json = req.body._jsonParser;
-  var currentPage = req.body.currentPageVar;
 
-  req.session._jsonConverter = json;
-  if (req.session.lang == 'nl') {
-    req.session.lang = 'nl'
-    var admin_db = cloudant.db.use('admin_db_nl');
-  } else {
-    req.session.lang = 'en'
-    var admin_db = cloudant.db.use('admin_db');
-  }
-
-  admin_db.get(currentPage, function(err, doc) {
-    if (!err) {
-      console.log("GET found 1 entry ! :"+ currentPage);
-      var rev = doc._rev;
-      // ...and insert a document in it.
-      admin_db.insert({
-        _id: currentPage,
-        _rev: rev,
-        reqContent: json
-      }, currentPage, function(err, body, header) {
-        if (err) {
-          console.log("Admin_db err");
-        } else {
-          console.log("GET succes finding entry:"+ currentPage);
-        }
-      });
-    };
-    console.log("POST used : "+ admin_db + "\nIn language : "+ req.session.lang);
-    delete req.session._jsonConverter;
-    res.redirect('/'+currentPage);
-  });
-
-});
+//BLOG (NEWS)
 app.post('/post/blog_post', upload.single('blogpost_file'), function(req, res) {
   var blog = cloudant.db.use('blog');
   var blogpost_title = req.body.blogpost_title;

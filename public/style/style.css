@@ -858,6 +858,13 @@ border-bottom:1px solid #ccc;
 }
 
 /* BLOG */
+.blog_post video + span {
+	display:block;
+	margin-bottom:1em;
+}
+.blog_post video {
+	max-width:100%;
+}
 .blog_post form input[type="submit"]{
 	margin-bottom:1.5em;
 }
