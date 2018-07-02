@@ -31,6 +31,7 @@
 	<script src="/js/jquery.min.js"></script>
 	<script src="/js/bootstrap.min.js"></script>
 	<script src="/js/jquery.mmenu.all.js"></script>
+	<script defer src="https://use.fontawesome.com/releases/v5.0.9/js/all.js" integrity="sha384-8iPTk2s/jMVj81dnzb/iFR2sdA7u06vHJyyLlAd4snFpCl/SnyUjRrbdJsw1pGIl" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -133,18 +134,34 @@
 								<div class="question">
 									<% if (typeof admin == 'undefined') { %>
 									<% } else if (admin) { %>
+										<div class="faq_edit_button">
+											<i class="fas fa-edit"></i>
+										</div>
+										<form method="post" action="/edit/question" class="question_edit_form">
+											<input type="hidden" name="original_id" value="<%= questions[i].original_id %>">
+											<input type="hidden" name="question_old_title" value="<%= questions[i].question_title %>">
+											<input type="text" name="question_title" value="<%= questions[i].question_title %>">
+											<input type="text" name="question_title_nl" value="<%= questions[i].question_title_nl %>">
+											<textarea type="text" name="question_answer" ><%= questions[i].question_answer %></textarea>
+											<textarea type="text" name="question_answer_nl" ><%= questions[i].question_answer_nl %></textarea>
+											<input type="hidden" name="question_section" value="<%= questions[i].question_section %>">
+											<input type="submit" value="send / verzenden">
+										</form>
 										<form method="post" action="/delete/question" class="question_delete_form shortForm">
+											<input type="hidden" name="original_id" value="<%= questions[i].original_id %>">
 											<input type="hidden" name="question_title" value="<%= questions[i].question_title %>">
 											<input type="hidden" name="question_answer" value="<%= questions[i].question_answer %>">
 											<input type="hidden" name="question_section" value="<%= questions[i].question_section %>">
 											<input type="submit" value="X">
 										</form>
 									<% } %>
-									<%= questions[i].question_title %>
-									<span class="closed">▲</span>
-									<span class="opened">▼</span>
-									<div class="answer">
-										<%= questions[i].question_answer %>
+									<div class="parts">
+										<%= questions[i].question_title %>
+										<span class="closed">▲</span>
+										<span class="opened">▼</span>
+										<div class="answer">
+											<%= questions[i].question_answer %>
+										</div>
 									</div>
 								</div>
 							<% } %>
@@ -174,6 +191,7 @@
 					<% } %>
         </div>
       </div>
+
       <div class="personal">
 				<% if (typeof lang == 'undefined' || lang == 'en') { %>
 					<h3>Personal</h3>
@@ -331,46 +349,6 @@
 					</form>
 				<% } %>
 
-			<% if (_id) { %>
-				<form id="faqform" action="/faqform/post" method="post">
-					<label for="form_subject">Subject:</label>
-					<select id="form_subject" name="form_subject" value="">
-						<% if (typeof lang == 'undefined' || lang == 'en') { %>
-							<option value="general">General</option>
-							<option value="personal">Personal</option>
-							<option value="banking">Banking</option>
-							<option value="technical">Technical</option>
-						<% } else if (lang == 'nl') { %>
-							<option value="general">Algemeen</option>
-							<option value="personal">Gebruiker</option>
-							<option value="banking">Bankieren</option>
-							<option value="technical">Technisch</option>
-						<% } %>
-					</select>
-					<label for="form_organisation">
-						<% if (typeof lang == 'undefined' || lang == 'en') { %>
-							Organisation:
-						<% } else if (lang == 'nl') { %>
-							Organisatie:
-						<% } %>
-
-					</label>
-					<input id="form_organisation" type="text" name="form_organisation" title="<%= organisationName || orgName %>" value="<%= organisationName || orgName %>">
-					<label for="form_email">Email:</label>
-					<input id="form_email" type="text" name="form_email" title="<%= JSON.parse(organisationEmail || adminEmail) %>" value="<%= JSON.parse(organisationEmail || adminEmail) %>">
-					<label for="form_question">
-						<% if (typeof lang == 'undefined' || lang == 'en') { %>
-								Question:
-						<% } else if (lang == 'nl') { %>
-								Vraag:
-						<% } %>
-						</label>
-					<textarea id="form_question" name="form_question" rows="8"></textarea>
-					<input type="submit" name="button" value="<% if (typeof lang == 'undefined' || lang == 'en') { %>Send<% } else if (lang == 'nl') { %>Verzenden<% } %>">
-				</form>
-			<% } %>
-
-
 		</div>
 
 		<% if (username && admin ) { %>
@@ -404,9 +382,17 @@
 </div>
 <script type="text/javascript">
   $(document).ready(function() {
+		var questionList = $('.qlist');
+
+		$('.qlist').each(function(){
+			if ($(this).children().length == 0) {
+				$(this).parent().remove();
+			}
+		})
+
     var question = $(".question");
     $(question).on('click', function(){
-      $(this).children('.answer').slideToggle(function(){
+      $(this).find('.answer').slideToggle(function(){
          $(this).parent('.question').toggleClass('active');
       });
     })
@@ -422,6 +408,20 @@
 			}
 			return isValid;
 		});
+
+		var editButton = $('.faq_edit_button');
+		editButton.click(function(e) {
+				e.stopPropagation();
+				e.preventDefault();
+				parts = $(this).siblings('.parts');
+				currentFaq = $(this).siblings('.question_edit_form');
+				parts.toggle();
+				currentFaq.toggle();
+
+			// currentForm.toggleClass('closed');
+		});
+
+
   });
 </script>
 <script src="./lib/domJSON.js"></script>

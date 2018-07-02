@@ -348,6 +348,58 @@ exports.toc = function(req, res){
     });
   }
 };
+exports.service_request = function(req, res){
+  if (!req.session._jsonConverter || req.session._jsonConverter){
+    req.session._jsonConverter = ''
+  }
+
+  console.log("before rendering : ", req.session.lang)
+  if (req.url.includes("?clang=nl")) {
+    delete req.session.lang;
+    req.session.lang = 'nl';
+  } else if (req.url.includes("?clang=en")) {
+    delete req.session.lang;
+    req.session.lang = 'en';
+  } else {
+    console.log("no language var !")
+  };
+
+  console.log("before rendering oldLang: ", req.session.oldLang)
+  if (req.session.lang == 'nl') {
+    req.session.oldLang = 'en';
+  } else {
+    req.session.oldLang = 'nl';
+  };
+
+  var faq = cloudant.db.use('faq');
+
+  faq.fetch({include_docs:true}, function (err, data) {
+    var questions = [];
+    data.rows.forEach(function(rows) {
+      questions.push(rows.doc);
+    });
+
+    req.session.questions = questions;
+
+    res.render('service_request.html', {
+      title: 'Service request',
+      admin: req.session.admin,
+      username: req.session.user,
+      organisationName:req.session.organisationName,
+      organisationEmail: req.session.organisationEmail,
+      _id: req.session._id,
+      licensekey: req.session.licensekey,
+      endDate: req.session.endDate,
+      startDate: req.session.endDate,
+      active: req.session.active,
+      userlist: req.session.userlist,
+      lang: req.session.lang,
+      _jsonConverter: req.session._jsonConverter,
+      questions: questions
+    });
+  });
+
+};
 exports.faq = function(req, res){
   if (!req.session._jsonConverter || req.session._jsonConverter){
     req.session._jsonConverter = ''

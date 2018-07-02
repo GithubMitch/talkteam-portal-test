@@ -95,6 +95,7 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 app.use(methodOverride());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'chatbot_min')));
 app.use('/style', express.static(path.join(__dirname, '/views/style')));
 app.use(express.static(path.join(__dirname, '/node_modules')));
 app.use('/lib', express.static(__dirname + '/node_modules/domjson/dist')); // redirect domJSON JS
@@ -124,6 +125,7 @@ app.get('/thankyou', routes.thankyou);
 app.get('/login', routes.login);
 app.get('/toc', routes.toc);
 app.get('/faq', routes.faq);
+app.get('/service_request', routes.service_request);
 app.get('/logout', routes.logout);
 app.get('/blog', routes.blog);
 
@@ -148,6 +150,8 @@ var username = dbCredentials.username;
 var password = dbCredentials.password;
 var cloudant = Cloudant({account:username, password:password});
 
+
+// REGISTER PAGE
 app.post('/post/registerform', function(req, res) {
     var regUser = req.body.username;
     var regPassword = req.body.password;
@@ -271,7 +275,63 @@ app.post('/login', function (req, res) {
       });
     }
   });
+});
+// Login- Admin endpoint
+app.post('/admin', function (req, res) {
+  var user = req.body.username;
+  var password = req.body.password;
+  var talkteam_clients = cloudant.db.use('talkteam_clients');
 
+  talkteam_clients.get(req.body.username, function(err, body) {
+    if (!err) {
+      console.log("Found this profile:")
+      console.log("_id: ",body._id)
+
+    } else {
+      console.log(err);
+    }
+  });
+  talkteam_clients.get(user, function(err, data) {
+    if (!user || !data) {
+      console.log("Login failed: non existing user -" + user )
+      res.redirect('/admin');
+    } else if(user === data._id || password === data.password) {
+      if (data.adminName) {
+        // console.log("THIS IS A ADMIN ACCOUNT");
+        req.session.admin = true;
+      }
+      req.session.user = user;
+      req.session.organisationName = (data.organisationName || data.orgName);
+      req.session.organisationEmail = JSON.stringify(data.organisationEmail || data.adminEmail) ;
+      req.session._id = JSON.stringify(data._id);
+      req.session.licensekey = JSON.stringify(data.licensekey);
+      req.session.endDate = JSON.stringify(data.endDate);
+      req.session.startDate = JSON.stringify(data.startDate);
+      req.session.active = JSON.stringify(data.active);
+      // console.log('Username:' + data._id + '\n' + 'Password:'+ data.password);
+      // console.log('is now logged in');
+
+      talkteam_clients.fetch({include_docs:true}, function (err, data) {
+        var printUserlist = [];
+        var userRows = [];
+        data.rows.forEach(function(rows) {
+          userRows.push(rows.doc);
+        });
+        data.rows.forEach(function(user) {
+          Object.entries(user).forEach(([key]) => {
+            var userKey = key;
+            printUserlist.push(userKey);
+          });
+        });
+
+        req.session.userRows = userRows;
+        req.session.userlist = printUserlist;
+        res.redirect('/toc');
+        delete req.session.userlist;
+        console.log("deleted userlist from req.session")
+      });
+    }
+  });
 });
 
 //FAQS
@@ -317,7 +377,6 @@ app.post('/faqform/post', function(req, res) {
     // });
 });
 app.post('/new/question', function(req, res) {
-
   // Create a new "talkteam_clients" database.
   var faq = cloudant.db.use('faq');
   var question_section = req.body.question_section;
@@ -330,6 +389,7 @@ app.post('/new/question', function(req, res) {
         console.log('Could not create new db: ' + 'faq' + ', it might already exist.');
     }
     faq.insert({
+      original_id: req.body.question_title,
       question_title: req.body.question_title,
       question_answer: req.body.question_answer,
       question_title_nl: req.body.question_title_nl,
@@ -345,26 +405,70 @@ app.post('/new/question', function(req, res) {
   res.redirect('/faq');
 });
 
+app.post('/edit/question', function(req, res) {
+  var faq = cloudant.db.use('faq');
+  var question_section = req.body.question_section;
+  var question_title = req.body.question_title;
+  var question_title_nl = req.body.question_title_nl;
+  var question_old_title = req.body.question_old_title;
+  var question_answer = req.body.question_answer;
+  var question_answer_nl = req.body.question_answer_nl;
+  var question_section = "general";
+  var original_id = req.body.original_id;
+
+  faq.get(original_id, function(err, data) {
+    if (!err) {
+      console.log("GET found 1 entry ! :"+ original_id);
+      console.log("Data :"+ data);
+      var rev = data._rev;
+
+      // ...and insert a document in it.
+      faq.insert({
+        _id: original_id,
+        _rev: rev,
+        question_title: req.body.blogpost_title,
+        question_title_nl: req.body.question_title_nl,
+        question_answer_nl: req.body.question_answer_nl,
+        question_title: req.body.question_title,
+        question_answer: req.body.question_answer,
+        question_section: "general",
+        original_id: original_id
+        // blogpost_file: req.file
+      }, original_id, function(err, body, header) {
+        if (err) {
+          console.log("Faq err finding entry" + original_id);
+        } else {
+          console.log("GET succes editing entry:"+ original_id);
+        }
+      });
+    } else {
+      console.log(err.message)
+      console.log("Nothing found, post not inserted")
+    }
+    res.redirect('/faq');
+  });
+});
 app.post('/delete/question', function(req, res) {
   var faq = cloudant.db.use('faq');
   var question_section = req.body.question_section;
   var question_title = req.body.question_title;
   var question_answer = req.body.question_answer;
+  var original_id = req.body.original_id;
 
-  faq.get(req.body.question_title, function(err, data) {
+  faq.get(original_id, function(err, data) {
     if (!question_title || !question_answer) {
       console.log("Failed finding question: " + question_title + "with the following answer " + question_answer )
       res.redirect('/faq');
-    } else if(question_title === data.question_title && question_answer === data.question_answer || question_section === data.question_section && question_title === data.question_title) {
+    } else if (original_id && data._rev) {
+      // question_title === data.question_title && question_answer === data.question_answer || question_section === data.question_section && question_title === data.question_title
       console.log("Found unique_field for ", data.question_title || data.question_answer);
       console.log(data._rev);
-      faq.destroy(question_title, data._rev,  function(err) {
+      faq.destroy(original_id, data._rev,  function(err) {
         if (!err) {
-          console.log("Successfully deleted doc with title: "+ question_title + "with following answer : ", question_answer);
+          console.log("Successfully deleted doc with title: "+ data.question_title + "with following answer : ", data.question_answer);
           res.redirect('/faq');
-
         } else {
-          console.log("No succes deleting title: "+ question_title);
+          console.log("No succes deleting title: "+ data.question_title);
           res.redirect('/faq');
         }
       });
@@ -460,38 +564,6 @@ app.post('/post/blog_edit', upload.single('fileuploadEdit'), function(req, res) 
     res.redirect('/blog');
   });
 
-
-  // blog.find(req.body.blogpost_old_title, function(err, data) {
-  //   if (!blogpost_old_title || !blogpost_date) {
-  //     console.log("Failed finding: " + blogpost_old_title + "with the following date " + blogpost_unique_date )
-  //     res.redirect('/blog');
-  //   } else {
-  //     // console.log("Found unique_date or normal date", data.blogpost_unique_date || data.blogpost_date);
-  //     // console.log(data._rev);
-  //     blog.insert({
-  //       blogpost_title: req.body.blogpost_title,
-  //       blogpost_body: req.body.blogpost_body,
-  //       blogpost_title_nl: req.body.blogpost_title_nl,
-  //       blogpost_body_nl: req.body.blogpost_body_nl,
-  //       blogpost_date: req.body.blogpost_date,
-  //       blogpost_date_format: req.body.blogpost_date_format,
-  //       blogpost_unique_date: req.body.blogpost_unique_date,
-  //       // blogpost_file: req.file,
-  //     });
-  //     // blog.insert(blogpost_title, data._rev,  function(err) {
-  //     //   if (!err) {
-  //     //     console.log("Successfully deleted doc with title: "+ blogpost_title + "with following date : ", blogpost_unique_date);
-  //     //     res.redirect('/blog');
-  //     //
-  //     //   } else {
-  //     //     console.log("No succes deleting title: "+ blogpost_title);
-  //     //     res.redirect('/blog');
-  //     //   }
-  //     // });
-  //     res.redirect('/blog');
-  //
-  //   }
-  // });
 });
 app.post('/delete/blog_post', function(req, res) {
   var blog = cloudant.db.use('blog');
