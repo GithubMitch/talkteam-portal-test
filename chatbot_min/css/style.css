@@ -44,20 +44,30 @@ button {
 }
 .setting {
 	text-align:right;
+  border-bottom:1px solid gray;
+  margin-bottom:1em;
 }
-button i {
-	line-height:20px;
+.setting button {
+  padding:0;
+}
+.setting button svg,
+.setting button i {
+	line-height:auto;
+  width:auto !important;
+  height:auto !important;
 }
 button#min ,
 button#max ,
 button#close {
 	display:inline-block;
-	width:20px;
-	height:20px;
+  width: 28px;
+  height: 27px;
+  padding: 0 3px;
 	vertical-align:middle;
 	font-size:1em;
 	background:transparent;
 	color:#7216A4;
+  outline-color: #7216A4;
 }
 .conversation div[class*="direct-chat"]  {
 		clear:both

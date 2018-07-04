@@ -14,7 +14,7 @@ function loadJSON() {
 		var qNnewDiv = document.createElement('div');
 		qNnewDiv.id = 'q'+conversationIndex;
 		qNnewDiv.className = 'direct-chat-msg right';
-		qNnewDiv.style = 'font-family: sans-serif; font-weight:bold; font-size:11px; margin-right:0px; text-align: justify; margin-right: 0px; float:right; overflow: auto;  background-color: #35B297;  border-radius: 3px;  margin: 10px;  padding: 5px;  text-align: left; color: #fff; margin-right:0px;';
+		qNnewDiv.style = 'font-family: sans-serif; font-weight:bold; font-size:11px; margin-right:0px; text-align: justify; margin-right: 0px; float:right; overflow: auto;  background-color: #35B297;  border-radius: 3px;  margin: 10px;  padding: 5px; padding-right:1em; text-align: left; color: #fff; margin-right:1em;';
 
 		var clearfixDiv = document.createElement('div')
 		clearfixDiv.className = 'direct-chat-info clearfix';
@@ -89,7 +89,7 @@ function loadJSON() {
 				var yourtext = document.createElement('div');
 				yourtext.className='direct-chat-text';
 				yourtext.innerHTML=responseMessage;
-				yourtext.style = 'font-size: 11px; font-family: sans-serif;  color: #001a73; font-weight: bold; margin-left: 50px; text-align:left; min-height: 40px; border: 1px solid; border-color: #dadada; box-sizing: border-box; border-radius: 5px; box-shadow: inset 1px 1px 2px 0 rgba(0,0,0,.1); padding:10px;';
+				yourtext.style = 'font-size: 11px; font-family: sans-serif;  color: #001a73; font-weight: bold; margin-left: 50px;  text-align:left; min-height: 40px; border: 1px solid; border-color: #dadada; box-sizing: border-box; border-radius: 5px; box-shadow: inset 1px 1px 2px 0 rgba(0,0,0,.1); padding:10px;';
 
 				toAdd.appendChild(newDiv);
 				newDiv.appendChild(clearfixright);
