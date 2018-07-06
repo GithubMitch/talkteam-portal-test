@@ -1138,6 +1138,12 @@ input[type="checkbox"] label[for="replaceFile"] {
 	bottom: 80px;
   z-index: 1000;
   border-radius: 15px;
+	height: 111px;
+  width: 212px;
+}
+#eofbot.active {
+	width:300px;
+	height:500px;
 }
 
 /* //// RESPONSIVE STYLE */

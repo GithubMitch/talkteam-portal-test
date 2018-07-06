@@ -138,6 +138,27 @@
 		</div>
 	</footer>
 </div>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('#eofbot').on('load', function(){
+			var wavy = $(this).contents().find("#wavy");
+			var eofbot = $('#eofbot');
+			$(this).contents().find("#wavy").on('click', function(event) {
+				available = eofbot.contents().find(".botname span", eofbot);
+				console.log(available)
+				function toggleText() {
+					if (available[0].innerHTML === "available") {
+						available[0].innerHTML = "Chatting";
+					} else {
+						available[0].innerHTML = "available";
+					}
+				}
+				$('#eofbot').toggleClass('active');
+				toggleText();
+			});
+		});
+	});
+</script>
 	<script type="text/javascript" src="/scripts/util.js"></script>
 	<!-- <script type="text/javascript" src="/scripts/index.js"></script> -->
 	<script type="text/javascript" src="/scripts/custom_menu.js"></script>
