@@ -46,6 +46,7 @@ button {
 	text-align:right;
   border-bottom:1px solid gray;
   margin-bottom:1em;
+  padding-right:.5em;
 }
 .setting button {
   padding:0;
@@ -165,7 +166,7 @@ div[id^="r"] {
 	text-transform:capitalize;
 }
 #input {
-	width: calc(100% - 64px);
+	width: calc(100% - 60px);
 	height:40px;
 	margin:0;
 	display:inline-block;
@@ -190,9 +191,11 @@ button {
 
 .askbutton {
 	background-color: #7216A4;
+	background-color: #633689;
 	margin:0;
-	margin-left:-4px;
-	width:64px;
+  margin-left: -8px;
+  width: 64px;
+  border-radius: 5px;
 	height:40px;
 	display:inline-block;
 	vertical-align:middle;

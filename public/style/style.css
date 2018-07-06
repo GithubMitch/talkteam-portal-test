@@ -438,7 +438,6 @@ a.logo {
 	padding-top:15px;
 	padding-bottom:15px;
 	padding:3rem;
-	text-align:center;
 }
 .intro h2 ,
 .intro h3 {
@@ -1136,8 +1135,9 @@ input[type="checkbox"] label[for="replaceFile"] {
 	display:block;
 	position: fixed;
 	right:20px;
-	bottom:20px;
-	z-index:1000;
+	bottom: 80px;
+  z-index: 1000;
+  border-radius: 15px;
 }
 
 /* //// RESPONSIVE STYLE */
@@ -1251,12 +1251,10 @@ input[type="checkbox"] label[for="replaceFile"] {
 	.intro div[class^="col-"] {
 		font-size: 14px;
 		line-height: 24px;
+		padding:1rem;
 	}
 	.intro ul {
 		padding-left:0%;
-	}
-	.intro div[class^="col-"] {
-		padding:1rem;
 	}
 	#mainmenu {display:none;}
 	#mm-mainmenu .lang {display:none;}
