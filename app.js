@@ -95,7 +95,9 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 app.use(methodOverride());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.static(path.join(__dirname, 'chatbot_min')));
+// app.use(express.static(path.join(__dirname, 'chatbot_min')));
+app.use(express.static(path.join(__dirname, 'chatbot_en')));
+// app.use(express.static(path.join(__dirname, 'chatbot_nl')));
 app.use('/style', express.static(path.join(__dirname, '/views/style')));
 app.use(express.static(path.join(__dirname, '/node_modules')));
 app.use('/lib', express.static(__dirname + '/node_modules/domjson/dist')); // redirect domJSON JS
@@ -123,6 +125,7 @@ app.get('/terms', routes.terms);
 app.get('/about', routes.about);
 app.get('/thankyou', routes.thankyou);
 app.get('/login', routes.login);
+app.get('/admin', routes.admin);// same as login
 app.get('/toc', routes.toc);
 app.get('/faq', routes.faq);
 app.get('/service_request', routes.service_request);
@@ -239,10 +242,7 @@ app.post('/login', function (req, res) {
       console.log("Login failed: non existing user -" + user )
       res.redirect('/login');
     } else if(user === data._id || password === data.password) {
-      if (data.adminName) {
-        // console.log("THIS IS A ADMIN ACCOUNT");
-        req.session.admin = true;
-      }
+      req.session.admin = false;
       req.session.user = user;
       req.session.organisationName = (data.organisationName || data.orgName);
       req.session.organisationEmail = JSON.stringify(data.organisationEmail || data.adminEmail) ;
@@ -276,7 +276,7 @@ app.post('/login', function (req, res) {
     }
   });
 });
-// Login- Admin endpoint
+// Admin login - endpoint ( same )
 app.post('/admin', function (req, res) {
   var user = req.body.username;
   var password = req.body.password;

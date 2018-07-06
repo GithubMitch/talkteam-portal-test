@@ -1,0 +1,354 @@
+@CHARSET "ISO-8859-1";
+
+html {
+	height:100%;
+	overflow-y:hidden;
+}
+* {
+	box-sizing: border-box;
+	margin:0;
+	padding:0;
+}
+body {
+	font-family: "roboto", "arial", sans-serif;
+  	height: 100%;
+	/* padding-bottom: calc(67px + .2em); */
+	background:#fff url(../img/background.jpg);
+	background-size:cover;
+	overflow:hidden;
+}
+.whitelayer {
+	background:rgba(255,255,255, .6);
+	width:100%;
+	height:100%;
+	overflow:hidden;
+}
+.wrap {
+	display:block;
+	width:100%;
+	height:100%;
+	border-radius:5px;
+	overflow:hidden;
+	margin:10% auto;
+	margin-top:0;
+	position:relative;
+}
+header  {
+	display:block;
+	overflow:hidden;
+	background:rgba(99,54, 137, 1);
+	/* background:#15822F;
+	background:#2B9A44; */
+	padding:.5em;
+	text-align:center;
+}
+main {
+	/* padding-bottom: 41px; */
+	overflow-y: scroll;
+	height: 100%;
+	background:#fff;
+  height: calc(100% - 108px);
+}
+#backButton {
+	position:relative;
+	background:#F29108;
+	display:block;
+	color:#fff;
+  padding: .6em 1.2em;
+	z-index:999;
+	border-radius: 0 0 5px 5px;
+  margin: -10% auto 0;
+	width:140px;
+	text-decoration: none;
+	text-align:center;
+}
+#backButton span {
+	font-weight:bold;
+}
+#logoOrange a {
+	display:block;
+	width:100%;
+	height:100%;
+}
+#logoOrange {
+	bottom:0;
+	top:10%;
+	right:auto;
+	margin:auto;
+	position:relative;
+	background:url(../img/logo.png)no-repeat center;
+	background-size:contain;
+	text-indent:-9999em;
+	width:200px;
+	height:100px;
+}
+
+.botname {
+	color:#fff;
+	height:51px;
+	display:inline-block;
+	vertical-align: middle;
+  padding: 0.5em;
+	line-height: 1em;
+	text-align:left;
+}
+.botname h2{
+	font-size:1em;
+}
+.botname span{
+	font-size:.666em;
+}
+.wavy {
+	height:51px;
+	display:inline-block;
+	vertical-align: middle;
+  filter: drop-shadow(0px 0px 4px #0a3e17);
+}
+.conversationQuestion {
+	color: #F00;
+}
+
+.conversation {
+	color: #7216A4;
+}
+.discovery-chat-msg {
+	background-color: #e9f4ec;
+	border-radius: 20px;
+	border-width:1px;
+	border-style:solid;
+	border-color:#2B9A44
+	box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    padding:.5em;
+}
+
+.discovery-chat-msg:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+/* Q&R boxes */
+div[id^="q"] {
+	border-right:3px solid #35B297;
+	text-align:right;
+}
+div[id^="r"] {
+	border-left:3px solid rgba(99,54, 137, 1);
+	text-align:left;
+}
+
+div[id^="q"],
+div[id^="r"] {
+		display:block;
+		width:100%;
+		padding:.5em;
+}
+
+#conversation div[id^="q"] h3{
+	color:#35B297;
+}
+#conversation div[id^="r"] h3{
+	color:rgba(99,54, 137, 1);
+}
+#conversation h3 {
+	font-size: 1em;
+	font-weight: bold;
+	margin-bottom:.2em;
+}
+#input {
+	width: calc(100% - 64px);
+	height:40px;
+	margin:0;
+	display:inline-block;
+	vertical-align:middle;
+	padding:.2em .5em;
+	border:0;
+}
+
+button {
+    background-color: #7216A4;
+    border: none;
+    color: white;
+    padding: 8px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    margin: 4px 2px;
+    cursor: pointer;
+	height:40px;
+	width:63px;
+}
+
+.askbutton {
+	background-color: #EA7164;
+	margin:0;
+	margin-left:-4px;
+	width:63px;
+	height:41px;
+	display:inline-block;
+	vertical-align:middle;
+	background-color: #fff;
+	color: #999;
+}
+
+.microphonebutton {
+	background: url(../img/Google_mic.png)no-repeat center; no-repeat -3px 0;
+    background-size: 20px 24px;
+    margin:0;
+	margin-left:-4px;
+	width:63px;
+	height:41px;
+	display:inline-block;
+	vertical-align:middle;
+	background-color: #fff;
+}
+
+#button-yes {
+	height:40px;
+	width: 60px;
+	margin: 5px;
+	border:none;
+	border-radius: 2px;
+	background-color:green;
+	color: white;
+}
+
+#button-no {
+	height:40px;
+	width: 60px;
+	margin: 5px;
+	border:none;
+	border-radius: 2px;
+	background-color:red;
+	color: white;
+}
+
+footer {
+	width:100%;
+	position: absolute;
+	bottom:0;
+}
+.bottom {
+	height:40px;
+}
+
+/* Custom, iPhone Retina */
+
+@media only screen and (min-width : 320px) {
+
+
+
+}
+
+
+
+/* Extra Small Devices, Phones */
+
+@media only screen and (min-width : 480px) {
+
+               .wrap {
+
+    display: block;
+
+    width: 480px;
+
+    height: 480px;
+
+    border-radius: 5px;
+
+    overflow: hidden;
+
+    margin: 10% auto;
+
+    position: relative;
+
+               }
+
+}
+
+
+
+/* Small Devices, Tablets */
+
+@media only screen and (min-width : 768px) {
+
+               .wrap {
+
+                              left:-5%;
+
+                              margin-bottom:0;
+
+               }
+
+               #backButton {
+
+                   position: absolute;
+
+                   left: 0;
+
+                   top: 32%;
+
+                   background: #F29108;
+
+                   color: #fff;
+
+                   padding: .5em 1em;
+
+                   transform: rotate(90deg);
+
+                   transform-origin: left bottom;
+
+                   margin-top: -37px;
+
+                   z-index: 999;
+
+                   border-radius: 5px 5px 0 0;
+
+                                             width:200px;
+
+               }
+
+               #logoOrange {
+
+                              top:0;
+
+                              left:-5%;
+
+               }
+
+}
+
+
+
+/* Medium Devices, Desktops */
+
+@media only screen and (min-width : 992px) {
+
+               #logoOrange {
+
+                              position:absolute;
+
+                              right:10%;
+
+                              left:auto;
+
+                              top:35%;
+
+                              bottom:auto;
+
+                              /* background:#F29108; */
+
+               }
+
+}
+
+
+
+/* Large Devices, Wide Screens */
+
+@media only screen and (min-width : 1200px) {
+
+
+
+}

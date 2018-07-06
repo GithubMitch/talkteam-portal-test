@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="nl" xmlns="http://www.w3.org/1999/xhtml" class="mcf-noframes chrome chrome54 chrome54_0 chrome54_0_2840 chrome54_0_2840_99 webkit webkit537 webkit537_36"
+data-cookiesettings="loaded">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<script type = "application/javascript" src="scripts/smalltalk.js"></script>
+		<script type="text/javascript" src="scripts/jquery.min.js"></script>
+		<link rel="stylesheet" href="css/style.css"></link>
+		<link rel="icon" href="img/cropped-baas-icon-32x32.jpg" sizes="32x32">
+		<title>TalkTeamBot NL</title>
+	</head>
+
+	<body onload='loadJSON()' >
+
+		<div class="whitelayer">
+			<div class="wrap">
+
+				<header>
+					<img class="wavy" id="wavy" src="img/avatar5.png" alt="TalkTeamBot NL's avatar">
+					<div class="botname">
+						<h2>TalkTeamBot NL</h2>
+						<span>beschikbaar</span>
+					</div>
+				</header>
+				<main>
+					<div id="conversation"></div>
+					<div><input type="hidden" id="conversation_context" />
+					<input type="hidden" id="endpoint" value="https://eu.baas.bot/api/baas/TalkTeamNederlands"/>
+					</div>
+				</main>
+				<footer>
+					<div class="bottom">
+						<input type="text" id="input" onkeypress="process(event, this)"/>
+						<button class="askbutton" type="button" onclick="loadJSON()">Stuur</button>
+					</div>
+				</footer>
+
+			</div>
+			<a href="https://www.e-office.com/oplossingen/bots-as-a-service/" id="backButton">over <span>baas</span></a>
+			<h1 id="logoOrange">
+				<a href="https://www.e-office.com/">Logo</a>
+			</h1>
+		</div>
+
+	</body>
+</html>

@@ -298,6 +298,18 @@ exports.login = function(req, res){
     });
   }
 };
+exports.admin = function(req, res){
+  if (req.session.user){
+    res.redirect('/');
+  } else {
+    res.render('admin.html', {
+      title: 'Admin - login',
+      username: req.session.user,
+      admin: req.session.admin,
+      lang: req.session.lang
+    });
+  }
+};
 exports.logout = function(req, res){
   res.render('logout.html', {
     title: 'Logout',
