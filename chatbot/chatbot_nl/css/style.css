@@ -39,7 +39,7 @@ header  {
 	background:rgba(99,54, 137, 1);
 	/* background:#15822F;
 	background:#2B9A44; */
-	padding:.5em;
+  padding: .5em 0;
 	text-align:center;
 }
 main {
