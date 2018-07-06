@@ -126,6 +126,12 @@
 	</div>
 </section>
 
+<% if (typeof lang == 'undefined' || lang == 'en') { %>
+	<iframe id="eofbot" src="/chatbot_en/chatbot.html" width="300" height="500px"></iframe>
+<% } else if (lang == 'nl') { %>
+	<iframe id="eofbot" src="/chatbot_nl/chatbot.html" width="300" height="500px"></iframe>
+<% } %>
+
 	<footer class="fluid-container">
 		<div class="row-12">
 			Copyright 2018 <a href="http://www.e-office.com">E-Office</a>
