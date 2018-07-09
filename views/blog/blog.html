@@ -175,16 +175,17 @@
 										<input type="checkbox" name="replaceFile" value="">
 										<label for="replaceFile"><% if (typeof lang == 'undefined' || lang == 'en') { %>Replace file <% } else if (lang == 'nl') { %>Bestand vervangen <% } %></label>
 										<div class="extra">
-											<label for="blogpost_file_edit<%= [i] %>" id="buttonlabel" class="edit_blog">
+											<label for="blogpost_file_edit_<%= [i] %>" id="buttonlabel" class="edit_blog">
 												<span role="button" aria-controls="filename_edit_<%= [i] %>" tabindex="0">
 													<i class="fas fa-upload"></i><% if (typeof lang == 'undefined' || lang == 'en') { %>Choose a file..<% } else if (lang == 'nl') { %>Bestand kiezen..<% } %>
 												</span>
 											</label>
-											<input type="file" name="blogpost_file_edit_<%= [i] %>" multiple id="blogpost_file_edit<%= [i] %>">
+											<input type="file" name="blogpost_file_edit" id="blogpost_file_edit_<%= [i] %>" class="blogpost_file_edit">
+
 											<label for="filename_edit_<%= [i] %>" class="hide">
 												uploaded file
 											</label>
-											<input type="text" id="filename_edit_<%= [i] %>" autocomplete="off" readonly placeholder="<% if (typeof lang == 'undefined' || lang == 'en') { %>No file selected, with this action you will overwrite the old upload(file)<% } else if (lang == 'nl') { %>Geen bestand geselecteerd , u overschrijft de vorige upload(bestand) hiermee.<% } %>">
+											<input type="text" id="filename_edit_<%= [i] %>" class="filename_edit" autocomplete="off" readonly placeholder="<% if (typeof lang == 'undefined' || lang == 'en') { %>No file selected, with this action you will overwrite the old upload(file)<% } else if (lang == 'nl') { %>Geen bestand geselecteerd , u overschrijft de vorige upload(bestand) hiermee.<% } %>">
 										</div>
 									</div>
 									<footer>

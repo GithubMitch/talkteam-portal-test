@@ -178,6 +178,19 @@
 								<div class="question">
 									<% if (typeof admin == 'undefined') { %>
 									<% } else if (admin) { %>
+										<div class="faq_edit_button">
+											<i class="fas fa-edit"></i>
+										</div>
+										<form method="post" action="/edit/question" class="question_edit_form">
+											<input type="hidden" name="original_id" value="<%= questions[i].original_id %>">
+											<input type="hidden" name="question_old_title" value="<%= questions[i].question_title %>">
+											<input type="text" name="question_title" value="<%= questions[i].question_title %>">
+											<input type="text" name="question_title_nl" value="<%= questions[i].question_title_nl %>">
+											<textarea type="text" name="question_answer" ><%= questions[i].question_answer %></textarea>
+											<textarea type="text" name="question_answer_nl" ><%= questions[i].question_answer_nl %></textarea>
+											<input type="hidden" name="question_section" value="<%= questions[i].question_section %>">
+											<input type="submit" value="send / verzenden">
+										</form>
 										<form method="post" action="/delete/question" class="question_delete_form shortForm">
 											<input type="hidden" name="question_title" value="<%= questions[i].question_title %>">
 											<input type="hidden" name="question_answer" value="<%= questions[i].question_answer %>">

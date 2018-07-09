@@ -40,7 +40,7 @@ header  {
 	/* background:#15822F;
 	background:#2B9A44; */
   padding: .5em 0;
-	text-align:center;
+	text-align: left;
 }
 main {
 	/* padding-bottom: 41px; */
@@ -129,26 +129,38 @@ main {
 }
 /* Q&R boxes */
 div[id^="q"] {
-	border-right:3px solid #35B297;
+	/* border-right:3px solid #35B297; */
+	/* background:#35B297; */
 	text-align:right;
+	/* padding: .5em;
+	padding-right: 0;
+	padding-top: 0; */
 }
 div[id^="r"] {
-	border-left:3px solid rgba(99,54, 137, 1);
+	/* border-left:3px solid rgba(99,54, 137, 1); */
+	/* background:rgba(99,54, 137, 1); */
 	text-align:left;
+	/* padding: .5em;
+	padding-left: 0;
+	padding-top: 0; */
 }
 
 div[id^="q"],
 div[id^="r"] {
 		display:block;
 		width:100%;
-		padding:.5em;
 }
 
 #conversation div[id^="q"] h3{
-	color:#35B297;
+	background:#35B297;
+  background: rgba(53, 178, 151, .7);
+	color:#fff;
+	padding:.5em;
 }
 #conversation div[id^="r"] h3{
-	color:rgba(99,54, 137, 1);
+	background:rgba(99,54, 137, .8);
+	color:#fff;
+	padding:.5em;
 }
 #conversation h3 {
 	font-size: 1em;
@@ -163,6 +175,13 @@ div[id^="r"] {
 	vertical-align:middle;
 	padding:.2em .5em;
 	border:0;
+}
+.direct-chat-text.right,
+.direct-chat-text {
+	padding:.5em;
+	display:block;
+	line-height: 1.333em;
+	font-size: 14px;
 }
 
 button {
