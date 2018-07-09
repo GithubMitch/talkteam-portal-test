@@ -44,7 +44,7 @@ function loadJSON() {
 
 	console.log(watsonContext)
 	if (watsonContext != "") {
-		
+
 		dialog.context=watsonContext;
 	}
 
@@ -64,9 +64,13 @@ function loadJSON() {
 			var responseMessages
 			if (jsonObj==null) {
 				jsonObj=jsonBodyObj;
-			} 
+			}
 			responseMessages = jsonObj.text;
-			
+
+
+			//todo add ready class to iframe when first response
+			$("#eofbot").addClass('ready');
+
 			console.log("Responsemessages =" + responseMessages);
 
 			//loop through array with outputs
@@ -86,9 +90,9 @@ function loadJSON() {
 				YourChatname.className = 'direct-chat-name pull-left';
 				YourChatname.innerHTML= chatbotName; //$Botname
 
-				
+
 				var spanImgright = document.createElement('span');
-				
+
 
 				var yourtext = document.createElement('div');
 				yourtext.className='direct-chat-text';
@@ -98,11 +102,11 @@ function loadJSON() {
 				toAdd.appendChild(newDiv);
 				newDiv.appendChild(clearfixright);
 				clearfixright.appendChild(YourChatname);
-				
+
 				newDiv.appendChild(spanImgright);
-				
+
 				spanImgright.appendChild(yourtext);
-				
+
 				watsonContext = jsonObj.context;
 				//console.log(watsonContext);
 				//updateWatsonContext(watsonContext);

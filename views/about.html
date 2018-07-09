@@ -159,9 +159,9 @@
 </section>
 
 <% if (typeof lang == 'undefined' || lang == 'en') { %>
-	<iframe id="eofbot" src="/chatbot_en/chatbot.html" width="300" height="500px"></iframe>
+  <iframe id="eofbot" class="<%	if (username) { %>indent<% } %>" src="/chatbot_en/chatbot.html" width="300" height="500px"></iframe>
 <% } else if (lang == 'nl') { %>
-	<iframe id="eofbot" src="/chatbot_nl/chatbot.html" width="300" height="500px"></iframe>
+  <iframe id="eofbot" class="<%	if (username) { %>indent<% } %>" src="/chatbot_nl/chatbot.html" width="300" height="500px"></iframe>
 <% } %>
 
 	<footer class="fluid-container">
