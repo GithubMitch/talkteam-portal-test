@@ -95,9 +95,7 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 app.use(methodOverride());
 app.use(express.static(path.join(__dirname, 'public')));
-// app.use(express.static(path.join(__dirname, 'chatbot_min')));
-app.use(express.static(path.join(__dirname, 'chatbot_en')));
-// app.use(express.static(path.join(__dirname, 'chatbot_nl')));
+app.use(express.static(path.join(__dirname, 'chatbot')));
 app.use('/style', express.static(path.join(__dirname, '/views/style')));
 app.use(express.static(path.join(__dirname, '/node_modules')));
 app.use('/lib', express.static(__dirname + '/node_modules/domjson/dist')); // redirect domJSON JS
@@ -296,7 +294,7 @@ app.post('/admin', function (req, res) {
       console.log("Login failed: non existing user -" + user )
       res.redirect('/admin');
     } else if(user === data._id || password === data.password) {
-      if (data.adminName) {
+      if (data.adminName || data.adminMail) {
         // console.log("THIS IS A ADMIN ACCOUNT");
         req.session.admin = true;
       }
@@ -419,7 +417,7 @@ app.post('/edit/question', function(req, res) {
   faq.get(original_id, function(err, data) {
     if (!err) {
       console.log("GET found 1 entry ! :"+ original_id);
-      console.log("Data :"+ data);
+      console.log("Data :"+ data._rev);
       var rev = data._rev;
 
       // ...and insert a document in it.
@@ -517,7 +515,7 @@ app.post('/post/blog_post', upload.single('blogpost_file'), function(req, res) {
   res.redirect('/blog');
 
 });
-app.post('/post/blog_edit', upload.single('fileuploadEdit'), function(req, res) {
+app.post('/post/blog_edit', upload.single('blogpost_file_edit'), function(req, res) {
   var blog = cloudant.db.use('blog');
   var blogpost_old_title = req.body.blogpost_old_title;
   var blogpost_title = req.body.blogpost_title;
@@ -526,6 +524,9 @@ app.post('/post/blog_edit', upload.single('fileuploadEdit'), function(req, res) 
   var blogpost_body_nl = req.body.blogpost_body;
   var blogpost_date = req.body.blogpost_date;
   var blogpost_unique_date = req.body.blogpost_unique_date;
+  var blogpost_date_format = req.body.blogpost_date_format;
+  var blogpost_id = req.body.blogpost_id;
+
   if (req.file) {
     console.log(req.file)
     var blogpost_file = req.file;
@@ -533,8 +534,9 @@ app.post('/post/blog_edit', upload.single('fileuploadEdit'), function(req, res) 
   console.log('req.body vars : ', req.body)
   console.log('blogpost_date : ', req.body.blogpost_date)
   console.log('blogpost_unique_date : ', req.body.blogpost_unique_date)
+  console.log('Old Title : ', req.body.blogpost_old_title)
 
-  blog.find(blogpost_old_title, function(err, data) {
+  blog.get(blogpost_id, function(err, data) {
     if (!err) {
       console.log("GET found 1 entry ! :"+ blogpost_old_title);
       console.log("Data :"+ data);
@@ -542,21 +544,25 @@ app.post('/post/blog_edit', upload.single('fileuploadEdit'), function(req, res) 
 
       // ...and insert a document in it.
       blog.insert({
-        _id: blogpost_old_title,
+        _id: blogpost_title,
         _rev: rev,
         blogpost_title: req.body.blogpost_title,
         blogpost_body: req.body.blogpost_body,
         blogpost_title_nl: req.body.blogpost_title_nl,
         blogpost_body_nl: req.body.blogpost_body_nl,
-        // blogpost_file: req.file
-      }, blogpost_old_title, function(err, body, header) {
+        blogpost_date: req.body.blogpost_date,
+        blogpost_date_format: req.body.blogpost_date_format,
+        blogpost_unique_date: req.body.blogpost_unique_date,
+        blogpost_file: req.file,
+      }, blogpost_id, function(err, body, header) {
         if (err) {
-          console.log("Blog err finding entry" + blogpost_old_title);
+          console.log("Blog err finding entry : " + blogpost_id);
         } else {
-          console.log("GET succes editing entry:"+ blogpost_old_title);
+          console.log("GET succes editing entry:"+ blogpost_id);
         }
       });
     } else {
+      console.log(err.message)
       console.log("Nothing found, post not inserted")
     }
     console.log("POST used : "+ blog + "\n In language : "+ req.session.lang);
@@ -571,26 +577,28 @@ app.post('/delete/blog_post', function(req, res) {
   var blogpost_body = req.body.blogpost_body;
   var blogpost_date = req.body.blogpost_date;
   var blogpost_unique_date = req.body.blogpost_unique_date;
+  var blogpost_id = req.body.blogpost_id;
 
 
-  blog.get(req.body.blogpost_title, function(err, data) {
+  blog.get(blogpost_id, function(err, data) {
     // if (!blogpost_title || !blogpost_date) {
     //   console.log("Failed finding: " + blogpost_title + "with the following date " + blogpost_unique_date )
     //   res.redirect('/blog');
     // } else
-    if(blogpost_title === data.blogpost_title && blogpost_unique_date === data.blogpost_unique_date || blogpost_title === data.blogpost_title && blogpost_date === data.blogpost_date) {
-      console.log("Found unique_date or normal date", data.blogpost_unique_date || data.blogpost_date);
-      console.log(data._rev);
-      blog.destroy(blogpost_title, data._rev,  function(err) {
+    // console.log(data._rev);
+    if(data._id == blogpost_id) {
+      blog.destroy(blogpost_id, data._rev,  function(err) {
         if (!err) {
-          console.log("Successfully deleted doc with title: "+ blogpost_title + "with following date : ", blogpost_unique_date);
+          console.log("Successfully deleted doc with title: "+ blogpost_title);
           res.redirect('/blog');
 
         } else {
-          console.log("No succes deleting title: "+ blogpost_title);
+          console.log("No succes deleting title: "+ blogpost_id);
           res.redirect('/blog');
         }
-      });
+      })
+    } else {
+      console.log("Nothing")
     }
   });
 });

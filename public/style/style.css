@@ -639,6 +639,16 @@ button[type=submit] ,
   color: #fff;
   text-decoration: none;
 }
+#regForm input[type="radio"]{
+	display:inline-block;
+	width:auto;
+}
+#regForm .checkbox label {
+	width:40%;
+}
+
+
+
 
 .user {
 	border: 3px double #ccc;
@@ -1006,9 +1016,12 @@ border-bottom:1px solid #ccc;
 		position: relative;
 		transition: .3s ease all;
 } */
+.blog_post label[for^="blogpost_file_edit"],
 .blog_post label[for="blogpost_file_edit"] {
 	display:block;
 }
+.blog_post label[for^="blogpost_file_edit"] > span[role="button"],
+.blog_post label[for^="blogpost_file"] > span[role="button"] ,
 .blog_post label[for="blogpost_file_edit"] > span[role="button"],
 .blog_post label[for="blogpost_file"] > span[role="button"] {
 		-webkit-appearance: none;
@@ -1346,10 +1359,12 @@ input[type="checkbox"] label[for="replaceFile"] {
 }
 
 
+input[id^="blogpost_file"], 
 #blogpost_file_edit ,
 #blogpost_file {
 	display: none;
 }
+
 input[type=text]:focus {
 	box-shadow: 0 0 5px #595959;
 	border-color: #265986;

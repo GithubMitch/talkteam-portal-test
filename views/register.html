@@ -130,7 +130,7 @@
 
 			<form id="regForm" class="shortForm" action="/post/registerform" method="post">
 			    <div>
-			        <label>Username:</label>
+			        <label>Name:</label>
 			        <input type="text" name="username"/><br/>
 							<span class="error">Fill in a username</span>
 			    </div>
@@ -140,20 +140,39 @@
 							<span class="error">Fill in a password</span>
 			    </div>
 			    <div>
+			        <label>E-mail:</label>
+			        <input type="text" name="email"/>
+							<span class="error">Fill in a organisation</span>
+			    </div>
+			    <div>
 			        <label>Organisation:</label>
 			        <input type="text" name="organisation"/>
 							<span class="error">Fill in a organisation</span>
 			    </div>
+					<div>
+						<label>Admin name :</label>
+						<input type="text" name="adminName"/>
+						<span class="error">Fill in a starting date</span>
+					</div>
+					<div>
+						<label>Admin e-mail :</label>
+						<input type="text" name="adminMail"/>
+						<span class="error">Fill in a starting date</span>
+					</div>
 			    <div>
-			        <label>License:</label>
+			        <label>License Key:</label>
 			        <input type="text" name="license"/>
 							<span class="error">Fill in a type of license</span>
 			    </div>
-			    <div>
-			        <label>Date :</label>
-			        <input type="text" name="date"/>
-							<span class="error">Fill in a starting date</span>
+			    <div class="checkbox">
+			        <label>Active:</label>
+			        <input type="checkbox" name="license"/>
 			    </div>
+			    <div class="checkbox">
+			        <label>Trial:</label>
+			        <input type="checkbox" name="trial"/>
+			    </div>
+
 					<div>
 						<input type="submit" value="<% if (typeof lang == 'undefined' || lang == 'en') { %>Send<% } else if (lang == 'nl') { %>Verzenden<% } %>" >
 			    </div>
