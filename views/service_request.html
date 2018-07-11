@@ -131,8 +131,8 @@
 				<% if (_id) { %>
 					<form id="faqform" action="/faqform/post" method="post">
 						<label for="form_subject">Subject:</label>
-						<select id="form_subject" name="form_subject" value="">
-							<% if (typeof lang == 'undefined' || lang == 'en') { %>
+						<input id="form_subject" name="form_subject">
+							<!-- <% if (typeof lang == 'undefined' || lang == 'en') { %>
 								<option value="general">General</option>
 								<option value="personal">Personal</option>
 								<option value="banking">Banking</option>
@@ -142,7 +142,7 @@
 								<option value="personal">Gebruiker</option>
 								<option value="banking">Bankieren</option>
 								<option value="technical">Technisch</option>
-							<% } %>
+							<% } %> -->
 						</select>
 						<label for="form_organisation">
 							<% if (typeof lang == 'undefined' || lang == 'en') { %>

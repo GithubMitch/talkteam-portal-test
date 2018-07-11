@@ -293,7 +293,7 @@ app.post('/admin', function (req, res) {
     if (!user || !data) {
       console.log("Login failed: non existing user -" + user )
       res.redirect('/admin');
-    } else if(user === data._id || password === data.password) {
+    } else if(user === data._id && password === data.password || user === data.user && password === data.password  ) {
       if (data.adminName || data.adminMail) {
         // console.log("THIS IS A ADMIN ACCOUNT");
         req.session.admin = true;
@@ -328,6 +328,10 @@ app.post('/admin', function (req, res) {
         delete req.session.userlist;
         console.log("deleted userlist from req.session")
       });
+    } else {
+      req.session.errorMessage = "Found no user with this password/username combination. Make sure you login with the correct password and username ór email"
+      res.redirect('/admin');
+      // res.redirect('/toc');
     }
   });
 });
@@ -342,7 +346,7 @@ app.post('/faqform/post', function(req, res) {
     },
     {
       to: 'mitchell.seedorf@e-office.com',
-      subject: "Question @ " + req.body.form_subject,
+      subject: req.body.form_subject,
       department: req.body.form_subject,
       organisation: req.body.form_organisation,
       customer: req.body.form_email,

@@ -306,6 +306,7 @@ exports.admin = function(req, res){
       title: 'Admin - login',
       username: req.session.user,
       admin: req.session.admin,
+      errorMessage: req.session.errorMessage,
       lang: req.session.lang
     });
   }

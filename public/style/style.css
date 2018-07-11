@@ -8,6 +8,36 @@
 	     to {background-color: #633689;}
 	 }
 
+
+.cookieWall {
+	position: fixed;
+	background: white;
+	bottom: 0px;
+	display: block;
+	width: 100%;
+	height: 80%;
+	opacity: .8;
+	z-index: 9999;
+	padding:1em 5em ;
+}
+.cookieWall button {
+	height: 42px;
+	border:none;
+	background-color: #633689;
+	color: #fff;
+	border-radius: 6px;
+	display: inline-block;
+	line-height: 42px;
+	border: 0;
+	cursor: pointer;
+	text-decoration: none;
+	font-size: 14px;
+	font-weight: 600;
+	padding: 0 20px;
+	transition: .3s ease all;
+	text-align: center;
+	margin-right:1em;
+}
 .intro > .admin_cm:focus {
 	outline-color:#35B297;
 	margin-bottom: 1px;
@@ -1148,15 +1178,21 @@ input[type="checkbox"] label[for="replaceFile"] {
 	display:block;
 	position: fixed;
 	right:20px;
-	bottom: 80px;
+	bottom: 20px;
   z-index: 1000;
   border-radius: 15px;
 	height: 111px;
   width: 212px;
 }
+#eofbot.indent {
+	bottom: 80px;
+}
 #eofbot.active {
 	width:300px;
 	height:500px;
+}
+#eofbot.ready {
+
 }
 
 /* //// RESPONSIVE STYLE */
@@ -1359,7 +1395,7 @@ input[type="checkbox"] label[for="replaceFile"] {
 }
 
 
-input[id^="blogpost_file"], 
+input[id^="blogpost_file"],
 #blogpost_file_edit ,
 #blogpost_file {
 	display: none;

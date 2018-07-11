@@ -32,6 +32,7 @@ body {
 	margin:10% auto;
 	margin-top:0;
 	position:relative;
+	/* background: url("../../images/tech_pic.jpg")no-repeat center; */
 }
 header  {
 	display:block;
@@ -46,7 +47,7 @@ main {
 	/* padding-bottom: 41px; */
 	overflow-y: scroll;
 	height: 100%;
-	background:#fff;
+  background: rgba(255,255,255, .8);
   height: calc(100% - 108px);
 }
 #backButton {
@@ -103,6 +104,11 @@ main {
 	display:inline-block;
 	vertical-align: middle;
   filter: drop-shadow(0px 0px 4px #0a3e17);
+	transition: .3s ease all;
+}
+.active #wavy,
+#wavy:hover {
+	filter: drop-shadow(0mm 0.5mm 1mm rgb(255, 255,255, .9));
 }
 .conversationQuestion {
 	color: #F00;
