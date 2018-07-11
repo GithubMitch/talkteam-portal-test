@@ -267,10 +267,17 @@ app.post('/login', function (req, res) {
 
         req.session.userRows = userRows;
         req.session.userlist = printUserlist;
+        if (req.session.errorMessage) {
+          delete req.session.errorMessage;
+        }
         res.redirect('/toc');
         delete req.session.userlist;
         console.log("deleted userlist from req.session")
       });
+    } else {
+      req.session.errorMessage = "Found no user with this password/username combination. Make sure you login with the correct password and username ór email"
+      res.redirect('/login');
+      // res.redirect('/toc');
     }
   });
 });

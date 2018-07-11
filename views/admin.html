@@ -144,12 +144,12 @@
 									Wachtwoord:
 							<% } %>
 						</label>
-						<input id="password-field" type="password" name="password" value="secret">
+						<input id="password-field" type="password" name="password">
 						<div class="toggle-password">
 							<i class="fas fa-eye field-icon"></i>
 						</div>
 						<!-- <span toggle="#password-field" class="fas fa-fw fa-eye field-icon toggle-password"></span> -->
-						<span><%= errorMessage %></span>
+						<span class="errorMessage"><%= errorMessage %></span>
 				</div>
 				<input type="submit" name="button" value="login">
 			</form>

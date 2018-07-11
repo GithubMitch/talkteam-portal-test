@@ -173,24 +173,26 @@
 	</footer>
 </div>
 
-<!-- <div class="cookieWall"> -->
-	<h3>We use cookies </h3>
-	<p>
-		To make your visit to our website even easier and more personal, we use cookies (and similar techniques).
-		With these cookies we and third parties can collect information about you and monitor your internet behavior within (and possibly also outside) our website.
-		With this information we and third parties adapt content or advertisements to your interests and profile.
-		In addition, cookies allow information to be shared via social media. Read more about our cookies >
-	</p>
-	<button type="button" class="agree" name="agree">I agree ›</button><button type="button" class="disagree" name="disagree">Cookie confinguration ›</button>
-	<!-- /////////////// Nederlands -->
-	<h3>Wij maken gebruik van cookies</h3>
-	<p>
-		Om jouw bezoek aan onze website nóg makkelijk en persoonlijker te maken zetten we cookies (en daarmee vergelijkbare technieken) in.
-		Met deze cookies kunnen wij en derde partijen informatie over jou verzamelen en jouw internetgedrag binnen (en mogelijk ook buiten) onze website volgen.
-		Met deze informatie passen wij en derde partijen content of advertenties aan jouw interesses en profiel aan.
-		Daarnaast is het dankzij cookies mogelijk informatie te delen via social media. Lees meer over onze cookies ›
-	</p>
-	<button type="button" class="agree" name="agree">Ik ga akkoord ›</button><button type="button" class="disagree" name="disagree">Cookie instellingen ›</button>
+<div class="cookieWall">
+	<% if (typeof lang == 'undefined' || lang == 'en') { %>
+		<h3>We use cookies </h3>
+		<p>
+			To make your visit to our website even easier and more personal, we use cookies (and similar techniques).
+			With these cookies we and third parties can collect information about you and monitor your internet behavior within (and possibly also outside) our website.
+			With this information we and third parties adapt content or advertisements to your interests and profile.
+			In addition, cookies allow information to be shared via social media. Read more about our cookies >
+		</p>
+		<button type="button" class="agree" name="agree">I agree ›</button><button type="button" class="disagree" name="disagree">Cookie confinguration ›</button>
+	<% } else if (lang == 'nl') { %>
+		<h3>Wij maken gebruik van cookies</h3>
+		<p>
+			Om jouw bezoek aan onze website nóg makkelijk en persoonlijker te maken zetten we cookies (en daarmee vergelijkbare technieken) in.
+			Met deze cookies kunnen wij en derde partijen informatie over jou verzamelen en jouw internetgedrag binnen (en mogelijk ook buiten) onze website volgen.
+			Met deze informatie passen wij en derde partijen content of advertenties aan jouw interesses en profiel aan.
+			Daarnaast is het dankzij cookies mogelijk informatie te delen via social media. Lees meer over onze cookies ›
+		</p>
+		<button type="button" class="agree" name="agree">Ik ga akkoord ›</button><button type="button" class="disagree" name="disagree">Cookie instellingen ›</button>
+	<% } %>
 </div>
 
 <script type="text/javascript">
@@ -200,7 +202,6 @@
 			var eofbot = $('#eofbot');
 		  $(this).contents().find("#wavy").on('click', function(event) {
 				available = eofbot.contents().find(".botname span", eofbot);
-				console.log(available)
 				function toggleText() {
 					if (available[0].innerHTML === "available") {
 						available[0].innerHTML = "Chatting";
@@ -216,6 +217,7 @@
 </script>
 <script src="./lib/domJSON.js"></script>
 <!-- <script type="text/javascript" src="/scripts/admin_cm.js"></script> -->
+<script type="text/javascript" src="/scripts/cookieWall.js"></script>
 <script type="text/javascript" src="/scripts/custom_menu.js"></script>
 </body>
 </html>
