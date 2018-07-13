@@ -261,7 +261,32 @@ footer {
 #wavy {
 	cursor:pointer;
 }
-
+.min {
+	display:inline-block;
+	float:right;
+	margin-right:1em;
+}
+.min svg:hover {
+	color:rgb(107, 36, 178);
+	color:#8d6daa;
+}
+.min svg {
+	color:#fff;
+	cursor:pointer;
+}
+.min .fa-window-minimize {
+	display:none;
+	margin-top:.25em;
+}
+.active .min .fa-window-minimize {
+	display:block;
+}
+.min .fa-plus {
+	margin-top:.45em;
+}
+.active .min .fa-plus {
+	display:none;
+}
 /* Custom, iPhone Retina */
 
 @media only screen and (min-width : 320px) {

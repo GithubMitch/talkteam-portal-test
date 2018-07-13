@@ -68,7 +68,7 @@ exports.index = function(req, res){
   }
 
 };
-exports.register = function(req, res){
+exports.support = function(req, res){
   console.log("before rendering : ", req.session.lang)
   if (req.url.includes("?clang=nl")) {
     delete req.session.lang;
@@ -88,8 +88,8 @@ exports.register = function(req, res){
     var admin_db = cloudant.db.use('admin_db');
   };
 
-  res.render('register.html', {
-    title: 'Register',
+  res.render('support.html', {
+    title: 'support',
     username: req.session.user,
     admin: req.session.admin,
     _jsonConverter: req.session._jsonConverter,

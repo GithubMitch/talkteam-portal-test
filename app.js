@@ -117,7 +117,7 @@ app.use(session({
 ///ROUTES
 app.get('/', routes.index);
 app.get('/home', routes.index);
-app.get('/register', routes.register);
+app.get('/support', routes.support);
 app.get('/downloads', routes.downloads);
 app.get('/terms', routes.terms);
 app.get('/about', routes.about);
@@ -301,7 +301,7 @@ app.post('/admin', function (req, res) {
       console.log("Login failed: non existing user -" + user )
       res.redirect('/admin');
     } else if(user === data._id && password === data.password || user === data.user && password === data.password  ) {
-      if (data.adminName || data.adminMail) {
+      if (data.eofAdmin) {
         // console.log("THIS IS A ADMIN ACCOUNT");
         req.session.admin = true;
       }
@@ -555,7 +555,7 @@ app.post('/post/blog_edit', upload.single('blogpost_file_edit'), function(req, r
 
       // ...and insert a document in it.
       blog.insert({
-        _id: blogpost_title,
+        _id: blogpost_id,
         _rev: rev,
         blogpost_title: req.body.blogpost_title,
         blogpost_body: req.body.blogpost_body,

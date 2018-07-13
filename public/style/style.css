@@ -15,10 +15,11 @@
 	bottom: 0px;
 	display: block;
 	width: 100%;
-	height: 80%;
 	z-index: 9999;
-	padding:1em 5em ;
+	padding:1em 0;
   opacity: .9;
+	max-height:100%;
+	overflow:scroll;
 }
 .cookieWall button {
 	height: 42px;

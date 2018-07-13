@@ -60,32 +60,30 @@
 						<nav id="mainmenu">
 							<ul>
 								<% if (typeof lang == 'undefined' || lang == 'en') { %>
-									<li><a href="/home">Home</a></li>
+								  <li><a href="/home">Home</a></li>
 									<li><a href="/blog">News</a></li>
 									<li><a href="/faq">F.A.Q</a></li>
 									<% if (!username) { %>
-										<li>
-											<a href="/register">Buy</a>
-										</li>
-										<li>
-											<a href="/login">Login</a>
-										</li>
+										<li><a href="/support">Support</a></li>
+										<li><a href="/login">Login</a></li>
 									<% } else if (username) { %>
 										<li><a href="/downloads">Downloads</a></li>
 										<li><a href="/service_request">Service Request</a></li>
 									<% } %>
-									<li><a href="/about">E-Office</a></li>
+								  <li><a href="/about">E-Office</a></li>
 									<li><a href="/terms">Terms & Conditions</a></li>
 								<% } else if (lang == 'nl') { %>
-									<li><a href="/home">Home</a></li>
+								  <li><a href="/home">Home</a></li>
 									<li><a href="/blog">Nieuws</a></li>
 									<li><a href="/faq">F.A.Q</a></li>
 									<% if (!username) { %>
+										<li><a href="/support">Ondersteuning</a></li>
 										<li><a href="/login">Login</a></li>
 									<% } else if (username) { %>
 										<li><a href="/downloads">Downloads</a></li>
+										<li><a href="/service_request">Service Request</a></li>
 									<% } %>
-									<li><a href="/about">E-Office</a></li>
+								  <li><a href="/about">E-Office</a></li>
 									<li><a href="/terms">Algemene voorwaarde</a></li>
 								<% } %>
 								<% if (typeof lang == 'undefined' || lang == 'en') { %>
@@ -100,7 +98,7 @@
 								<a id="logoutButton" href="/logout" style="margin-right: -4px">Logout</a>
 							<% } %>
 							<% if (!username) { %>
-								<a id="loginButton" href="/login">Login</a>
+								<!-- <a id="loginButton" href="/login">Login</a> -->
 							<% } %>
 						</div>
 					</div>
@@ -134,15 +132,15 @@
 										<!-- <input type="hidden" id="blogpost_date" name="blogpost_date" value="<%= blog_posts[i].blogpost_date %>"/>
 										<input type="hidden" id="blogpost_unique_date" name="blogpost_unique_date" value="<%= blog_posts[i].blogpost_unique_date %>"/> -->
 										<!-- <input type="hidden" id="blogpost_date_format" name="blogpost_date_format" value="<%= blog_posts[i].blogpost_date_format %>"/> -->
-										<input type="text" id="blogpost_title" placeholder="<%= blog_posts[i].blogpost_title %>" name="blogpost_title"/>
+										<input type="text" id="blogpost_title" value="<%= blog_posts[i].blogpost_title %>" placeholder="<%= blog_posts[i].blogpost_title %>" name="blogpost_title"/>
 										<label for="blogpost_title_nl">Title (NL):</label>
-										<input type="text" id="blogpost_title_nl" placeholder="<%= blog_posts[i].blogpost_title_nl %>" name="blogpost_title_nl"/>
+										<input type="text" id="blogpost_title_nl" value="<%= blog_posts[i].blogpost_title_nl %>" placeholder="<%= blog_posts[i].blogpost_title_nl %>" name="blogpost_title_nl"/>
 									</header>
 									<div class="body">
 										<label for="blogpost_body">Content:</label>
-										<textarea type="text" id="blogpost_body" placeholder="<%= blog_posts[i].blogpost_body %>" name="blogpost_body"/></textarea>
+										<textarea type="text" id="blogpost_body" value="<%= blog_posts[i].blogpost_body %>" placeholder="<%= blog_posts[i].blogpost_body %>" name="blogpost_body"/><%= blog_posts[i].blogpost_body %></textarea>
 										<label for="blogpost_body_nl">Content (NL):</label>
-										<textarea type="text" id="blogpost_body_nl" placeholder="<%= blog_posts[i].blogpost_body_nl %>" name="blogpost_body_nl"/></textarea>
+										<textarea type="text" id="blogpost_body_nl" value="<%= blog_posts[i].blogpost_body_nl %>" placeholder="<%= blog_posts[i].blogpost_body_nl %>" name="blogpost_body_nl"/><%= blog_posts[i].blogpost_body_nl %></textarea>
 										<label for="replaceFile"><% if (typeof lang == 'undefined' || lang == 'en') { %>Replace file <% } else if (lang == 'nl') { %>Bestand vervangen <% } %></label>
 										<input type="checkbox" name="replaceFile" value="">
 										<div class="extra">
@@ -163,15 +161,15 @@
 								<% } else if (lang == 'nl') { %>
 									<header>
 										<label for="blogpost_title_nl">Titel:</label>
-										<input type="text" id="blogpost_title_nl" placeholder="<%= blog_posts[i].blogpost_title_nl %>"name="blogpost_title_nl"/>
+										<input type="text" id="blogpost_title_nl" value="<%= blog_posts[i].blogpost_title_nl %>"  placeholder="<%= blog_posts[i].blogpost_title_nl %>" name="blogpost_title_nl"/>
 										<label for="blogpost_title">Titel (EN):</label>
-										<input type="text" id="blogpost_title" placeholder="<%= blog_posts[i].blogpost_title %>" name="blogpost_title"/>
+										<input type="text" id="blogpost_title" value="<%= blog_posts[i].blogpost_title %>" placeholder="<%= blog_posts[i].blogpost_title %>" name="blogpost_title"/>
 									</header>
 									<div class="body">
 										<label for="blogpost_body_nl">Inhoud:</label>
-										<textarea type="text" id="blogpost_body_nl" placeholder="<%= blog_posts[i].blogpost_body_nl %>" name="blogpost_body_nl"/></textarea>
+										<textarea type="text" id="blogpost_body_nl" value="<%= blog_posts[i].blogpost_body_nl %>" placeholder="<%= blog_posts[i].blogpost_body_nl %>" name="blogpost_body_nl"/><%= blog_posts[i].blogpost_body_nl %></textarea>
 										<label for="blogpost_body">Inhoud (EN):</label>
-										<textarea type="text" id="blogpost_body" placeholder="<%= blog_posts[i].blogpost_body %>" name="blogpost_body"/></textarea>
+										<textarea type="text" id="blogpost_body" value="<%= blog_posts[i].blogpost_body %>" placeholder="<%= blog_posts[i].blogpost_body %>" name="blogpost_body"/><%= blog_posts[i].blogpost_body %></textarea>
 										<input type="checkbox" name="replaceFile" value="">
 										<label for="replaceFile"><% if (typeof lang == 'undefined' || lang == 'en') { %>Replace file <% } else if (lang == 'nl') { %>Bestand vervangen <% } %></label>
 										<div class="extra">
@@ -418,26 +416,9 @@
 		// console.log($(this))
 		$(this).siblings('.extra').toggle();
 	});
-
-	$('#eofbot').on('load', function(){
-		var wavy = $(this).contents().find("#wavy");
-		var eofbot = $('#eofbot');
-		$(this).contents().find("#wavy").on('click', function(event) {
-			available = eofbot.contents().find(".botname span", eofbot);
-			console.log(available)
-			function toggleText() {
-				if (available[0].innerHTML === "available") {
-					available[0].innerHTML = "Chatting";
-				} else {
-					available[0].innerHTML = "available";
-				}
-			}
-			$('#eofbot').toggleClass('active');
-			toggleText();
-		});
-	});
 });
 </script>
+<script type="text/javascript" src="/scripts/botframe.js"></script>
 <script src=".././lib/domJSON.js"></script>
 <script type="text/javascript" src="../scripts/admin_cm.js"></script>
 <script type="text/javascript" src="../scripts/custom_menu.js"></script>
