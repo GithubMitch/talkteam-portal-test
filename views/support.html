@@ -28,9 +28,12 @@
 	<link rel="stylesheet" href="/css/bootstrap.min.css">
 	<link rel="stylesheet" href="/style/style.css" />
 	<link rel="stylesheet" href="/css/jquery.mmenu.all.css"/>
+	<link href="//cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 	<script src="/js/jquery.min.js"></script>
 	<script src="/js/bootstrap.min.js"></script>
 	<script src="/js/jquery.mmenu.all.js"></script>
+	<script src="//cdn.quilljs.com/1.3.6/quill.min.js"></script>
+	<script type="text/javascript" src="/scripts/admin_cm_copy.js"></script>
 </head>
 
 <body>
@@ -83,7 +86,7 @@
 										<li><a href="/service_request">Service Request</a></li>
 									<% } %>
 								  <li><a href="/about">E-Office</a></li>
-									<li><a href="/terms">Algemene voorwaarde</a></li>
+									<li><a href="/terms">Algemene voorwaarden</a></li>
 								<% } %>
 								<% if (typeof lang == 'undefined' || lang == 'en') { %>
 									<li class="lang"><a href="?clang=nl"><img src="images/nl.png" title="Translate to: Dutch" alt="Dutch flag" height="34" width="34"></a></li>
@@ -116,6 +119,21 @@
 <section class="container main">
 	<div class="row intro">
 
+		<!-- <% if (typeof lang == 'undefined' || lang == 'en') { %>
+			<h2>Support</h2>
+			<p>Register your username and password here.</p>
+		<% } else if (lang == 'nl') { %>
+			<h2>Ondersteuning</h2>
+			<p>Registreer uw gebruikersnaam en wachtwoord hier.</p>
+		<% } %> -->
+
+		<% for(var i=0; i < _jsonConverter.cmsNodes.length; i++) { %>
+			<div class="col-12 <% if ( admin ) { %> cm <% } %> ">
+				<div class="cm_box">
+					<%- _jsonConverter.cmsNodes[i] %>
+				</div>
+			</div>
+		<% } %>
 		<div class="col-12">
 
 			<% if (typeof lang == 'undefined' || lang == 'en') { %>
@@ -177,9 +195,97 @@
 			</form>
 		</div>
 
+		<% if (username && admin ) { %>
+			<div class="adminPanel">
+				<form id="adminPost" action="/admin_cm/post" method="post">
+					<input id="jsonParser" type="text" name="_jsonParser" hidden="true" value="">
+					<input id="currentPageVar" type="text" name="currentPageVar" hidden="true" value='<%= title %>'>
+					<input id="admin_ApplyButton" name="button" value="<% if (typeof lang == 'undefined' || lang == 'en') { %>Apply<% } else if (lang == 'nl') { %>Toepassen<% } %>">
+					<input id="admin_SafeButton" name="button" value="<% if (typeof lang == 'undefined' || lang == 'en') { %>Save<% } else if (lang == 'nl') { %>Bewaren<% } %>" type="submit">
+				</form>
+				<a href="/toc"><% if (typeof lang == 'undefined' || lang == 'en') { %>Configuration<% } else if (lang == 'nl') { %>Configuratie<% } %></a>
+
+				<div id="setAdmin" hidden="true">toggle setAdmin</div>
+			</div>
+
+		<% } else if (username) { %>
+			<div class="adminPanel">
+				<a href="/toc"><% if (typeof lang == 'undefined' || lang == 'en') { %>Configuration<% } else if (lang == 'nl') { %>Configuratie<% } %></a>
+			</div>
+		<% } %>
+
+		<input id="jsonConverter" type="text" name="_jsonConverter" hidden="true" value='<%= _jsonConverter %>'>
+
+	</section>
+
+
+<!-- <section class="container main">
+	<div class="row intro">
+
+		<div class="col-12"> -->
+
+			<!-- <% if (typeof lang == 'undefined' || lang == 'en') { %>
+				<h2>Support</h2>
+				<p>Register your username and password here.</p>
+			<% } else if (lang == 'nl') { %>
+				<h2>Ondersteuning</h2>
+				<p>Registreer uw gebruikersnaam en wachtwoord hier.</p>
+			<% } %> -->
+
+			<!-- <form id="regForm" class="shortForm" action="/post/registerform" method="post">
+			    <div>
+			        <label>Name:</label>
+			        <input type="text" name="username"/><br/>
+							<span class="error">Fill in a username</span>
+			    </div>
+			    <div>
+			        <label>Password:</label>
+			        <input type="password" name="password"/>
+							<span class="error">Fill in a password</span>
+			    </div>
+			    <div>
+			        <label>E-mail:</label>
+			        <input type="text" name="email"/>
+							<span class="error">Fill in a organisation</span>
+			    </div>
+			    <div>
+			        <label>Organisation:</label>
+			        <input type="text" name="organisation"/>
+							<span class="error">Fill in a organisation</span>
+			    </div>
+					<div>
+						<label>Admin name :</label>
+						<input type="text" name="adminName"/>
+						<span class="error">Fill in a starting date</span>
+					</div>
+					<div>
+						<label>Admin e-mail :</label>
+						<input type="text" name="adminMail"/>
+						<span class="error">Fill in a starting date</span>
+					</div>
+			    <div>
+			        <label>License Key:</label>
+			        <input type="text" name="license"/>
+							<span class="error">Fill in a type of license</span>
+			    </div>
+			    <div class="checkbox">
+			        <label>Active:</label>
+			        <input type="checkbox" name="license"/>
+			    </div>
+			    <div class="checkbox">
+			        <label>Trial:</label>
+			        <input type="checkbox" name="trial"/>
+			    </div>
+
+					<div>
+						<input type="submit" value="<% if (typeof lang == 'undefined' || lang == 'en') { %>Send<% } else if (lang == 'nl') { %>Verzenden<% } %>" >
+			    </div>
+			</form> -->
+		<!-- </div>
+
 	</div>
 
-</section>
+</section> -->
 
 <% if (typeof lang == 'undefined' || lang == 'en') { %>
   <iframe id="eofbot" class="<%	if (username) { %>indent<% } %>" src="/chatbot_en/chatbot.html" width="300" height="500px"></iframe>
@@ -194,6 +300,7 @@
 	</footer>
 
 </div>
+	<script src="./lib/domJSON.js"></script>
 	<script type="text/javascript" src="/scripts/botframe.js"></script>
 	<script type="text/javascript" src="/scripts/custom_menu.js"></script>
 	<script type="text/javascript">

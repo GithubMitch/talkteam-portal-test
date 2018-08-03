@@ -1,5 +1,5 @@
 // Fill $chatbotName with CLients chatbot-name
-var chatbotName = "TalkTeamBot EN";
+var chatbotName = "TalkTeamBot";
 // Fill $userName with 'active' user-name
 var userName = "you";
 

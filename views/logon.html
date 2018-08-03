@@ -118,48 +118,33 @@
 
 <section class="container main">
 	<div class="row intro">
-		<div class="col-12"  style="text-align:center;">
-			<h2>Admin</h2>
-			<form id="loginForm" class="loginForm shortForm" method="post">
-				<div>
+		<div class="col-12" style="text-align:center;">
+			<h2>Logon</h2>
+			<br>
+			<% if (typeof lang == 'undefined' || lang == 'en') { %>
+					<span>Login here with your username and password</span>
+				<% } else if (lang == 'nl') { %>
+					<span>U kunt hier inloggen met uw gebruikersnaam en wachtwoord</span>
+			<% } %>
 
-						<label>
-							<% if (typeof lang == 'undefined' || lang == 'en') { %>
-									Username:
-								<% } else if (lang == 'nl') { %>
-									Gebruikersnaam:
-							<% } %>
-
-
-						</label>
-						<input type="text" name="username" value="">
-				</div>
-				<div>
-						<label>
-							<% if (typeof lang == 'undefined' || lang == 'en') { %>
-									Password:
-								<% } else if (lang == 'nl') { %>
-									Wachtwoord:
-							<% } %>
-						</label>
-						<input id="password-field" type="password" name="password">
-						<div class="toggle-password">
-							<i class="fas fa-eye field-icon"></i>
-						</div>
-						<!-- <span toggle="#password-field" class="fas fa-fw fa-eye field-icon toggle-password"></span> -->
-						<span class="errorMessage"><%= errorMessage %></span>
-				</div>
-				<input type="submit" name="button" value="login">
-			</form>
+			<span id="connectionsLoginStatus"></span> to this endpoint<br><br>
+			<div class="btn-group" id="connectionsLogin">
+				<button class="btn" id="connectionsLoginPopup" onclick="login('popup')">Login Popup</button>
+				<button class="btn" id="connectionsLoginDialog" onclick="login('dialog')">Login Dialog</button>
+				<button class="btn" id="connectionsLoginMW" onclick="login('mainWindow')">Login Main Window</button>
+			</div>
+			<div class="btn-group" id="connectionsLogout">
+				<button class="btn" onclick="logout()">Logout</button>
+			</div>
 		</div>
 
 	</div>
 </section>
 
 <% if (typeof lang == 'undefined' || lang == 'en') { %>
-	<iframe id="eofbot" src="/chatbot_en/chatbot.html" width="300" height="500px"></iframe>
+  <iframe id="eofbot" class="<%	if (username) { %>indent<% } %>" src="/chatbot_en/chatbot.html" width="300" height="500px"></iframe>
 <% } else if (lang == 'nl') { %>
-	<iframe id="eofbot" src="/chatbot_nl/chatbot.html" width="300" height="500px"></iframe>
+  <iframe id="eofbot" class="<%	if (username) { %>indent<% } %>" src="/chatbot_nl/chatbot.html" width="300" height="500px"></iframe>
 <% } %>
 
 	<footer class="fluid-container">
@@ -169,32 +154,53 @@
 	</footer>
 </div>
 <script type="text/javascript" src="/scripts/custom_menu.js"></script>
-<script type="text/javascript">
-$( document ).ready(function() {
-  // Handler for .ready() called.
-	$("#loginForm").submit(function(){
-		var isValid = true;
-		$( "#loginForm label + input" ).each(function() {
-			if($(this).val().trim().length == 0) {
-				isValid = false;
-			}
-		});
-		if (isValid == false) {
-			alert("Username or password is empty!");
-		}
-		return isValid;
-	});
-	$(".toggle-password").click(function() {
-		$(this).children('svg').toggleClass("fa-eye fa-eye-slash");
-		var input = $("#password-field");
-		if (input.attr("type") == "password") {
-			input.attr("type", "text");
-		} else {
-			input.attr("type", "password");
-		}
-	});
+<!-- <script type="text/javascript"src="../scripts/require.js"></script> -->
+<script src="scripts/require.js"></script>
+<script>
+require(["sbt/dom","sbt/config"], function(dom,config) {
+	var ep = config.findEndpoint("connections");
+	if(ep.isAuthenticated){
+		dom.setText("connectionsLoginStatus","You are authenticated");
+		dom.byId("connectionsLogin").style.display = "none";
+		dom.byId("connectionsLogout").style.display = "inline";
+	}else{
+		dom.setText("connectionsLoginStatus","You are not authenticated");
+		dom.byId("connectionsLogin").style.display = "inline";
+		dom.byId("connectionsLogout").style.display = "none";
+	}
 });
+
+function login(loginUi) {
+	require(["sbt/dom","sbt/config"], function(dom,config) {
+		config.Properties["loginUi"] = loginUi;
+		config.findEndpoint("connections").authenticate().then(
+			function(response){
+				dom.setText("connectionsLoginStatus","You are authenticated");
+				dom.byId("connectionsLogin").style.display = "none";
+				dom.byId("connectionsLogout").style.display = "inline";
+			},
+			function(){
+				dom.setText("content","You need to Login to Proceed");
+			}
+		);
+	});
+}
+
+function logout() {
+	require(['sbt/config',"sbt/dom"], function(config,dom) {
+		config.findEndpoint("connections").logout().then(
+			function(response){
+				dom.setText("connectionsLoginStatus","You are not authenticated");
+				dom.byId("connectionsLogin").style.display = "inline";
+				dom.byId("connectionsLogout").style.display = "none";
+			},
+			function(){
+				dom.setText("content","Failed to Logout");
+			}
+		);
+	});
+}
 </script>
-<script type="text/javascript" src="/scripts/botframe.js"></script>
+
 </body>
 </html>

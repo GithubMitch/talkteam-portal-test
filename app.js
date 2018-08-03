@@ -19,6 +19,7 @@ var express = require('express'),
     multipart = require('connect-multiparty'),
     multipartMiddleware = multipart(),
     SuperLogin = require('superlogin'),
+    uuid = require("node-uuid"),
     multer = require('multer');
 var app = express(),
     db,
@@ -83,6 +84,15 @@ var getAcces = require('./getAcces.js');
 var initDBConnection = getAcces.initDBConnection;
 var dbCredentials = getAcces.dbCredentials;
 getAcces.initDBConnection();
+
+var sbt = require("./sbt");
+
+app.use('/sbt', sbt);
+// app.get('/logon', function (req, res) {
+//   res.send("This is the '/logon' route in main_app");
+// });
+
+
 // all environments
 app.set('port', process.env.PORT || 3000);
 app.set('views', __dirname + '/views');
@@ -96,6 +106,13 @@ app.use(bodyParser.json());
 app.use(methodOverride());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'chatbot')));
+
+app.use(express.static(path.join(__dirname, 'SocialSDK-master')));
+app.use(express.static(path.join(__dirname, '/SocialSDK-master/sdk/com.ibm.sbt.web/src/main/webapp/js/sdk/')));
+app.use('/scripts', express.static(__dirname + '/SocialSDK-master/sdk/com.ibm.sbt.web/src/main/webapp/js/sdk/sbt')); // redirect domJSON JS
+app.use('/sbt', express.static(__dirname + '/SocialSDK-master/sdk/com.ibm.sbt.web/src/main/webapp/js/sdk/sbt')); // redirect domJSON JS
+app.use('/jquery', express.static(__dirname + 'SocialSDK-master/sdk/com.ibm.sbt.web/src/main/webapp/js/sdk/_bridges/jquery')); // redirect domJSON JS
+
 app.use('/style', express.static(path.join(__dirname, '/views/style')));
 app.use(express.static(path.join(__dirname, '/node_modules')));
 app.use('/lib', express.static(__dirname + '/node_modules/domjson/dist')); // redirect domJSON JS
@@ -129,6 +146,7 @@ app.get('/faq', routes.faq);
 app.get('/service_request', routes.service_request);
 app.get('/logout', routes.logout);
 app.get('/blog', routes.blog);
+app.get('/logon', routes.logon);
 
 //MAILTEMPLATING
 mailer.extend(app, {
