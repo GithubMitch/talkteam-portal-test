@@ -18,6 +18,8 @@ var express = require('express'),
     errorHandler = require('errorhandler'),
     multipart = require('connect-multiparty'),
     multipartMiddleware = multipart(),
+    passport = require('passport'),
+    IBMConnectionsCloudStrategy = require('passport-ibm-connections-cloud').Strategy,
     SuperLogin = require('superlogin'),
     uuid = require("node-uuid"),
     multer = require('multer');
@@ -84,13 +86,27 @@ var getAcces = require('./getAcces.js');
 var initDBConnection = getAcces.initDBConnection;
 var dbCredentials = getAcces.dbCredentials;
 getAcces.initDBConnection();
-
-var sbt = require("./sbt");
-
-app.use('/sbt', sbt);
+//
+// var sbt = require("./sbt");
+//
+// app.use('/sbt', sbt);
 // app.get('/logon', function (req, res) {
 //   res.send("This is the '/logon' route in main_app");
 // });
+
+// setup passport to use this strategy
+// passport.use(new IBMConnectionsCloudStrategy({
+//   hostname: 'apps.na.collabserv.com',
+//   clientID: 'talkteam-portal-key',
+//   clientSecret: 'talkteam-portal-secret',
+//   callbackURL: 'https://localhost:3000/auth/ibm-connections-cloud/callback' //https is important here. Connections Cloud doesn't accept http callback urls
+//   },
+//   function(accessToken, refreshToken, params, profile, done) {
+//     // do your magic to load or create a local user here
+//     done();
+//   }
+// ));
+
 
 
 // all environments
@@ -107,11 +123,11 @@ app.use(methodOverride());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'chatbot')));
 
-app.use(express.static(path.join(__dirname, 'SocialSDK-master')));
-app.use(express.static(path.join(__dirname, '/SocialSDK-master/sdk/com.ibm.sbt.web/src/main/webapp/js/sdk/')));
-app.use('/scripts', express.static(__dirname + '/SocialSDK-master/sdk/com.ibm.sbt.web/src/main/webapp/js/sdk/sbt')); // redirect domJSON JS
-app.use('/sbt', express.static(__dirname + '/SocialSDK-master/sdk/com.ibm.sbt.web/src/main/webapp/js/sdk/sbt')); // redirect domJSON JS
-app.use('/jquery', express.static(__dirname + 'SocialSDK-master/sdk/com.ibm.sbt.web/src/main/webapp/js/sdk/_bridges/jquery')); // redirect domJSON JS
+// app.use(express.static(path.join(__dirname, 'SocialSDK-master')));
+// app.use(express.static(path.join(__dirname, '/SocialSDK-master/sdk/com.ibm.sbt.web/src/main/webapp/js/sdk/')));
+// app.use('/scripts', express.static(__dirname + '/SocialSDK-master/sdk/com.ibm.sbt.web/src/main/webapp/js/sdk/sbt')); // redirect domJSON JS
+// app.use('/sbt', express.static(__dirname + '/SocialSDK-master/sdk/com.ibm.sbt.web/src/main/webapp/js/sdk/sbt')); // redirect domJSON JS
+// app.use('/jquery', express.static(__dirname + 'SocialSDK-master/sdk/com.ibm.sbt.web/src/main/webapp/js/sdk/_bridges/jquery')); // redirect domJSON JS
 
 app.use('/style', express.static(path.join(__dirname, '/views/style')));
 app.use(express.static(path.join(__dirname, '/node_modules')));
@@ -131,6 +147,22 @@ app.use(session({
     resave: true,
     saveUninitialized: true
 }));
+
+
+// var router = express.Router();
+// router.get('/', passport.authenticate('ibm-connections-cloud', {
+//    session: false
+//  }))
+// router.get('/callback', passport.authenticate('ibm-connections-cloud', {
+//    failureRedirect: '/login',
+//    session: false
+//  }), function(req, res, next){
+//    // e.g. create a jwt for your application and return to client
+//    console.log('yes')
+// });
+//
+// app.use('/auth/ibm-connections-cloud', router);
+
 ///ROUTES
 app.get('/', routes.index);
 app.get('/home', routes.index);

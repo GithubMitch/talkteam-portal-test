@@ -14,25 +14,6 @@ getAcces.initDBConnection();
  var defaultLang = 'en';
 
 
- // app.get('/', function (req, res) {
- //   res.send("This is the '/' route in app_sbt");
- // });
- exports.sbtindex = function(req, res){
-   res.render('../SocialSDK-master/sdk/com.ibm.sbt.web/src/main/webapp/index.html', {
-     title: 'sbt',
-     // username: req.session.user,
-     // admin: req.session.admin,
-     // lang: req.session.lang
-   });
-   // req.session.destroy();
-   // res.send("logout success!");
- };
- exports.sbtindex = function(req, res){
-   res.render('../SocialSDK-master/sdk/com.ibm.sbt.web/src/main/webapp/index.html', {
-     title: 'sbt-login',
-   });
- };
-
 exports.index = function(req, res){
   //console.log("before rendering : ", req.session.lang);
   if (req.url.includes("?clang=nl")) {
