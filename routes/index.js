@@ -315,6 +315,9 @@ exports.thankyou = function(req, res){
   });
 };
 exports.login = function(req, res){
+  if (!req.session.user) {
+    console.log("req.session.user =", req.session.user)
+  }
   if (req.session.user){
     res.redirect('/');
   } else {

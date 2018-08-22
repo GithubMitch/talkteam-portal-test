@@ -8,8 +8,6 @@ var express = require('express'),
     jade = require('jade'),
     session = require('express-session'),
     MemoryStore = require('memorystore')(session),
-    authorization = require('express-authorization'),
-    createElement = require('create-element'),
     babelPolyfill = require("babel-polyfill"),
     mailer = require('express-mailer'),
     bodyParser = require('body-parser'),
@@ -18,16 +16,17 @@ var express = require('express'),
     errorHandler = require('errorhandler'),
     multipart = require('connect-multiparty'),
     multipartMiddleware = multipart(),
-    passport = require('passport'),
-    IBMConnectionsCloudStrategy = require('passport-ibm-connections-cloud').Strategy,
-    SuperLogin = require('superlogin'),
     uuid = require("node-uuid"),
+    passport = require('passport'),
+    { Strategy } = require('passport-ibm-connections-oauth'),
+    // IBMConnectionsCloudStrategy = require('passport-ibm-connections-cloud').Strategy,
     multer = require('multer');
 var app = express(),
     db,
     cloudant,
     fileToUpload,
     currentURL;
+
 var storage = multer.diskStorage({
     destination: function(req, file, cb){
       cb(null, 'uploads');
@@ -86,26 +85,8 @@ var getAcces = require('./getAcces.js');
 var initDBConnection = getAcces.initDBConnection;
 var dbCredentials = getAcces.dbCredentials;
 getAcces.initDBConnection();
-//
-// var sbt = require("./sbt");
-//
-// app.use('/sbt', sbt);
-// app.get('/logon', function (req, res) {
-//   res.send("This is the '/logon' route in main_app");
-// });
 
-// setup passport to use this strategy
-// passport.use(new IBMConnectionsCloudStrategy({
-//   hostname: 'apps.na.collabserv.com',
-//   clientID: 'talkteam-portal-key',
-//   clientSecret: 'talkteam-portal-secret',
-//   callbackURL: 'https://localhost:3000/auth/ibm-connections-cloud/callback' //https is important here. Connections Cloud doesn't accept http callback urls
-//   },
-//   function(accessToken, refreshToken, params, profile, done) {
-//     // do your magic to load or create a local user here
-//     done();
-//   }
-// ));
+require('https').globalAgent.options.rejectUnauthorized = false;
 
 
 
@@ -123,11 +104,6 @@ app.use(methodOverride());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'chatbot')));
 
-// app.use(express.static(path.join(__dirname, 'SocialSDK-master')));
-// app.use(express.static(path.join(__dirname, '/SocialSDK-master/sdk/com.ibm.sbt.web/src/main/webapp/js/sdk/')));
-// app.use('/scripts', express.static(__dirname + '/SocialSDK-master/sdk/com.ibm.sbt.web/src/main/webapp/js/sdk/sbt')); // redirect domJSON JS
-// app.use('/sbt', express.static(__dirname + '/SocialSDK-master/sdk/com.ibm.sbt.web/src/main/webapp/js/sdk/sbt')); // redirect domJSON JS
-// app.use('/jquery', express.static(__dirname + 'SocialSDK-master/sdk/com.ibm.sbt.web/src/main/webapp/js/sdk/_bridges/jquery')); // redirect domJSON JS
 
 app.use('/style', express.static(path.join(__dirname, '/views/style')));
 app.use(express.static(path.join(__dirname, '/node_modules')));
@@ -148,20 +124,131 @@ app.use(session({
     saveUninitialized: true
 }));
 
+// AUTHORIZATION
+app.use(passport.initialize());
+app.use(passport.session());
 
-// var router = express.Router();
-// router.get('/', passport.authenticate('ibm-connections-cloud', {
-//    session: false
-//  }))
-// router.get('/callback', passport.authenticate('ibm-connections-cloud', {
-//    failureRedirect: '/login',
-//    session: false
-//  }), function(req, res, next){
-//    // e.g. create a jwt for your application and return to client
-//    console.log('yes')
-// });
-//
-// app.use('/auth/ibm-connections-cloud', router);
+passport.serializeUser(function(user, done) {
+  done(null, user);
+});
+
+passport.deserializeUser(function(user, done) {
+  done(null, user);
+});
+
+var strategyParams = {
+  hostname: 'apps.ce.collabserv.com',
+  clientID: 'app_200077316_1534244218975',
+  clientSecret: 'd1c08beeea8a4b30575fd36b69e711861c5ec8de85f782b5a31440cbac41800480c8aeb37e921a3834e9bbfb3394dd3d673232de186b0099aae2b688f675eed11c8cf44a3130c50f41c8f5afeb054b504f3f64b861792111131398233c37de246c8ea3dcb795808aed78223b88a75e1e5da73be40cef6989f35681c5948f90c0',
+  // callbackURL: 'https://www.talkteam.org/auth/ibm-connections-oauth/callback',
+  callbackURL: 'http://localhost:3000/auth/ibm-connections-oauth/callback',
+  passReqToCallback: true,
+  // optionally define your own `authorizationURL` and `tokenURL` (e.g. when using with IBM Connections >= 5.5)
+  // authorizationURL: '/oauth2/endpoint/connectionsProvider/authorize',
+  // tokenURL: '/oauth2/endpoint/connectionsProvider/token',
+};
+passport.use(new Strategy(strategyParams, (req, accessToken, refreshToken, params, profile, done) => {
+  // do your magic to load or create a local user here
+  if (accessToken, refreshToken, params, profile) {
+    req.session.ibmid = {};
+    req.session.ibmid.profile = profile;
+    return done(null, profile);
+    // done();
+  } else {
+    done();
+  }
+}));
+
+var router = express.Router();
+router.get(
+  '/',
+  passport.authenticate('ibm-connections-oauth', {
+    session: true,
+  })
+)
+router.get(
+  '/callback',
+  passport.authenticate('ibm-connections-oauth', {
+    // successRedirect: '/toc',
+    failureRedirect: '/login',
+    session: true,
+    failureFlash: true,
+    // session: true,
+  }),
+  (req, res, next) => {
+    // e.g. create a jwt for your application and return to client
+    var ibmProfile = req.session.ibmid.profile;
+
+    var user = req.session.ibmid.profile.userid;
+    var IBMuserName = req.session.ibmid.profile.displayName;
+    var talkteam_clients = cloudant.db.use('talkteam_clients');
+
+    try
+    {
+      talkteam_clients.get(user, function(err, data) {
+        if (!user || !data) {
+          res.redirect('/login');
+        } else if(user === data._id || password === data.password) {
+          try {
+            console.log("IBMuserName = ", IBMuserName)
+            if (data.eofAdmin) {
+              req.session.admin = true;
+            } else {
+              req.session.admin = false;
+            }
+            req.session.user = IBMuserName;
+            req.session.organisationName = (data.organisationName || data.orgName);
+            req.session.organisationEmail = JSON.stringify(data.organisationEmail || data.adminEmail) ;
+            req.session._id = JSON.stringify(data._id);
+            req.session.licensekey = JSON.stringify(data.licensekey);
+            req.session.endDate = JSON.stringify(data.endDate);
+            req.session.startDate = JSON.stringify(data.startDate);
+            req.session.active = JSON.stringify(data.active);
+
+            talkteam_clients.fetch({include_docs:true}, function (err, data) {
+              var printUserlist = [];
+              var userRows = [];
+              data.rows.forEach(function(rows) {
+                userRows.push(rows.doc);
+              });
+              data.rows.forEach(function(user) {
+                Object.entries(user).forEach(([key]) => {
+                  var userKey = key;
+                  printUserlist.push(userKey);
+                });
+              });
+
+              req.session.userRows = userRows;
+              req.session.userlist = printUserlist;
+              if (req.session.errorMessage) {
+                delete req.session.errorMessage;
+              }
+
+              delete req.session.userlist;
+              console.log("deleted userlist from req.session")
+              next(res.redirect('/toc'));
+
+            });
+
+          } catch (error) {
+              console.error('An error occurred: ', error);
+          }
+
+        } else {
+          req.session.errorMessage = "Found no user with this password/username combination. Make sure you login with the correct password and username ór email"
+        }
+      });
+    }
+    catch (error) {
+        console.error('An error occurred: ', error);
+        next(res.redirect('/toc'));
+    }
+
+  }
+);
+
+app.use('/auth/ibm-connections-oauth', router);
+
 
 ///ROUTES
 app.get('/', routes.index);
@@ -212,10 +299,8 @@ app.post('/post/registerform', function(req, res) {
       if (err) {
           console.log('Could not create new db: ' + 'talkteam_clients' + ', it might already exist.');
       }
-
       // Specify the database we are going to use (alice)...
       var talkteam_clients = cloudant.db.use('talkteam_clients');
-
       // ...and insert a document in it.
       talkteam_clients.insert({
         user: regUser,
@@ -224,19 +309,15 @@ app.post('/post/registerform', function(req, res) {
         if (err) {
           return console.log('[talkteam_clients.insert] ', err.message);
         }
-
       });
-
     });
     res.redirect('/thankyou');
 });
 
 // CONTENT EDIT - ADMIN
 app.post('/admin_cm/post', function(req, res) {
-
   var json = req.body._jsonParser;
   var currentPage = req.body.currentPageVar;
-
   req.session._jsonConverter = json;
   if (req.session.lang == 'nl') {
     req.session.lang = 'nl'
@@ -267,7 +348,6 @@ app.post('/admin_cm/post', function(req, res) {
     delete req.session._jsonConverter;
     res.redirect('/'+currentPage);
   });
-
 });
 
 // Login endpoint
@@ -299,8 +379,6 @@ app.post('/login', function (req, res) {
       req.session.endDate = JSON.stringify(data.endDate);
       req.session.startDate = JSON.stringify(data.startDate);
       req.session.active = JSON.stringify(data.active);
-      // console.log('Username:' + data._id + '\n' + 'Password:'+ data.password);
-      // console.log('is now logged in');
 
       talkteam_clients.fetch({include_docs:true}, function (err, data) {
         var printUserlist = [];
@@ -327,7 +405,6 @@ app.post('/login', function (req, res) {
     } else {
       req.session.errorMessage = "Found no user with this password/username combination. Make sure you login with the correct password and username ór email"
       res.redirect('/login');
-      // res.redirect('/toc');
     }
   });
 });
@@ -363,8 +440,6 @@ app.post('/admin', function (req, res) {
       req.session.endDate = JSON.stringify(data.endDate);
       req.session.startDate = JSON.stringify(data.startDate);
       req.session.active = JSON.stringify(data.active);
-      // console.log('Username:' + data._id + '\n' + 'Password:'+ data.password);
-      // console.log('is now logged in');
 
       talkteam_clients.fetch({include_docs:true}, function (err, data) {
         var printUserlist = [];
@@ -477,10 +552,7 @@ app.post('/edit/question', function(req, res) {
 
   faq.get(original_id, function(err, data) {
     if (!err) {
-      console.log("GET found 1 entry ! :"+ original_id);
-      console.log("Data :"+ data._rev);
       var rev = data._rev;
-
       // ...and insert a document in it.
       faq.insert({
         _id: original_id,
@@ -502,7 +574,6 @@ app.post('/edit/question', function(req, res) {
       });
     } else {
       console.log(err.message)
-      console.log("Nothing found, post not inserted")
     }
     res.redirect('/faq');
   });
@@ -519,9 +590,6 @@ app.post('/delete/question', function(req, res) {
       console.log("Failed finding question: " + question_title + "with the following answer " + question_answer )
       res.redirect('/faq');
     } else if (original_id && data._rev) {
-      // question_title === data.question_title && question_answer === data.question_answer || question_section === data.question_section && question_title === data.question_title
-      console.log("Found unique_field for ", data.question_title || data.question_answer);
-      console.log(data._rev);
       faq.destroy(original_id, data._rev,  function(err) {
         if (!err) {
           console.log("Successfully deleted doc with title: "+ data.question_title + "with following answer : ", data.question_answer);
@@ -602,7 +670,6 @@ app.post('/post/blog_edit', upload.single('blogpost_file_edit'), function(req, r
       console.log("GET found 1 entry ! :"+ blogpost_old_title);
       console.log("Data :"+ data);
       var rev = data._rev;
-
       // ...and insert a document in it.
       blog.insert({
         _id: blogpost_id,
@@ -627,7 +694,6 @@ app.post('/post/blog_edit', upload.single('blogpost_file_edit'), function(req, r
       console.log("Nothing found, post not inserted")
     }
     console.log("POST used : "+ blog + "\n In language : "+ req.session.lang);
-    // delete req.session._jsonConverter;
     res.redirect('/blog');
   });
 
@@ -640,13 +706,7 @@ app.post('/delete/blog_post', function(req, res) {
   var blogpost_unique_date = req.body.blogpost_unique_date;
   var blogpost_id = req.body.blogpost_id;
 
-
   blog.get(blogpost_id, function(err, data) {
-    // if (!blogpost_title || !blogpost_date) {
-    //   console.log("Failed finding: " + blogpost_title + "with the following date " + blogpost_unique_date )
-    //   res.redirect('/blog');
-    // } else
-    // console.log(data._rev);
     if(data._id == blogpost_id) {
       blog.destroy(blogpost_id, data._rev,  function(err) {
         if (!err) {
@@ -659,7 +719,7 @@ app.post('/delete/blog_post', function(req, res) {
         }
       })
     } else {
-      console.log("Nothing")
+      res.redirect('/blog');
     }
   });
 });

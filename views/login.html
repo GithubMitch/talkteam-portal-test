@@ -123,11 +123,13 @@
 			<br>
 			<% if (typeof lang == 'undefined' || lang == 'en') { %>
 					<span>Login here with your username and password</span>
+					<a href="auth/ibm-connections-oauth/">Login trough two factor authentication via IBM Connections platform</a>
 				<% } else if (lang == 'nl') { %>
 					<span>U kunt hier inloggen met uw gebruikersnaam en wachtwoord</span>
+					<a href="auth/ibm-connections-oauth/">Login door middel van twee factor authenticatie van IBM Connections platform</a>
 			<% } %>
 
-			<form id="loginForm" class="loginForm shortForm" method="post">
+			<!-- <form id="loginForm" class="loginForm shortForm" method="post">
 				<div>
 
 						<label>
@@ -153,11 +155,11 @@
 						<div class="toggle-password">
 							<i class="fas fa-eye field-icon"></i>
 						</div>
-						<!-- <span toggle="#password-field" class="fas fa-fw fa-eye field-icon toggle-password"></span> -->
+						<!-- <span toggle="#password-field" class="fas fa-fw fa-eye field-icon toggle-password"></span>
 						<span class="errorMessage"><%= errorMessage %></span>
 				</div>
 				<input type="submit" name="button" value="login">
-			</form>
+			</form> -->
 		</div>
 
 	</div>
