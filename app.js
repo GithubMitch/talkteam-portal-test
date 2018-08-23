@@ -141,7 +141,8 @@ var strategyParams = {
   clientID: 'app_200077316_1534244218975',
   clientSecret: 'd1c08beeea8a4b30575fd36b69e711861c5ec8de85f782b5a31440cbac41800480c8aeb37e921a3834e9bbfb3394dd3d673232de186b0099aae2b688f675eed11c8cf44a3130c50f41c8f5afeb054b504f3f64b861792111131398233c37de246c8ea3dcb795808aed78223b88a75e1e5da73be40cef6989f35681c5948f90c0',
   // callbackURL: 'https://www.talkteam.org/auth/ibm-connections-oauth/callback',
-  callbackURL: 'http://localhost:3000/auth/ibm-connections-oauth/callback',
+  // use top one in production
+  callbackURL: 'http://www.talkteam.org/auth/ibm-connections-oauth/callback',
   passReqToCallback: true,
   // optionally define your own `authorizationURL` and `tokenURL` (e.g. when using with IBM Connections >= 5.5)
   // authorizationURL: '/oauth2/endpoint/connectionsProvider/authorize',

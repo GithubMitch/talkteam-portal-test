@@ -6,13 +6,14 @@ $(document).ready(function() {
     botheader = eofbot.contents().find("header", eofbot);
     available = eofbot.contents().find(".botname span", eofbot);
     toggleElements = $(this).contents().find("#input, #minMax, #wavy")
-    // $(document).delegate( $(toggleElements), "click", function() {
-    //   toggleText();
-    //   activeHeader();
-    // })
-    $(toggleElements).on("click", function() {
-      toggleText();
-      activeHeader();
+    input =  $(this).contents().find("#input");
+    $(toggleElements).bind("touchstart click", function(e) {
+        var $this = $(e.target);
+        if ($this[0] === input[0] && $('#eofbot').hasClass('active')) {
+        } else {
+          toggleText();
+          activeHeader();
+        }
     })
   });
 

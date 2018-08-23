@@ -4,6 +4,6 @@ $(document).ready(function() {
   }
   $(".cookieWall button").on('click', function (){
     document.cookie = "accepted=yes";
-    $(this).parent().remove();
+    $(".cookieWall").remove();
   })
 });
