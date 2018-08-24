@@ -127,11 +127,9 @@ app.use(session({
 // AUTHORIZATION
 app.use(passport.initialize());
 app.use(passport.session());
-
 passport.serializeUser(function(user, done) {
   done(null, user);
 });
-
 passport.deserializeUser(function(user, done) {
   done(null, user);
 });
@@ -154,7 +152,6 @@ passport.use(new Strategy(strategyParams, (req, accessToken, refreshToken, param
     req.session.ibmid = {};
     req.session.ibmid.profile = profile;
     return done(null, profile);
-    // done();
   } else {
     done();
   }
@@ -191,7 +188,7 @@ router.get(
           res.redirect('/login');
         } else if(user === data._id || password === data.password) {
           try {
-            console.log("IBMuserName = ", IBMuserName)
+            // console.log("IBMuserName = ", IBMuserName)
             if (data.eofAdmin) {
               req.session.admin = true;
             } else {
@@ -224,17 +221,13 @@ router.get(
               if (req.session.errorMessage) {
                 delete req.session.errorMessage;
               }
-
               delete req.session.userlist;
               console.log("deleted userlist from req.session")
               next(res.redirect('/toc'));
-
             });
-
           } catch (error) {
               console.error('An error occurred: ', error);
           }
-
         } else {
           req.session.errorMessage = "Found no user with this password/username combination. Make sure you login with the correct password and username ór email"
         }
@@ -244,13 +237,10 @@ router.get(
         console.error('An error occurred: ', error);
         next(res.redirect('/toc'));
     }
-
   }
 );
 
 app.use('/auth/ibm-connections-oauth', router);
-
-
 ///ROUTES
 app.get('/', routes.index);
 app.get('/home', routes.index);
@@ -266,7 +256,7 @@ app.get('/faq', routes.faq);
 app.get('/service_request', routes.service_request);
 app.get('/logout', routes.logout);
 app.get('/blog', routes.blog);
-app.get('/logon', routes.logon);
+// app.get('/logon', routes.logon);
 
 //MAILTEMPLATING
 mailer.extend(app, {
@@ -289,12 +279,10 @@ var username = dbCredentials.username;
 var password = dbCredentials.password;
 var cloudant = Cloudant({account:username, password:password});
 
-
 // REGISTER PAGE
 app.post('/post/registerform', function(req, res) {
     var regUser = req.body.username;
     var regPassword = req.body.password;
-
     // Create a new "talkteam_clients" database.
     cloudant.db.create('talkteam_clients', function(err, res) {
       if (err) {
@@ -361,7 +349,6 @@ app.post('/login', function (req, res) {
     if (!err) {
       console.log("Found this profile:")
       console.log("_id: ",body._id)
-
     } else {
       console.log(err);
     }
