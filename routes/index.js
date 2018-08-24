@@ -330,16 +330,6 @@ exports.login = function(req, res){
     });
   }
 };
-exports.logon = function(req, res){
-  res.render('logon.html', {
-    title: 'SBT-Login',
-    username: '',
-    admin: '',
-    errorMessage: '',
-    lang: '',
-  });
-}
-
 exports.admin = function(req, res){
   if (req.session.user){
     res.redirect('/');
