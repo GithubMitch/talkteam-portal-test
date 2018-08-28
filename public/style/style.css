@@ -8,6 +8,20 @@
 	     to {background-color: #633689;}
 	 }
 
+.login-button {
+	display:block;
+	max-width:250px;
+	margin:1em auto 0;
+	text-align:center;
+	padding:1em;
+	background:rgba(99,54, 137, 1);
+	color:#fff;
+}
+	.login-button:hover {
+		background:#8d6daa;
+		color:#fff;
+		text-decoration:none;
+	}
 
 .cookieWall {
 	position: fixed;

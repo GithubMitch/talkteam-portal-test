@@ -325,8 +325,8 @@
 					<form class="questionForm" action="/new/question" method="post">
 						<% if (typeof lang == 'undefined' || lang == 'en') { %>
 							<h4>Post a new question</h4>
-							<label for="question_section"><% if (typeof lang == 'undefined' || lang == 'en') { %>Subject:<% } else if (lang == 'nl') { %>Onderwerp:<% } %></label>
-							<select id="question_section" name="question_section" value="">
+							<label hidden="true" for="question_section"><% if (typeof lang == 'undefined' || lang == 'en') { %>Subject:<% } else if (lang == 'nl') { %>Onderwerp:<% } %></label>
+							<select hidden="true" id="question_section" name="question_section" value="">
 								<option value="general">General</option>
 								<option value="personal">Personal</option>
 								<option value="banking">Banking</option>
