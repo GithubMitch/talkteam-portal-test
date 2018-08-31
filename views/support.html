@@ -138,13 +138,15 @@
 
 			<% if (typeof lang == 'undefined' || lang == 'en') { %>
 				<h2>Support</h2>
-				<p>Register your username and password here.</p>
+				<p>For support you need to login , go <a href="/login">here</a> and login trough your IBM connections profile.</p>
+				<p>When you are logged in the menu item : service request will appear.</p>
 			<% } else if (lang == 'nl') { %>
 				<h2>Ondersteuning</h2>
-				<p>Registreer uw gebruikersnaam en wachtwoord hier.</p>
+				<p>Voor ondersteuning moet u <a href="/login">hier</a> inloggen met uw IBM connections profiel.</p>
+				<p>Wanneer u ben ingelogd zal het menu item : service request verschijnen.</p>
 			<% } %>
 
-			<form id="regForm" class="shortForm" action="/post/registerform" method="post">
+			<!-- <form id="regForm" class="shortForm" action="/post/registerform" method="post">
 			    <div>
 			        <label>Name:</label>
 			        <input type="text" name="username"/><br/>
@@ -192,7 +194,7 @@
 					<div>
 						<input type="submit" value="<% if (typeof lang == 'undefined' || lang == 'en') { %>Send<% } else if (lang == 'nl') { %>Verzenden<% } %>" >
 			    </div>
-			</form>
+			</form> -->
 		</div>
 
 		<% if (username && admin ) { %>

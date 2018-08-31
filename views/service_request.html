@@ -128,6 +128,7 @@
 
 				<% if (_id) { %>
 					<form id="faqform" action="/faqform/post" method="post">
+						<input type="text" hidden="true" name="adminName" value="<% if (typeof adminName == 'undefined') { %><% } else if (adminName !== 'undefined') { %><%= adminName %><% } %>">
 						<label for="form_subject">Subject:</label>
 						<input id="form_subject" name="form_subject">
 							<!-- <% if (typeof lang == 'undefined' || lang == 'en') { %>
@@ -141,7 +142,7 @@
 								<option value="banking">Bankieren</option>
 								<option value="technical">Technisch</option>
 							<% } %> -->
-						</select>
+						<!-- </select> -->
 						<label for="form_organisation">
 							<% if (typeof lang == 'undefined' || lang == 'en') { %>
 								Organisation:

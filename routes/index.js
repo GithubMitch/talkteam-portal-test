@@ -145,6 +145,59 @@ exports.downloads = function(req, res){
     var admin_db = cloudant.db.use('admin_db');
   };
 
+  var download_files = cloudant.db.use('download_files');
+
+  //Timestamp
+  var today = new Date();
+  var dd = today.getDate();
+  var mm = today.getMonth()+1; //January is 0!
+  var yyyy = today.getFullYear();
+  if(dd<10) {
+      dd = '0'+dd
+  }
+  if(mm<10) {
+      mm = '0'+mm
+  }
+  uniqueTimeStamp = Date.now();
+  timeStamp = yyyy + mm + dd;
+  timeStampFormat = dd + '-' + mm + '-' + yyyy;
+
+  download_files.fetch({include_docs:true}, function (err, data) {
+    var download_files = [];
+    data.rows.forEach(function(rows) {
+      download_files.push(rows.doc);
+    });
+    function descPostDates() {
+      download_files.sort(function(a, b){return b.file_date-a.file_date});
+
+    }
+    descPostDates();
+
+    req.session.download_files = download_files;
+    // //console.log("ALL POSTS : \n", blog_posts);
+    // //console.log(printblogRows);
+    // delete req.session.userlist;
+  //   res.render('downloads.html', {
+  //     title: 'downloads',
+  //     username: req.session.user,
+  //     organisationName:req.session.organisationName,
+  //     organisationEmail: req.session.organisationEmail,
+  //     _id: req.session._id,
+  //     licensekey: req.session.licensekey,
+  //     endDate: req.session.endDate,
+  //     startDate: req.session.endDate,
+  //     active: req.session.active,
+  //     userlist: req.session.userlist,
+  //     lang: req.session.lang,
+  //     _jsonConverter: req.session._jsonConverter,
+  //     admin: req.session.admin,
+  //     download_files: download_files,
+  //     timeStamp: timeStamp,
+  //     timeStampFormat: timeStampFormat,
+  //     uniqueTimeStamp: uniqueTimeStamp,
+  //   });
+  // });
+
   if (req.session._jsonConverter){
     if (req.session.user){
       res.render('downloads.html', {
@@ -152,7 +205,11 @@ exports.downloads = function(req, res){
         username: req.session.user,
         admin: req.session.admin,
         _jsonConverter: req.session._jsonConverter,
-        lang: req.session.lang
+        lang: req.session.lang,
+        timeStamp: timeStamp,
+        download_files: download_files,
+        timeStampFormat: timeStampFormat,
+        uniqueTimeStamp: uniqueTimeStamp,
       });
     } else {
       res.redirect('/login');
@@ -168,21 +225,26 @@ exports.downloads = function(req, res){
             username: req.session.user,
             admin: req.session.admin,
             _jsonConverter: db_freshContent,
-
+            download_files: download_files,
+            timeStamp: timeStamp,
+            timeStampFormat: timeStampFormat,
+            uniqueTimeStamp: uniqueTimeStamp,
             lang: req.session.lang
           });
         } else {
           res.redirect('/login');
         }
       } else {
-        //console.log("ERROR finding : 'Downloads'" + err.message);
         if (req.session.user){
           res.render('downloads.html', {
             title: 'downloads',
             username: req.session.user,
             admin: req.session.admin,
             _jsonConverter: db_freshContent,
-
+            download_files: download_files,
+            timeStamp: timeStamp,
+            timeStampFormat: timeStampFormat,
+            uniqueTimeStamp: uniqueTimeStamp,
             lang: req.session.lang
           });
         } else {
@@ -193,6 +255,7 @@ exports.downloads = function(req, res){
       return;
     });
   }
+})
 };
 exports.about = function(req, res){
   if (req.url.includes("?clang=nl")) {
@@ -429,6 +492,7 @@ exports.service_request = function(req, res){
     res.render('service_request.html', {
       title: 'Service request',
       admin: req.session.admin,
+      adminName: req.session.adminName,
       username: req.session.user,
       organisationName:req.session.organisationName,
       organisationEmail: req.session.organisationEmail,

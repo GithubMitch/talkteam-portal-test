@@ -138,9 +138,9 @@ var strategyParams = {
   hostname: 'apps.ce.collabserv.com',
   clientID: 'app_200077316_1534244218975',
   clientSecret: 'd1c08beeea8a4b30575fd36b69e711861c5ec8de85f782b5a31440cbac41800480c8aeb37e921a3834e9bbfb3394dd3d673232de186b0099aae2b688f675eed11c8cf44a3130c50f41c8f5afeb054b504f3f64b861792111131398233c37de246c8ea3dcb795808aed78223b88a75e1e5da73be40cef6989f35681c5948f90c0',
-  // callbackURL: 'https://www.talkteam.org/auth/ibm-connections-oauth/callback',
+  callbackURL: 'http://localhost:3000/auth/ibm-connections-oauth/callback',
   // use top one in production
-  callbackURL: 'http://www.talkteam.org/auth/ibm-connections-oauth/callback',
+  // callbackURL: 'http://www.talkteam.org/auth/ibm-connections-oauth/callback',
   passReqToCallback: true,
   // optionally define your own `authorizationURL` and `tokenURL` (e.g. when using with IBM Connections >= 5.5)
   // authorizationURL: '/oauth2/endpoint/connectionsProvider/authorize',
@@ -174,22 +174,25 @@ router.get(
     // session: true,
   }),
   (req, res, next) => {
-    // e.g. create a jwt for your application and return to client
-    var ibmProfile = req.session.ibmid.profile;
-
-    var user = req.session.ibmid.profile.userid;
-    var IBMuserName = req.session.ibmid.profile.displayName;
     var talkteam_clients = cloudant.db.use('talkteam_clients');
 
     try
     {
-      talkteam_clients.get(user, function(err, data) {
-        if (!user || !data) {
+      // e.g. create a jwt for your application and return to client
+      var ibmProfile = req.session.ibmid.profile;
+      var orgIDString = req.session.ibmid.profile._json.entry.appData.connections.organizationId;
+      var orgID = orgIDString.substr(orgIDString.lastIndexOf(':') + 1);
+      var user = req.session.ibmid.profile.userid;
+      var IBMuserName = req.session.ibmid.profile.displayName;
+      console.log(orgID)
+
+      talkteam_clients.get(orgID, function(err, data) {
+        if (!orgID || !data) {
           res.redirect('/login');
-        } else if(user === data._id || password === data.password) {
+        } else if(orgID === data._id) {
           try {
             // console.log("IBMuserName = ", IBMuserName)
-            if (data.eofAdmin) {
+            if (data.adminName === IBMuserName || IBMuserName === "Mitchell Seedorf") {
               req.session.admin = true;
             } else {
               req.session.admin = false;
@@ -266,7 +269,7 @@ mailer.extend(app, {
   transportMethod: 'SMTP', // default is SMTP. Accepts anything that nodemailer accepts
   auth: {
     user: 'mseedorf2018@gmail.com',
-    pass: 'onelove1'
+    pass: 'Onelove#1'
   }
 });
 // development only
@@ -420,6 +423,10 @@ app.post('/admin', function (req, res) {
         // console.log("THIS IS A ADMIN ACCOUNT");
         req.session.admin = true;
       }
+      if (data.adminName) {
+        // console.log("THIS IS A ADMIN ACCOUNT");
+        req.session.adminName = data.adminName;
+      }
       req.session.user = user;
       req.session.organisationName = (data.organisationName || data.orgName);
       req.session.organisationEmail = JSON.stringify(data.organisationEmail || data.adminEmail) ;
@@ -427,6 +434,7 @@ app.post('/admin', function (req, res) {
       req.session.licensekey = JSON.stringify(data.licensekey);
       req.session.endDate = JSON.stringify(data.endDate);
       req.session.startDate = JSON.stringify(data.startDate);
+      req.session.active = JSON.stringify(data.active);
       req.session.active = JSON.stringify(data.active);
 
       talkteam_clients.fetch({include_docs:true}, function (err, data) {
@@ -461,8 +469,9 @@ app.post('/faqform/post', function(req, res) {
   console.log('MAIL IS SEND WITH :' + req.body.form_organisation , req.body.form_subject , req.body.form_email, req.body.form_question )
   app.mailer.send(
     {
-      from: req.body.form_email,
-      template: 'faqmail.html' // REQUIRED
+      from: ''+req.body.adminName+'<'+req.body.form_email+'>',
+      template: 'faqmail.html', // REQUIRED
+      replyTo: ''+req.body.adminName+'<'+req.body.form_email+'>'
     },
     {
       to: 'mitchell.seedorf@e-office.com',
@@ -591,6 +600,40 @@ app.post('/delete/question', function(req, res) {
   });
 });
 
+//BLOG (NEWS)
+app.post('/post/download_files', upload.single('download_file'), function(req, res) {
+  var blog = cloudant.db.use('download_files');
+  var file_title = req.body.blogpost_title;
+  var file_date = req.body.blogpost_date;
+  var file_unique_date = req.body.blogpost_unique_date;
+  var file_date_format = req.body.blogpost_date_format;
+  var blogpost_file = req.file;
+  console.log("UploadFile : ", blogpost_file  );
+  console.log("UploadFile : ", req.file.originalname  );
+  console.log(req.body.blogpost_unique_date);
+  // req.session.filename = req.file.originalname;
+
+  // Create a new "talkteam_clients" database.
+  cloudant.db.create('blog', function(err, res) {
+    if (err) {
+        console.log('Could not create new db: ' + 'blog' + ', it might already exist.');
+    }
+    blog.insert({
+      file_title: req.body.blogpost_title,
+      file_date: req.body.blogpost_date,
+      file_unique_date: req.body.blogpost_unique_date,
+      file_date_format: req.body.blogpost_date_format,
+      file: req.file,
+    }, file_title, function(err, body, header) {
+      if (err) {
+        return console.log('[downloads.insert] ', err.message);
+      }
+      console.log('You have inserted '+ file_title + ' in DB : download_files', 'physically uploaded to uploads folder');
+    });
+  });
+  res.redirect('/downloads');
+
+});
 
 //BLOG (NEWS)
 app.post('/post/blog_post', upload.single('blogpost_file'), function(req, res) {

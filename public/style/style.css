@@ -7,7 +7,31 @@
 	     from {background-color: #35B297;}
 	     to {background-color: #633689;}
 	 }
-
+#downloadFile {
+	margin:0;
+}
+#downloadFile #buttonlabel {display:block;}
+#downloadFile #buttonlabel span {
+	-webkit-appearance: none;
+	height: 42px;
+	background-color: #633689;
+	color: #fff;
+	border-radius: 6px;
+	display: block;
+	line-height: 42px;
+	border: 0;
+	cursor: pointer;
+	text-decoration: none;
+	font-size: 14px;
+	font-weight: 600;
+	padding: 0 20px;
+	transition: .3s ease all;
+	margin: 1em auto;
+	text-align: center;
+	position: relative;
+	transition: .3s ease all;
+}
+#download_file {display:none;}
 .login-button {
 	display:block;
 	max-width:250px;
