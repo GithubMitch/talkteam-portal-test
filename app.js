@@ -602,7 +602,7 @@ app.post('/delete/question', function(req, res) {
 
 //BLOG (NEWS)
 app.post('/post/download_files', upload.single('download_file'), function(req, res) {
-  var blog = cloudant.db.use('download_files');
+  var download_files = cloudant.db.use('download_files');
   var file_title = req.body.blogpost_title;
   var file_date = req.body.blogpost_date;
   var file_unique_date = req.body.blogpost_unique_date;
@@ -614,11 +614,11 @@ app.post('/post/download_files', upload.single('download_file'), function(req, r
   // req.session.filename = req.file.originalname;
 
   // Create a new "talkteam_clients" database.
-  cloudant.db.create('blog', function(err, res) {
+  cloudant.db.create('download_files', function(err, res) {
     if (err) {
         console.log('Could not create new db: ' + 'blog' + ', it might already exist.');
     }
-    blog.insert({
+    download_files.insert({
       file_title: req.body.blogpost_title,
       file_date: req.body.blogpost_date,
       file_unique_date: req.body.blogpost_unique_date,

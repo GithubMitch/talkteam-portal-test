@@ -407,13 +407,27 @@ exports.admin = function(req, res){
   }
 };
 exports.logout = function(req, res){
-  res.render('logout.html', {
-    title: 'Logout',
-    username: req.session.user,
-    admin: req.session.admin,
-    lang: req.session.lang
-  });
-  req.session.destroy();
+  try {
+    delete req.session.user;
+    delete req.session.admin;
+    // code...
+    try {
+      res.render('logout.html', {
+        title: 'Logout',
+        // username: req.session.user,
+        // admin: req.session.admin,
+        lang: req.session.lang
+      });
+    } catch (err) {
+
+    }
+
+  } catch (err) {
+    // error handling
+  }
+
+
+
   // res.send("logout success!");
 };
 exports.toc = function(req, res){

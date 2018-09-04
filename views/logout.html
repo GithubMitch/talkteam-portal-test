@@ -62,12 +62,9 @@
 								  <li><a href="/home">Home</a></li>
 									<li><a href="/blog">News</a></li>
 									<li><a href="/faq">F.A.Q</a></li>
-									<% if (!username) { %>
+									<% if (typeof username === "undefined") { %>
 										<li><a href="/support">Support</a></li>
 										<li><a href="/login">Login</a></li>
-									<% } else if (username) { %>
-										<li><a href="/downloads">Downloads</a></li>
-										<li><a href="/service_request">Service Request</a></li>
 									<% } %>
 								  <li><a href="/about">E-Office</a></li>
 									<li><a href="/terms">Terms & Conditions</a></li>
@@ -75,12 +72,9 @@
 								  <li><a href="/home">Home</a></li>
 									<li><a href="/blog">Nieuws</a></li>
 									<li><a href="/faq">F.A.Q</a></li>
-									<% if (!username) { %>
+									<% if (typeof username === "undefined") { %>
 										<li><a href="/support">Ondersteuning</a></li>
 										<li><a href="/login">Login</a></li>
-									<% } else if (username) { %>
-										<li><a href="/downloads">Downloads</a></li>
-										<li><a href="/service_request">Service Request</a></li>
 									<% } %>
 								  <li><a href="/about">E-Office</a></li>
 									<li><a href="/terms">Algemene voorwaarden</a></li>
@@ -93,11 +87,8 @@
 							</ul>
 						</nav>
 						<div class="login">
-							<% if (username) { %>
-								<a id="logoutButton" href="/logout" style="margin-right: -4px">Logout</a>
-							<% } %>
-							<% if (!username) { %>
-								<!-- <a id="loginButton" href="/login">Login</a> -->
+							<% if (typeof username === "undefined") { %>
+								<a id="loginButton" href="/login">Login</a>
 							<% } %>
 						</div>
 				</div>
@@ -126,9 +117,9 @@
 </section>
 
 <% if (typeof lang == 'undefined' || lang == 'en') { %>
-  <iframe id="eofbot" class="<%	if (username) { %>indent<% } %>" src="/chatbot_en/chatbot.html" width="300" height="500px"></iframe>
+  <iframe id="eofbot" class="" src="/chatbot_en/chatbot.html" width="300" height="500px"></iframe>
 <% } else if (lang == 'nl') { %>
-  <iframe id="eofbot" class="<%	if (username) { %>indent<% } %>" src="/chatbot_nl/chatbot.html" width="300" height="500px"></iframe>
+  <iframe id="eofbot" class="" src="/chatbot_nl/chatbot.html" width="300" height="500px"></iframe>
 <% } %>
 
 	<footer class="fluid-container">
