@@ -265,18 +265,12 @@ app.get('/blog', routes.blog);
 
 //MAILTEMPLATING
 mailer.extend(app, {
-  //Top one
-  // host: 'smtp.gmail.com', // hostname
   host: 'smtp.office365.com', // hostname
-  // secureConnection: true, // use SSL
   secure: false,
   requireTLS: true, // only use if the server really does support TLS
-  // port: 465, // port for secure SMTP
   port: 587, // port for secure SMTP
   transportMethod: 'SMTP', // default is SMTP. Accepts anything that nodemailer accepts
   auth: {
-    // user: 'mseedorf2018@gmail.com',
-    // pass: 'Onelove#1'
     user: smtpUser,
     pass: smtpPass
   }
@@ -480,11 +474,12 @@ app.post('/faqform/post', function(req, res) {
     {
       // from: ''+req.body.adminName+'<'+req.body.form_email+'>',
       from: 'talkteam@e-office.com',
+      cc: ''+req.body.adminName+'<'+req.body.form_email+'>',
       template: 'faqmail.html', // REQUIRED
       replyTo: ''+req.body.adminName+'<'+req.body.form_email+'>'
     },
     {
-      to: 'mitchell.seedorf@e-office.com',
+      to: 'e-services@e-office.com',
       subject: req.body.form_subject,
       department: req.body.form_subject,
       organisation: req.body.form_organisation,
