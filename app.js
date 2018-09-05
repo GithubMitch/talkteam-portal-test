@@ -84,6 +84,8 @@ var storage = multer.diskStorage({
 var getAcces = require('./getAcces.js');
 var initDBConnection = getAcces.initDBConnection;
 var dbCredentials = getAcces.dbCredentials;
+var smtpUser = getAcces.smtpUser.user;
+var smtpPass = getAcces.smtpUser.pass;
 getAcces.initDBConnection();
 
 require('https').globalAgent.options.rejectUnauthorized = false;
@@ -275,8 +277,8 @@ mailer.extend(app, {
   auth: {
     // user: 'mseedorf2018@gmail.com',
     // pass: 'Onelove#1'
-    user: 'talkteam@e-office.com',
-    pass: 'Mitch3991!'
+    user: smtpUser,
+    pass: smtpPass
   }
 });
 // development only

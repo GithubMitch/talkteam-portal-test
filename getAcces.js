@@ -3,6 +3,10 @@ fs = require('fs');
 var dbCredentials = {
     dbName: 'cloudantNoSQLDB'
 };
+var smtpUser = {
+  user: 'talkteam@e-office.com',
+  pass: 'Mitch3991!'
+}
 function getDBCredentialsUrl(jsonData) {
     var vcapServices = JSON.parse(jsonData);
     // Pattern match to find the first instance of a Cloudant service in
@@ -23,6 +27,7 @@ function getDBCredentialsUrl(jsonData) {
     console.log('Done');
 }
 module.exports = {
+  smtpUser: smtpUser,
   dbCredentials: dbCredentials,
   initDBConnection: function() {
       //When running on Bluemix, this variable will be set to a json object
