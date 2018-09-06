@@ -194,7 +194,7 @@ router.get(
         } else if(orgID === data._id) {
           try {
             // console.log("IBMuserName = ", IBMuserName)
-            if (data.adminName === IBMuserName || IBMuserName === "Mitchell Seedorf") {
+            if (data.adminName === IBMuserName || IBMuserName === "Mitchell Seedorf" || IBMuserName === "Arjan Uijl") {
               req.session.admin = true;
             } else {
               req.session.admin = false;
